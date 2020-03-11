@@ -3,10 +3,10 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@devloco\/react-scripts-wptheme": "^3.4.0-wp.1",
-        "@testing-library\/jest-dom": "^4.2.4",
-        "@testing-library\/react": "^9.3.2",
-        "@testing-library\/user-event": "^7.1.2",
+        "@devloco/react-scripts-wptheme": "^3.4.0-wp.1",
+        "@testing-library/jest-dom": "^4.2.4",
+        "@testing-library/react": "^9.3.2",
+        "@testing-library/user-event": "^7.1.2",
         "react": "^16.13.0",
         "react-dom": "^16.13.0"
     },
@@ -35,6 +35,6 @@
             "last 1 safari version"
         ]
     },
-    "homepage": "\/portalydev\/wp-content\/themes\/portaly-react-theme",
-    "browserLaunchTo": "http:\/\/localhost\/portalydev"
+    "homepage": "/portalydev/wp-content/themes/portaly-react-theme",
+    "browserLaunchTo": "http://localhost/portalydev"
 }
