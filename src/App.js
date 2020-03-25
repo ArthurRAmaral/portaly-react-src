@@ -10,7 +10,9 @@ const App = () => {
   return (
     <BrowserRouter>
       <Header />
-      <Routes />
+      <div className="container">
+        <Routes />
+      </div>
       <Footer />
     </BrowserRouter>
   );
