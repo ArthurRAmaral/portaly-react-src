@@ -9,6 +9,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@woocommerce/woocommerce-rest-api": "^1.0.1",
+    "dotenv": "^8.2.0",
     "materialize-css": "^1.0.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",

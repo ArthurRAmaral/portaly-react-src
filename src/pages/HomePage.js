@@ -17,7 +17,7 @@ export default class HomePage extends Component {
   render() {
     return (
       <section id="homepage">
-        <section id="destaques">
+        {/* <section id="destaques">
           {this.state.produtos.map(produto => {
             return produto.on_sale ? (
               <div key={produto.id} className="produto">
@@ -27,7 +27,7 @@ export default class HomePage extends Component {
               <div></div>
             );
           })}
-        </section>
+        </section> */}
         <section id="produtos-list">
           {this.state.produtos.map(produto => {
             console.log(produto);

@@ -1,9 +1,9 @@
 const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
 
 const api = new WooCommerceRestApi({
-  url: "http://localhost/portalydev",
-  consumerKey: "ck_1ba42fcb1de9a3a63925f27ee7b669de17d6c66d",
-  consumerSecret: "cs_1dcb7bd9eb49edcae04fd992c894b021a42ae23c",
+  url: "https://demo.skeavee.com/portaly/",
+  consumerKey: "ck_7b8470ceaba1db71afb0c3a77f7f1ea3f98b9ce0",
+  consumerSecret: "cs_de262070deb1bcf2a2911dfb08af5fa991407f5e",
   version: "wc/v3"
 });
 
