@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import api from "../services/api";
 import { Link } from "react-router-dom";
 
-import "./css/HomePage.css";
+import "../css/HomePage.css";
 
 import imgDefault from "../assets/imgDefault.png";
 
