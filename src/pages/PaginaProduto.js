@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import api from "../services/api";
 // import { Link, useParams } from "react-router-dom";
 
-import "./css/PaginaProduto.css";
+import "../css/PaginaProduto.css";
 
 // import imgDefault from "../assets/imgDefault.png";
 
