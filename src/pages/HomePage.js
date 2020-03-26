@@ -26,7 +26,7 @@ export default class HomePage extends Component {
         {this.state.produtos.map(produto => {
           return (
             <Link key={`link-to-${produto.id}`} to={`/produto/${produto.id}`}>
-              <div className="produto">
+              <div className="produto card">
                 <img
                   key={produto.id}
                   src={
@@ -36,6 +36,8 @@ export default class HomePage extends Component {
                   }
                   alt=""
                 />
+                <p className="card-title grey-text text-darken-4">{produto.name}</p>
+                <p className="card-title grey-text text-darken-4">R$: {produto.price}</p>
               </div>
             </Link>
           );
