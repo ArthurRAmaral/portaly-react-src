@@ -1,6 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "../css/Header.css";
+
+const Carrinho = JSON.parse(localStorage.getItem("carrinho"));
 
 const Headers = () => {
   return (
@@ -19,11 +22,13 @@ const Headers = () => {
 
       <div className="main-header">
         <div className="center-content">
-          <img
-            src="https://demo.skeavee.com/portaly/wp-content/uploads/2020/03/Portaly_PNG_Background.png"
-            alt=""
-            className="logo center-children"
-          />
+          <Link to="/">
+            <img
+              src="https://demo.skeavee.com/portaly/wp-content/uploads/2020/03/Portaly_PNG_Background.png"
+              alt=""
+              className="logo center-children"
+            />
+          </Link>
 
           <div className="row">
             <form>
@@ -38,7 +43,8 @@ const Headers = () => {
           </div>
 
           <div className="cart">
-            <img src="" alt="" /> Valor total: <span id="value"></span>
+            <img src="" alt="" /> Valor total:{" "}
+            <span id="value">{Carrinho ? Carrinho.valor : 0}</span>
           </div>
         </div>
         <nav className="menu brown darken-1">

@@ -16,7 +16,7 @@
     "react-router-dom": "^5.1.2"
   },
   "scripts": {
-    "crabuild": "react-scripts build",
+    "crabuild": "produto-pagina build",
     "craeject": "react-scripts eject",
     "crastart": "react-scripts start",
     "cratest": "react-scripts test",
