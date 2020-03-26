@@ -6,7 +6,7 @@ const Headers = () => {
       <div className="nav-wrapper">
         <a href="/" className="brand-logo">
           <img
-            src="http://localhost/portalydev/wp-content/uploads/2020/03/Portaly_Logo_fundo_branco__fee74.png"
+            src="https://demo.skeavee.com/portaly/wp-content/uploads/2020/03/Portaly_PNG_Background.png"
             alt=""
             width="100%"
           />
