@@ -18,7 +18,6 @@ export default class HomePage extends Component {
       per_page: 20 // 20 products per page
     });
 
-    console.log(response.data);
     this.setState({ produtos: response.data });
   }
 
@@ -28,8 +27,8 @@ export default class HomePage extends Component {
         {this.state.produtos.map(produto => {
           return (
             <Link key={`link-to-${produto.id}`} to={`/produto/${produto.id}`}>
-              <div className="produto card medium">
-                <div className="card-image">
+              <div className="produto card small">
+                <div className="">
                   <img
                     key={produto.id}
                     src={
@@ -41,10 +40,10 @@ export default class HomePage extends Component {
                   />
                 </div>
                 <div className="produto-dados">
-                  <p className="card-title grey-text text-darken-4">
+                  <p className="nome grey-text text-darken-4 ">
                     {produto.name}
                   </p>
-                  <p className="card-title grey-text text-darken-4">
+                  <p className="preco grey-text text-darken-4">
                     R$: {produto.price}
                   </p>
                 </div>
