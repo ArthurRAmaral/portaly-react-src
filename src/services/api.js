@@ -6,5 +6,5 @@ const api = new WooCommerceRestApi({
   consumerSecret: "cs_de262070deb1bcf2a2911dfb08af5fa991407f5e",
   version: "wc/v3"
 });
-
 export default api;
+
