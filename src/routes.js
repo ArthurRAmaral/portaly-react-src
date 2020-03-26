@@ -1,14 +1,16 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import HomePage from "./pages/HomePage.js";
+import HomePage from "./pages/HomePage";
+import PaginaProduto from "./pages/PaginaProduto";
 
-const Routes = () => {
+function Routes() {
   return (
     <Switch>
-      <Route path="/" component={HomePage} />
+      <Route path="/" exact component={HomePage} />
+      <Route path="/produto/:id" component={PaginaProduto} />
     </Switch>
   );
-};
+}
 
 export default Routes;
