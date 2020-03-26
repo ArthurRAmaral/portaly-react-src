@@ -1,8 +1,11 @@
 import React from "react";
 
+import "../css/Header.css";
+
+
 const Logo = () => {
   return (
-    <div className="nav-wrapper">
+    <div id="logo" className="nav-wrapper">
       <a href="/" className="brand-logo">
         <img
           src="https://demo.skeavee.com/portaly/wp-content/uploads/2020/03/Portaly_PNG_Background.png"
