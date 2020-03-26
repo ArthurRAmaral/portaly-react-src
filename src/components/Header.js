@@ -4,8 +4,8 @@ import "../css/Header.css";
 
 const Headers = () => {
   return (
-    <header class="header">
-      <div class="sup-header blue-grey lighten-4">
+    <header className="header">
+      <div className="sup-header blue-grey lighten-4">
         <div className="Contato sup-header-content">Contato</div>
         <div className="sup-header-content">
           <a className="Go-to-email" href="mailto:portalyportas@gmail.com">
@@ -17,55 +17,57 @@ const Headers = () => {
         </div>
       </div>
 
-      <div class="main-header">
+      <div className="main-header">
+        <div className="center-content">
+          <img
+            src="https://demo.skeavee.com/portaly/wp-content/uploads/2020/03/Portaly_PNG_Background.png"
+            alt=""
+            className="logo center-children"
+          />
 
-      <div className="center-content">
+          <div className="row">
+            <form>
+              <div className="search-area">
+                <input
+                  type="text"
+                  className="search-input"
+                  placeholder="Busque um produto"
+                />
+              </div>
+            </form>
+          </div>
 
-      <img
-          src="https://demo.skeavee.com/portaly/wp-content/uploads/2020/03/Portaly_PNG_Background.png"
-          alt=""
-          className="logo center-children"
-        />
-
-        <div class="row">
-          <form>
-              <div class="search-area">
-              <input type="text" className="search-input" placeholder="Busque um produto"/> 
-            </div>
-          </form>
+          <div className="cart">
+            <img src="" alt="" /> Valor total: <span id="value"></span>
+          </div>
         </div>
-
-        <div class="cart">
-          <img src="" alt="" /> Valor total: <span id="value"></span>
-        </div>
-        </div>
-        <nav class="menu brown darken-1">
+        <nav className="menu brown darken-1">
           <ul>
-            <li class="category">
+            <li className="category">
               <a href="#Alizar">Alizar</a>
             </li>
-            <li class="category">
+            <li className="category">
               <a href="#Dobradica">Dobradiça</a>
             </li>
-            <li class="category">
+            <li className="category">
               <a href="#Fechadura">Fechadura</a>
             </li>
-            <li class="category">
+            <li className="category">
               <a href="#KitDeCorrer">Kit de Correr</a>
             </li>
-            <li class="category">
+            <li className="category">
               <a href="#Marco">Marco (Batente)</a>
             </li>
-            <li class="category">
+            <li className="category">
               <a href="#Outros">Outros</a>
             </li>
-            <li class="category">
+            <li className="category">
               <a href="#Portas">Porta</a>
             </li>
-            <li class="category">
+            <li className="category">
               <a href="#Puxador">Puxador</a>
             </li>
-            <li class="category">
+            <li className="category">
               <a href="#Monte">Monte Sua Porta</a>
             </li>
           </ul>
