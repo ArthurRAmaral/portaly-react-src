@@ -26,16 +26,20 @@ export default class HomePage extends Component {
         {this.state.produtos.map(produto => {
           return (
             <Link key={`link-to-${produto.id}`} to={`/produto/${produto.id}`}>
-              <div className="produto">
-                <img
-                  key={produto.id}
-                  src={
-                    produto.images.length > 0
-                      ? produto.images[0].src
-                      : imgDefault
-                  }
-                  alt=""
-                />
+              <div className="produto card medium">
+                <div className="card-image">
+                  <img
+                    key={produto.id}
+                    src={
+                      produto.images.length > 0
+                        ? produto.images[0].src
+                        : imgDefault
+                    }
+                    alt=""
+                  />
+                </div>
+                <p className="card-title grey-text text-darken-4">{produto.name}</p>
+                <p className="card-title grey-text text-darken-4">R$: {produto.price}</p>
               </div>
             </Link>
           );
