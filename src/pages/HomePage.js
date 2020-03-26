@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 import "../css/HomePage.css";
 
+import Loading from "../components/Loading.js";
+
 import imgDefault from "../assets/imgDefault.png";
 
 export default class HomePage extends Component {
@@ -38,21 +40,19 @@ export default class HomePage extends Component {
                     alt=""
                   />
                 </div>
-                <p className="card-title grey-text text-darken-4">{produto.name}</p>
-                <p className="card-title grey-text text-darken-4">R$: {produto.price}</p>
+                <div className="produto-dados">
+                  <p className="card-title grey-text text-darken-4">
+                    {produto.name}
+                  </p>
+                  <p className="card-title grey-text text-darken-4">
+                    R$: {produto.price}
+                  </p>
+                </div>
               </div>
             </Link>
           );
         })}
       </section>
-    );
-  };
-
-  aguardandoProdutos = () => {
-    return (
-      <div className="progress">
-        <div className="indeterminate"></div>
-      </div>
     );
   };
 
@@ -70,9 +70,7 @@ export default class HomePage extends Component {
             );
           })}
         </section> */}
-        {this.state.produtos.length > 0
-          ? this.mostrarProdutos()
-          : this.aguardandoProdutos()}
+        {this.state.produtos.length > 0 ? this.mostrarProdutos() : Loading()}
       </section>
     );
   }

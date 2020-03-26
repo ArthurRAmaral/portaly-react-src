@@ -1,17 +1,39 @@
+#homepage {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  min-height: calc(100vh - (259px + 231.219px));
+}
 
 #produtos-list {
   display: flex;
+  justify-content: center;
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
-  height: 100vh;
+  padding: 30px;
+  width: 100%;
 }
 
 .produto {
-  border: 1px solid black;
+  width: 300px;
   display: block;
   margin: 10px;
+  margin: 10px;
 }
+.produto:hover {
+  background-color: rgba(0, 0, 0, 0.144);
+  opacity: 65%;
+}
+
 .produto img {
+  object-fit: fill;
   width: 150px;
+  width: 300px;
+  height: 300px;
+}
+
+.produto-dados {
+  padding: 10px;
+  font-weight: bold;
 }

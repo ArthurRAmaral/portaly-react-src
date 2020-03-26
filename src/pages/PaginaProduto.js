@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import api from "../services/api";
 // import { Link, useParams } from "react-router-dom";
 
+import Loading from "../components/Loading.js";
+
 import "../css/PaginaProduto.css";
 
 // import imgDefault from "../assets/imgDefault.png";
@@ -21,18 +23,10 @@ export default class PaginaProduto extends Component {
 
   renderProduto = () => <h1>{this.state.produto.name}</h1>;
 
-  aguardandoProduto = () => (
-    <div className="progress">
-      <div className="indeterminate"></div>
-    </div>
-  );
-
   render() {
     return (
       <section id="produto-pagina">
-        <div>
-          {this.state.produto ? this.renderProduto() : this.aguardandoProduto()}
-        </div>
+        <div>{this.state.produto ? this.renderProduto() : Loading()}</div>
       </section>
     );
   }
