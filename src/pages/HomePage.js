@@ -3,6 +3,8 @@ import api from "../services/api";
 
 import "./HomePage.css";
 
+import imgDefault from "../assets/imgDefault.png";
+
 export default class HomePage extends Component {
   state = {
     produtos: []
@@ -34,7 +36,14 @@ export default class HomePage extends Component {
 
             return (
               <div key={produto.id} className="produto">
-                <img src={produto.images[0].src} alt="" width={300} />
+                <img
+                  src={
+                    produto.images.length > 0
+                      ? produto.images[0].src
+                      : imgDefault
+                  }
+                  alt=""
+                />
               </div>
             );
           })}
