@@ -3,14 +3,14 @@ import { BrowserRouter } from "react-router-dom";
 import Header from "./components/Header";
 import Routes from "./routes";
 import Footer from "./components/Footer";
-import funcoesCarrinho from "./util/Carrinho";
+import Carrinho from "./util/Carrinho";
 import "materialize-css/dist/css/materialize.min.css";
 import "./css/Global.css";
 
 
 const App = () => {
 
-  funcoesCarrinho.setCarrinho();
+  Carrinho.setCarrinho();
 
   return (
     <BrowserRouter>
