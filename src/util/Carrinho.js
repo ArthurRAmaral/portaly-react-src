@@ -10,7 +10,11 @@ const funcoesCarrinho = {
       ? console.log()
       : localStorage.setItem("carrinho", JSON.stringify(Carrinho));
   },
-  
+  getCarrinho: () => {
+    JSON.parse(localStorage.getItem("carrinho"));
+  },
+
+
 }
 
 export default funcoesCarrinho;
