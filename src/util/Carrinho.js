@@ -9,7 +9,6 @@ const funcoesCarrinho = {
     localStorage.getItem("carrinho")
       ? console.log()
       : localStorage.setItem("carrinho", JSON.stringify(Carrinho));
-      return;
   },
   
 }
