@@ -3,10 +3,15 @@ const Carrinho = {
   itens: []
 };
 
-const setCarrinho = () =>{
-  localStorage.getItem("carrinho")
-    ? console.log()
-    : localStorage.setItem("carrinho", JSON.stringify(Carrinho));
+const funcoesCarrinho = {
+
+  setCarrinho: () => {
+    localStorage.getItem("carrinho")
+      ? console.log()
+      : localStorage.setItem("carrinho", JSON.stringify(Carrinho));
+      return;
+  },
+  
 }
 
-export default setCarrinho;
+export default funcoesCarrinho;
