@@ -11,7 +11,7 @@ class HomePage extends Component {
       super(props);
 
       this.state = {
-         produtos: [{ nome: "guilherme", idade: "26" }],
+         produtos: [],
       }
    }
 
@@ -58,6 +58,9 @@ class HomePage extends Component {
    };
 
    render() {
+
+      console.log(this.state);
+
       return (
          <section id="homepage">
             {/* <section id="destaques">
@@ -71,7 +74,7 @@ class HomePage extends Component {
             );
           })}
         </section> */}
-            {this.state.produtos.length >= 0 ? <mostrarProdutos /> : <Loading />}
+            {this.state.produtos.length > 0 ?  this.mostrarProdutos() : Loading()}
          </section>
       );
    }
