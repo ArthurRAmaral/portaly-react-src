@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import ApiWooCommerce from "../util/ApiWooCommerce";
 import Loading from "../components/Loading.js";
 import MostrarProdutos from "../components/MostraProdutos";
@@ -29,9 +29,9 @@ class HomePage extends Component {
       Carrinho.setCarrinho();
 
       return (
-         <section id="homepage">
+         <Fragment>
             {this.state.produtos.length > 0 ? MostrarProdutos(this.state.produtos) : <Loading />}
-         </section>
+         </Fragment>
       );
    }
 }
