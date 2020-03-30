@@ -43,7 +43,7 @@ const ApiCategories = (categorias) => {
       categorias.map(cat => {
          return (
             <li key={cat.id}>
-               <Link key={`categorias${cat.id}`} to={`/`}>{cat.name}</Link>
+               <Link key={`categorias${cat.id}`} to={`/categoria/${cat.id}`} >{cat.name}</Link>
             </li>
          )
       })
@@ -68,7 +68,6 @@ class Categorias extends Component {
    }
 
    render() {
-      console.log(this.state.categories);
 
       return (
          <Fragment>

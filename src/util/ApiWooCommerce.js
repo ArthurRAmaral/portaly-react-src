@@ -5,8 +5,11 @@ const funcoesApiWooCommerce = {
    getAll: () => {
       return (api.get("products", { per_page: 20 }))
    },
-   getAllCategorias: () =>{
+   getAllCategorias: () => {
       return (api.get("products/categories"))
+   },
+   getCategoria: (id) => {
+      return (api.get("products", { category: id }))
    }
 
 }
