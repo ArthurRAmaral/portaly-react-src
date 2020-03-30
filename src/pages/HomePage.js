@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ApiWooCommerce from "../services/api";
+import ApiWooCommerce from "../util/ApiWooCommerce";
 import Loading from "../components/Loading.js";
 import MostrarProdutos from "../components/MostraProdutos";
 
@@ -17,11 +17,10 @@ class HomePage extends Component {
    }
 
    componentDidMount() {
-      ApiWooCommerce.get("products", { per_page: 20 })
+      ApiWooCommerce.getAll()
          .then(res => {
             this.setState({ produtos: [...this.state.produtos, ...res.data] });
-         });
-
+         })
    }
 
 
