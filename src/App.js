@@ -10,15 +10,15 @@ import "./css/Global.css";
 
 const App = () => {
 
-  Carrinho.setCarrinho();
+   Carrinho.setCarrinho();
 
-  return (
-    <BrowserRouter>
-      <Header />
-      <Routes />
-      <Footer />
-    </BrowserRouter>
-  );
+   return (
+      <BrowserRouter>
+         <Header />
+         <Routes />
+         <Footer />
+      </BrowserRouter>
+   );
 };
 
 export default App;

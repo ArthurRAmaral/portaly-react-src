@@ -12,7 +12,7 @@ class HomePage extends Component {
 
       this.state = {
          produtos: [],
-         teste:[],
+         teste: [],
       }
    }
 
@@ -32,7 +32,7 @@ class HomePage extends Component {
 
       return (
          <section id="homepage">
-            {this.state.produtos.length > 0 ?  MostrarProdutos(this.state.produtos) : <Loading />}
+            {this.state.produtos.length > 0 ? MostrarProdutos(this.state.produtos) : <Loading />}
          </section>
       );
    }
