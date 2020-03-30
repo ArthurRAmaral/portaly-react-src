@@ -27,9 +27,12 @@ class HomePage extends Component {
 
 
    render() {
+
+      console.log(this.state.produtos);
+
       return (
          <section id="homepage">
-            {this.state.produtos.length > 0 ?  <MostrarProdutos pros={this.state}/> : <Loading />}
+            {this.state.produtos.length > 0 ?  MostrarProdutos(this.state.produtos) : <Loading />}
          </section>
       );
    }
