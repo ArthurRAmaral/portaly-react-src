@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import ApiWooCommerce from "../util/ApiWooCommerce";
 import MostraProdutos from "../components/MostraProdutos"
 import Loaging from "../components/Loading"
+import Carrinho from "../util/Carrinho";
 
 class PaginaCategorias extends Component {
 
@@ -24,10 +25,12 @@ class PaginaCategorias extends Component {
 
    render() {
 
+      Carrinho.setCarrinho();
+
       return (
-        <Fragment>
-           {this.state.produtos.length > 0 ? MostraProdutos(this.state.produtos) : Loaging()}
-        </Fragment>
+         <Fragment>
+            {this.state.produtos.length > 0 ? MostraProdutos(this.state.produtos) : Loaging()}
+         </Fragment>
       )
    }
 }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ApiWooCommerce from "../util/ApiWooCommerce";
 import Loading from "../components/Loading.js";
 import MostrarProdutos from "../components/MostraProdutos";
+import Carrinho from "../util/Carrinho";
 
 class HomePage extends Component {
 
@@ -25,7 +26,7 @@ class HomePage extends Component {
 
    render() {
 
-      console.log(this.state.produtos);
+      Carrinho.setCarrinho();
 
       return (
          <section id="homepage">

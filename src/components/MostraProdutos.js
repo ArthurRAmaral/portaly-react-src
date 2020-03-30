@@ -14,7 +14,9 @@ const MostrarProdutos = (props) => {
                <div className="col s12 m6 l4 xl3" key={`${produto.slug}${produto.id}`}>
                   <div className="card">
                      <div className="card-image waves-effect waves-block waves-light">
-                        <img className="activator" src={produto.images[0].src} />
+                        <img className="activator" src={produto.images.length > 0
+                           ? produto.images[0].src
+                           : imgDefault} />
                      </div>
                      <div className="card-content row">
                         <span className="card-title activator grey-text text-darken-4">{produto.name}<i className="material-icons right">more_vert</i></span>
