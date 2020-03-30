@@ -8,10 +8,10 @@ const MostrarProdutos = (props) => {
    const cards =
       props.map(produto => {
          return (
-            <Link key={`link-to-${produto.id}`} to={`/produto/${produto.id}`} className="hover">
+            <Link key={`link-to-${produto.id}`} to={`/produto/${produto.id}`} >
                <div className="col s12 m6 l4 xl3" key={`${produto.slug}${produto.id}`}>
-                  <div className="card">
-                     <div className="card-image waves-effect waves-block waves-light  image_card">
+                  <div className="card image_card">
+                     <div className="card-image waves-effect waves-light">
                         <img className="activator" src={produto.images.length > 0
                            ? produto.images[0].src
                            : imgDefault} />
