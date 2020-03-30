@@ -43,7 +43,7 @@ const ApiCategories = (categorias) => {
       categorias.map(cat => {
          return (
             <li key={cat.id}>
-               <Link Key={`categorias${cat.id}`}>{cat.name}</Link>
+               <Link key={`categorias${cat.id}`} to={`/`}>{cat.name}</Link>
             </li>
          )
       })
