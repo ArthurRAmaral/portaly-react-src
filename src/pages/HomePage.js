@@ -3,8 +3,6 @@ import ApiWooCommerce from "../util/ApiWooCommerce";
 import Loading from "../components/Loading.js";
 import MostrarProdutos from "../components/MostraProdutos";
 
-import "../css/HomePage.css";
-
 class HomePage extends Component {
 
    constructor(props) {
