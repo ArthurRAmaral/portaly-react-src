@@ -1,8 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment, Component } from "react";
+import ApiWooCommerce from "../../util/ApiWooCommerce";
+import { Link } from "react-router-dom";
 
-const Categorias = () => {
+const DefaultCategories = () => {
    return (
       <Fragment>
+
          <li className="category">
             <a href="#Alizar">Alizar</a>
          </li>
@@ -31,7 +34,49 @@ const Categorias = () => {
             <a href="#Monte">Monte Sua Porta</a>
          </li>
       </Fragment>
+
    )
+}
+
+const ApiCategories = (categorias) => {
+   return (
+      categorias.map(cat => {
+         return (
+            <li key={cat.id}>
+               <Link Key={`categorias${cat.id}`}>{cat.name}</Link>
+            </li>
+         )
+      })
+   )
+}
+
+class Categorias extends Component {
+
+   constructor(props) {
+      super(props);
+
+      this.state = {
+         categories: []
+      }
+   }
+
+   componentDidMount() {
+      ApiWooCommerce.getAllCategorias()
+         .then(res => {
+            this.setState({ categories: [...this.state.categories, ...res.data] })
+         })
+   }
+
+   render() {
+      console.log(this.state.categories);
+
+      return (
+         <Fragment>
+            {this.state.categories.length > 0 ? ApiCategories(this.state.categories) : <DefaultCategories />}
+         </Fragment>
+      )
+   }
+
 }
 
 export default Categorias;
