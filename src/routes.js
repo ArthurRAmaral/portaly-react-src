@@ -4,7 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import PaginaCategoria from "./pages/PaginaCategoria"
 import PaginaProduto from "./pages/PaginaProduto";
-import HomeCss from "./css/Global.css"
+import "./css/Global.css";
 
 function Routes() {
    return (
