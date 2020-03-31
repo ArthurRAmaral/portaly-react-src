@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import ApiWooCommerce from "../util/ApiWooCommerce";
-import Loading from "../components/Loading.js";
+import LineLoading from "../components/loading/LineLoading";
 import MostrarProdutos from "../components/MostraProdutos";
 import Carrinho from "../util/Carrinho";
 
@@ -30,7 +30,7 @@ class HomePage extends Component {
 
       return (
          <Fragment>
-            {this.state.produtos.length > 0 ? MostrarProdutos(this.state.produtos) : <Loading />}
+            {this.state.produtos.length > 0 ? MostrarProdutos(this.state.produtos) : <LineLoading />}
          </Fragment>
       );
    }

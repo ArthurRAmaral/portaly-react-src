@@ -1,81 +1,45 @@
-import React, { Fragment, Component } from "react";
+import React, { Component } from "react";
 import ApiWooCommerce from "../../util/ApiWooCommerce";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-const DefaultCategories = () => {
-   return (
-      <Fragment>
-
-         <li className="category">
-            <a href="#Alizar">Alizar</a>
+const ApiCategories = categorias => {
+   return categorias.map(cat => {
+      return (
+         <li key={cat.id}>
+            <NavLink
+               key={`categorias${cat.id}`}
+               to={`/categoria/${cat.id}`}
+               activeStyle={{ backgroundColor: "#a1887f" }}
+            >
+               {cat.name}
+            </NavLink>
          </li>
-         <li className="category">
-            <a href="#Dobradica">Dobradiça</a>
-         </li>
-         <li className="category">
-            <a href="#Fechadura">Fechadura</a>
-         </li>
-         <li className="category">
-            <a href="#KitDeCorrer">Kit de Correr</a>
-         </li>
-         <li className="category">
-            <a href="#Marco">Marco (Batente)</a>
-         </li>
-         <li className="category">
-            <a href="#Outros">Outros</a>
-         </li>
-         <li className="category">
-            <a href="#Portas">Porta</a>
-         </li>
-         <li className="category">
-            <a href="#Puxador">Puxador</a>
-         </li>
-         <li className="category">
-            <a href="#Monte">Monte Sua Porta</a>
-         </li>
-      </Fragment>
-
-   )
-}
-
-const ApiCategories = (categorias) => {
-   return (
-      categorias.map(cat => {
-         return (
-            <li key={cat.id}>
-               <Link key={`categorias${cat.id}`} to={`/categoria/${cat.id}`} >{cat.name}</Link>
-            </li>
-         )
-      })
-   )
-}
+      );
+   });
+};
 
 class Categorias extends Component {
-
    constructor(props) {
       super(props);
 
       this.state = {
          categories: []
-      }
+      };
    }
 
    componentDidMount() {
-      ApiWooCommerce.getAllCategorias()
-         .then(res => {
-            this.setState({ categories: [...this.state.categories, ...res.data] })
-         })
+      ApiWooCommerce.getAllCategorias().then(res => {
+         this.setState({ categories: [...this.state.categories, ...res.data] });
+      });
    }
 
    render() {
-
       return (
-         <Fragment>
-            {this.state.categories.length > 0 ? ApiCategories(this.state.categories) : <DefaultCategories />}
-         </Fragment>
-      )
+         <ul>
+            {this.state.categories.length > 0 ? ApiCategories(this.state.categories) : ""}
+         </ul>
+      );
    }
-
 }
 
 export default Categorias;
