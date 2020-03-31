@@ -1,7 +1,7 @@
 import React from "react";
-import "../css/Loading.css";
+import "../../css/Loading.css";
 
-const Loading = () => {
+const LineLoading = () => {
   return (
     <div className="loading">
       <div className="progress brown lighten-4">
@@ -11,4 +11,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default LineLoading;

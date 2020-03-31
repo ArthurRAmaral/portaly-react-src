@@ -5,22 +5,20 @@ import Carrinho from "./Carrinho"
 import Categorias from "./Categorias"
 
 const MainHeader = () => {
-  return (
-    <Fragment>
-      <div className="main-header">
-        <div className="center-content">
-          <Logo />
-          <Busca />
-          <Carrinho />
-        </div>
-        <nav className="menu brown darken-1">
-          <ul>
-            <Categorias />
-          </ul>
-        </nav>
-      </div >
-    </Fragment>
-  )
+   return (
+      <Fragment>
+         <div className="main-header">
+            <div className="center-content">
+               <Logo />
+               <Busca />
+               <Carrinho />
+            </div>
+            <nav className="menu brown darken-1 center-align">
+               <Categorias />
+            </nav>
+         </div >
+      </Fragment>
+   )
 }
 
 export default MainHeader;

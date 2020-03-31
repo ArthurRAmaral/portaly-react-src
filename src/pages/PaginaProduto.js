@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import api from "../services/api";
 import { Link } from "react-router-dom";
 
-import Loading from "../components/Loading.js";
+import LineLoading from "../components/loading/LineLoading";
 
 import "../css/PaginaProduto.css";
 
@@ -75,7 +75,7 @@ export default class PaginaProduto extends Component {
   render() {
     return (
       <section id="produto-pagina">
-        {this.state.produto ? this.renderProduto() : Loading()}
+        {this.state.produto ? this.renderProduto() : LineLoading()}
       </section>
     );
   }
