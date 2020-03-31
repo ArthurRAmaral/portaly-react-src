@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import ApiWooCommerce from "../util/ApiWooCommerce";
 import MostraProdutos from "../components/MostraProdutos"
-import Loaging from "../components/Loading"
+import LineLoaging from "../components/loading/LineLoading"
 import Carrinho from "../util/Carrinho";
 
 class PaginaCategorias extends Component {
@@ -20,7 +20,7 @@ class PaginaCategorias extends Component {
          .then(res => {
             this.setState({ produtos: [...this.state.produtos, ...res.data] });
          })
-         .catch(console.log("Erro"))
+         .catch(console.log("Carregando"))
    }
 
    render() {
@@ -29,7 +29,7 @@ class PaginaCategorias extends Component {
 
       return (
          <Fragment>
-            {this.state.produtos.length > 0 ? MostraProdutos(this.state.produtos) : Loaging()}
+            {this.state.produtos.length > 0 ? MostraProdutos(this.state.produtos) : LineLoaging()}
          </Fragment>
       )
    }
