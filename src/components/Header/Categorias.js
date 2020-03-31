@@ -1,11 +1,10 @@
 import React, { Fragment, Component } from "react";
 import ApiWooCommerce from "../../util/ApiWooCommerce";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const DefaultCategories = () => {
    return (
       <Fragment>
-
          <li className="category">
             <a href="#Alizar">Alizar</a>
          </li>
@@ -34,48 +33,74 @@ const DefaultCategories = () => {
             <a href="#Monte">Monte Sua Porta</a>
          </li>
       </Fragment>
+   );
+};
 
-   )
-}
-
-const ApiCategories = (categorias) => {
-   return (
-      categorias.map(cat => {
+const ApiCategories = categorias => {
+   return categorias.map(cat => {
+      if (window.location.pathname === `/categoria/${cat.id}`)
          return (
             <li key={cat.id}>
-               <Link key={`categorias${cat.id}`} to={`/categoria/${cat.id}`} >{cat.name}</Link>
+               <NavLink
+                  style={{
+                     backgroundColor: "black"
+                  }}
+                  key={`categorias${cat.id}`}
+                  to={`/categoria/${cat.id}`}
+                  onClick={() => {
+                     window.location.href = `/categoria/${cat.id}`;
+                  }}
+               >
+                  {cat.name}
+               </NavLink>
             </li>
-         )
-      })
-   )
-}
+         );
+      else
+         return (
+            <li key={cat.id}>
+               <NavLink
+                  activeStyle={{
+                     backgroundColor: "black"
+                  }}
+                  key={`categorias${cat.id}`}
+                  to={`/categoria/${cat.id}`}
+                  onClick={() => {
+                     window.location.href = `/categoria/${cat.id}`;
+                  }}
+               >
+                  {cat.name}
+               </NavLink>
+            </li>
+         );
+   });
+};
 
 class Categorias extends Component {
-
    constructor(props) {
       super(props);
 
       this.state = {
          categories: []
-      }
+      };
    }
 
    componentDidMount() {
-      ApiWooCommerce.getAllCategorias()
-         .then(res => {
-            this.setState({ categories: [...this.state.categories, ...res.data] })
-         })
+      ApiWooCommerce.getAllCategorias().then(res => {
+         this.setState({ categories: [...this.state.categories, ...res.data] });
+      });
    }
 
    render() {
-
       return (
          <Fragment>
-            {this.state.categories.length > 0 ? ApiCategories(this.state.categories) : <DefaultCategories />}
+            {this.state.categories.length > 0 ? (
+               ApiCategories(this.state.categories)
+            ) : (
+               <DefaultCategories />
+            )}
          </Fragment>
-      )
+      );
    }
-
 }
 
 export default Categorias;
