@@ -1,10 +1,12 @@
 * {
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  /* font-weight: 400; */
+   margin: 0;
+   padding: 0;
+   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+   /* font-weight: 400; */
 }
 
 #homepage {
    min-height: calc(100vh - (259px + 231.219px));
- }
+   display: flex;
+   align-items: center;
+}
