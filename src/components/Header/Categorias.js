@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import ApiWooCommerce from "../../util/ApiWooCommerce";
 import { NavLink } from "react-router-dom";
-import CircleLoding from "../loading/CircleLoading";
-import Paginacategoria from "../../pages/PaginaCategoria";
 
 const TrocaCategoria = (cat) => {
    if (window.location.pathname === `/categoria/${cat.id}`)
@@ -19,7 +17,7 @@ const ApiCategories = categorias => {
                key={`categorias${cat.id}`}
                to={`/categoria/${cat.id}`}
                activeStyle={{ backgroundColor: "#a1887f" }}
-               onClick={() => { TrocaCategoria(cat) }}
+               // onClick={() => { TrocaCategoria(cat) }}
             >
                {cat.name}
             </NavLink>
@@ -46,11 +44,7 @@ class Categorias extends Component {
    render() {
       return (
          <ul>
-            {this.state.categories.length > 0 ? (
-               ApiCategories(this.state.categories)
-            ) : (
-                  <CircleLoding />
-               )}
+            {this.state.categories.length > 0 ? ApiCategories(this.state.categories) : ""}
          </ul>
       );
    }

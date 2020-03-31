@@ -10,26 +10,40 @@ class PaginaCategorias extends Component {
       super(props)
 
       this.state = {
-         produtos: []
+         produtos: [],
+         paginaId: props.match.params.id,
+
       }
    }
 
    componentDidMount() {
-      const id = this.props.match.params;
-      ApiWooCommerce.getCategoria(id.id)
+      this.chamaApiParaRceberProdutos(this.state.paginaId);
+   }
+
+   componentWillReceiveProps(nextProps) {
+      const id = nextProps.match.params.id;
+      this.chamaApiParaRceberProdutos(id);
+
+   }
+
+   chamaApiParaRceberProdutos(id) {
+      ApiWooCommerce.getCategoria(id)
          .then(res => {
-            this.setState({ produtos: [...this.state.produtos, ...res.data] });
+            this.setState({ produtos: [...res.data], paginaId: id });
          })
          .catch(console.log("Carregando"))
    }
 
    render() {
 
+      console.log(this.state)
+
       Carrinho.setCarrinho();
 
       return (
          <Fragment>
-            {this.state.produtos.length > 0 ? MostraProdutos(this.state.produtos) : LineLoaging()}
+            {this.state.produtos.length > 0 && this.state.paginaId === this.props.match.params.id ?
+               MostraProdutos(this.state.produtos) : LineLoaging()}
          </Fragment>
       )
    }
