@@ -2,13 +2,6 @@ import React, { Component } from "react";
 import ApiWooCommerce from "../../util/ApiWooCommerce";
 import { NavLink } from "react-router-dom";
 
-const TrocaCategoria = (cat) => {
-   if (window.location.pathname === `/categoria/${cat.id}`)
-      return;
-   else
-      return window.location.href = `/categoria/${cat.id}`;
-}
-
 const ApiCategories = categorias => {
    return categorias.map(cat => {
       return (
@@ -17,7 +10,6 @@ const ApiCategories = categorias => {
                key={`categorias${cat.id}`}
                to={`/categoria/${cat.id}`}
                activeStyle={{ backgroundColor: "#a1887f" }}
-               // onClick={() => { TrocaCategoria(cat) }}
             >
                {cat.name}
             </NavLink>
