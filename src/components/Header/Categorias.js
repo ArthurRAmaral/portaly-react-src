@@ -1,10 +1,23 @@
+//From dependencies
 import React, { Component, Fragment } from "react";
-import ApiWooCommerce from "../../util/ApiWooCommerce";
 import { NavLink } from "react-router-dom";
+
+//From utils
+import ApiWooCommerce from "../../util/ApiWooCommerce";
 
 const ApiCategories = categorias => {
    return (
       <Fragment>
+         <li>
+            <NavLink
+               exact
+               key={`Todos`}
+               to={`/`}
+               activeStyle={{ backgroundColor: "#a1887f" }}
+            >
+               {`Todos`}
+            </NavLink>
+         </li>
          {categorias.map(cat => {
             return (
                <li key={cat.id}>

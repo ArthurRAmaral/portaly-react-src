@@ -1,3 +1,4 @@
+//From dependencies
 import React from "react"
 import Carrinho from "../../util/Carrinho";
 

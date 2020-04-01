@@ -1,10 +1,14 @@
+//From dependencies
 import React, { Fragment } from "react";
 import { Switch, Route } from "react-router-dom";
 
+//From componets
 import HomePage from "./pages/HomePage";
 import PaginaCategoria from "./pages/PaginaCategoria";
 import PaginaProduto from "./pages/PaginaProduto";
 import MonteSuaPorta from "./pages/MonteSuaPorta";
+
+//From css
 import "./css/Global.css";
 
 function Routes() {

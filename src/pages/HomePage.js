@@ -16,7 +16,10 @@ class HomePage extends Component {
 
    componentDidMount() {
       ApiWooCommerce.getAll().then(res => {
-         this.setState({ produtos: [...this.state.produtos, ...res.data] });
+         let produtos = res.data;
+         this.setState({
+            produtos: [...this.state.produtos, ...produtos]
+         });
       });
    }
 
