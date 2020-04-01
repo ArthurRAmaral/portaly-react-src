@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { BrowserRouter } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Routes from "./routes";
@@ -37,9 +37,9 @@ class App extends Component {
 
       return (
          <BrowserRouter>
-               <Header categorias={this.state.produtos} />
-               {/* <Routes /> */}
-               {/* <Footer /> */}
+               {/* <Header categorias={this.state.produtos} /> */}
+               <Routes produtos={this.state.produtos} />
+               <Footer />
             </BrowserRouter>
       )
    }
