@@ -1,21 +1,34 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import ApiWooCommerce from "../../util/ApiWooCommerce";
 import { NavLink } from "react-router-dom";
 
 const ApiCategories = categorias => {
-   return categorias.map(cat => {
-      return (
-         <li key={cat.id}>
+   return (
+      <Fragment>
+         {categorias.map(cat => {
+            return (
+               <li key={cat.id}>
+                  <NavLink
+                     key={`categorias${cat.id}`}
+                     to={`/categoria/${cat.id}`}
+                     activeStyle={{ backgroundColor: "#a1887f" }}
+                  >
+                     {cat.name}
+                  </NavLink>
+               </li>
+            );
+         })}
+         <li>
             <NavLink
-               key={`categorias${cat.id}`}
-               to={`/categoria/${cat.id}`}
+               key={`montesuaporta`}
+               to={`/montesuaporta`}
                activeStyle={{ backgroundColor: "#a1887f" }}
             >
-               {cat.name}
+               {`Monte Sua Porta`}
             </NavLink>
          </li>
-      );
-   });
+      </Fragment>
+   );
 };
 
 class Categorias extends Component {
@@ -36,7 +49,9 @@ class Categorias extends Component {
    render() {
       return (
          <ul>
-            {this.state.categories.length > 0 ? ApiCategories(this.state.categories) : ""}
+            {this.state.categories.length > 0
+               ? ApiCategories(this.state.categories)
+               : ""}
          </ul>
       );
    }

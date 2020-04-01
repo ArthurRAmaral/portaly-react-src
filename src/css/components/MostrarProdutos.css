@@ -1,0 +1,43 @@
+.produtos-list {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: row;
+   flex-wrap: wrap;
+   /* padding: 30px 250px; */
+   width: 100%;
+}
+
+.produto {
+   width: 205px;
+   display: block;
+   margin: 10px;
+}
+
+.produto .preco {
+   font-weight: 400;
+   font-size: medium;
+}
+
+.produto:hover {
+   /* background-color: rgba(0, 0, 0, 0.144); */
+   opacity: 45%;
+}
+
+.produto .nome {
+   font-weight: 400;
+   font-size: large;
+}
+
+.produto img {
+   object-fit: contain;
+   height: 205px;
+   width: 205px;
+   display: block;
+   margin: 0 auto;
+}
+
+.produto-dados {
+   padding: 10px;
+   font-weight: bold;
+}

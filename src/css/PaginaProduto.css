@@ -1,25 +1,25 @@
 #produto-pagina {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  width: 100%;
-  padding: 30px;
-  min-height: calc(100vh - (259px + 231.219px));
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: row;
+   width: 100%;
+   padding: 30px;
+   min-height: calc(100vh - (259px + 231.219px));
 }
 
 .produtomostrado {
-  width: 500px;
+   width: 500px;
 }
 
 .produtomostrado img.principal {
-  width: 500px;
-  height: 500px;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto;
+   width: 500px;
+   height: 500px;
+   object-fit: contain;
+   display: block;
+   margin: 0 auto;
 }
 
 .quantidade-input {
-  width: 10px;
+   width: 10px;
 }

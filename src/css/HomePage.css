@@ -1,13 +1,20 @@
-.image_card {
+/* .image_card {
    width: 100%;
    height: 300px;
 }
 
 .hover:hover {
-  background-color: rgba(0, 0, 0, 0.253);
-  opacity: 60%;
+   background-color: rgba(0, 0, 0, 0.253);
+   opacity: 60%;
 }
 
 .image {
    height: 300px;
+} */
+
+#homepage {
+   display: flex;
+   align-content: center;
+   align-items: center;
+   min-height: calc(100vh - (259px + 231.219px));
 }

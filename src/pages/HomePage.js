@@ -5,37 +5,35 @@ import MostrarProdutos from "../components/MostraProdutos";
 import Carrinho from "../util/Carrinho";
 
 class HomePage extends Component {
-
    constructor(props) {
       super(props);
 
       this.state = {
          produtos: [],
-         teste: [],
-      }
+         teste: []
+      };
    }
 
    componentDidMount() {
-      ApiWooCommerce.getAll()
-         .then(res => {
-            this.setState({ produtos: [...this.state.produtos, ...res.data] });
-         })
+      ApiWooCommerce.getAll().then(res => {
+         this.setState({ produtos: [...this.state.produtos, ...res.data] });
+      });
    }
 
-
-
    render() {
-
       Carrinho.setCarrinho();
 
       return (
          <Fragment>
-            {this.state.produtos.length > 0 ? MostrarProdutos(this.state.produtos) : <LineLoading />}
+            {this.state.produtos.length > 0 ? (
+               MostrarProdutos(this.state.produtos)
+            ) : (
+               <LineLoading />
+            )}
          </Fragment>
       );
    }
 }
-
 
 export default HomePage;
 
