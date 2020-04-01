@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 import Logo from "./Logo";
-import Busca from "./Busca"
-import Carrinho from "./Carrinho"
-import Categorias from "./Categorias"
+import Busca from "./Busca";
+import Carrinho from "./Carrinho";
+import Categorias from "./Categorias";
 
-const MainHeader = () => {
+const MainHeader = categorias => {
    return (
       <Fragment>
          <div className="main-header">
@@ -14,11 +14,11 @@ const MainHeader = () => {
                <Carrinho />
             </div>
             <nav className="menu brown darken-1 center-align">
-               <Categorias />
+               <Categorias categorias={categorias} />
             </nav>
-         </div >
+         </div>
       </Fragment>
-   )
-}
+   );
+};
 
 export default MainHeader;
