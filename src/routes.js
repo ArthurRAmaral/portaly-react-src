@@ -7,15 +7,15 @@ import PaginaProduto from "./pages/PaginaProduto";
 import MonteSuaPorta from "./pages/MonteSuaPorta";
 import "./css/Global.css";
 
-function Routes() {
+function Routes(props) {
    return (
       <Switch>
          <Fragment>
             <section id="homepage">
-               <Route path="/" exact component={HomePage} />
-               <Route path="/categoria/:id" component={PaginaCategoria} />
-               <Route path="/produto/:id" component={PaginaProduto} />
-               <Route path="/montesuaporta" component={MonteSuaPorta} />
+               <Route path="/" exact children={HomePage(props.produtos)} />
+               {/* <Route path="/categoria/:id" component={PaginaCategoria} /> */}
+               {/* <Route path="/produto/:id" component={PaginaProduto} /> */}
+               {/* <Route path="/montesuaporta" component={MonteSuaPorta} /> */}
             </section>
          </Fragment>
       </Switch>
