@@ -34,11 +34,7 @@ const MostrarProdutos = props => {
       );
    });
 
-   return (
-      <section className="row center-align container produtos-list">
-         {cards}
-      </section>
-   );
+   return <section className="row center-align produtos-list">{cards}</section>;
 };
 
 export default MostrarProdutos;
