@@ -7,7 +7,7 @@ const Logo = () => {
    return (
       <Link to={`${InitPath}`}>
          <img
-            src="https://demo.skeavee.com/portaly/wp-content/uploads/2020/03/Portaly_PNG_Background.png"
+            src="https://portaly.demo.skeavee.com/wp-content/uploads/2020/03/Portaly_PNG_Background.png"
             alt=""
             className="logo center-children"
          />

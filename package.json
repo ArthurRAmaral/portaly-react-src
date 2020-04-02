@@ -2,7 +2,7 @@
    "name": "portaly_react_theme",
    "version": "0.1.0",
    "private": true,
-   "main": "src/index.jsx",
+   "main": "src/index.js",
    "dependencies": {
       "@devloco/react-scripts-wptheme": "^3.4.0-wp.1",
       "@testing-library/jest-dom": "^4.2.4",
@@ -41,5 +41,5 @@
       ]
    },
    "homepage": "/wp-content/themes/portaly-react-theme",
-   "browserLaunchTo": "https://localhost/"
+   "browserLaunchTo": "http://localhost/"
 }
