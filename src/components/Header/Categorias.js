@@ -5,6 +5,8 @@ import { NavLink } from "react-router-dom";
 //From utils
 import ApiWooCommerce from "../../util/ApiWooCommerce";
 
+import InitPath from "../../services/InitPath";
+
 const ApiCategories = categorias => {
    return (
       <Fragment>
@@ -12,7 +14,7 @@ const ApiCategories = categorias => {
             <NavLink
                exact
                key={`Todos`}
-               to={`/`}
+               to={`${InitPath}/`}
                activeStyle={{ backgroundColor: "#a1887f" }}
             >
                {`Todos`}
@@ -23,7 +25,7 @@ const ApiCategories = categorias => {
                <li key={cat.id}>
                   <NavLink
                      key={`categorias${cat.id}`}
-                     to={`/categoria/${cat.id}`}
+                     to={`${InitPath}/categoria/${cat.id}`}
                      activeStyle={{ backgroundColor: "#a1887f" }}
                   >
                      {cat.name}

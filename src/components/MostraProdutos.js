@@ -3,13 +3,15 @@ import imgDefault from "../assets/imgDefault.png";
 import { Link } from "react-router-dom";
 import "../css/components/MostrarProdutos.css";
 
+import InitPath from "../services/InitPath";
+
 const MostrarProdutos = props => {
    const cards = props.map(produto => {
       return (
          <Link
             className="produto"
             key={`link-to-${produto.id}`}
-            to={`/produto/${produto.id}`}
+            to={`${InitPath}/produto/${produto.id}`}
          >
             <div className=" card small">
                <div className="">

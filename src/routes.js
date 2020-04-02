@@ -8,6 +8,9 @@ import PaginaCategoria from "./pages/PaginaCategoria";
 import PaginaProduto from "./pages/PaginaProduto";
 import MonteSuaPorta from "./pages/MonteSuaPorta";
 
+//From util
+import InitPath from "./services/InitPath";
+
 //From css
 import "./css/Global.css";
 
@@ -16,10 +19,19 @@ function Routes() {
       <Switch>
          <Fragment>
             <section id="homepage">
-               <Route path="/" exact component={HomePage} />
-               <Route path="/categoria/:id" component={PaginaCategoria} />
-               <Route path="/produto/:id" component={PaginaProduto} />
-               <Route path="/montesuaporta" component={MonteSuaPorta} />
+               <Route path={`${InitPath}/`} exact component={HomePage} />
+               <Route
+                  path={`${InitPath}/categoria/:id`}
+                  component={PaginaCategoria}
+               />
+               <Route
+                  path={`${InitPath}/produto/:id`}
+                  component={PaginaProduto}
+               />
+               <Route
+                  path={`${InitPath}/montesuaporta`}
+                  component={MonteSuaPorta}
+               />
             </section>
          </Fragment>
       </Switch>
