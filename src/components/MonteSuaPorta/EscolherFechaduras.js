@@ -2,7 +2,7 @@ import React from "react";
 
 const EscolherPorta = () => {
    return (
-      <footer className="page-footer  brown darken-1">
+      <div className="page-footer  brown darken-1">
          <div className="container">
             <div className="row">
                <div className="col l6 s12">
@@ -47,7 +47,7 @@ const EscolherPorta = () => {
                </a>
             </div>
          </div>
-      </footer>
+      </div>
    );
 };
 

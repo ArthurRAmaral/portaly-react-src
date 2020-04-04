@@ -1,0 +1,7 @@
+.montagem-porta-container {
+   margin: 10px 200px;
+}
+
+.btn:focus {
+   background-color: red;
+}

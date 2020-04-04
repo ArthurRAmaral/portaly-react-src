@@ -9,7 +9,7 @@ class PaginaCategorias extends Component {
 
       this.state = {
          produtos: null,
-         paginaId: props.match.params.id
+         paginaId: props.match.params.id,
       };
    }
 
@@ -23,7 +23,7 @@ class PaginaCategorias extends Component {
    }
 
    chamaApiParaRceberProdutos(id) {
-      ApiWooCommerce.getCategoriaPublishProducts(id).then(res => {
+      ApiWooCommerce.getCategoriaPublishProductsById(id).then((res) => {
          this.setState({ produtos: res.data, paginaId: id });
       });
    }

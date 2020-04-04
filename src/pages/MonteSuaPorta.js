@@ -1,16 +1,18 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 // import ApiWooCommerce from "../util/ApiWooCommerce";
 // import LineLoaging from "../components/loading/LineLoading";
 import Carrinho from "../util/Carrinho";
-import Setepper from "../components/Stepper";
+import Setepper from "../components/MonteSuaPorta/Stepper";
+
+import "../css/MonteSuaPorta.css"
 
 class MonteSuaPorta extends Component {
    constructor(props) {
       super(props);
 
       this.state = {
-         produtos: [],
-         paginaId: props.match.params.id,
+         porta: null,
+         itens: [],
       };
    }
 
@@ -18,10 +20,12 @@ class MonteSuaPorta extends Component {
       return <Setepper />;
    }
 
+   addItem(item) {}
+
    render() {
       Carrinho.setCarrinho();
 
-      return <Fragment>{this.mostraMontagemPorta()}</Fragment>;
+      return <section className="montagem-porta-container">{this.mostraMontagemPorta()}</section>;
    }
 }
 
