@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 // import ApiWooCommerce from "../util/ApiWooCommerce";
 // import LineLoaging from "../components/loading/LineLoading";
 import Carrinho from "../util/Carrinho";
+import Setepper from "../components/Stepper";
 
 class MonteSuaPorta extends Component {
    constructor(props) {
@@ -9,12 +10,12 @@ class MonteSuaPorta extends Component {
 
       this.state = {
          produtos: [],
-         paginaId: props.match.params.id
+         paginaId: props.match.params.id,
       };
    }
 
    mostraMontagemPorta() {
-      return <div>Montesuaporta</div>;
+      return <Setepper />;
    }
 
    render() {
