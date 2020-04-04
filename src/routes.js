@@ -1,5 +1,5 @@
 //From dependencies
-import React, { Fragment } from "react";
+import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 
 //From componets
@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import PaginaCategoria from "./pages/PaginaCategoria";
 import PaginaProduto from "./pages/PaginaProduto";
 import MonteSuaPorta from "./pages/MonteSuaPorta";
+import DefaultPage from "./pages/DefaultPage";
 
 //From util
 import InitPath from "./services/InitPath";
@@ -14,28 +15,34 @@ import InitPath from "./services/InitPath";
 //From css
 import "./css/Global.css";
 
-function Routes() {
-   return (
-      <Switch>
-         <Fragment>
-            <section id="homepage">
+class Routes extends Component {
+   constructor(props) {
+      super(props);
+      this.state = {};
+   }
+
+   render() {
+      return (
+         <section id="homepage">
+            <Switch>
                <Route path={`${InitPath}/`} exact component={HomePage} />
                <Route
                   path={`${InitPath}/categoria/:id`}
                   component={PaginaCategoria}
                />
                <Route
-                  path={`${InitPath}/produto/:id`}
+                  path={`${InitPath}/produto/:slug`}
                   component={PaginaProduto}
                />
                <Route
                   path={`${InitPath}/montesuaporta`}
                   component={MonteSuaPorta}
                />
-            </section>
-         </Fragment>
-      </Switch>
-   );
+               <Route path={`${InitPath}/`} component={DefaultPage} />
+            </Switch>
+         </section>
+      );
+   }
 }
 
 export default Routes;

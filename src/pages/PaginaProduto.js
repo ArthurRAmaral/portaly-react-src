@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import api from "../services/api";
+// import api from "../services/api";
 import { Link } from "react-router-dom";
 
 import LineLoading from "../components/loading/LineLoading";
@@ -7,17 +7,19 @@ import LineLoading from "../components/loading/LineLoading";
 import "../css/PaginaProduto.css";
 
 import imgDefault from "../assets/imgDefault.png";
+import ApiWooCommerce from "../util/ApiWooCommerce";
 
 export default class PaginaProduto extends Component {
    state = {
-      produto: undefined,
+      produto: null,
       opc: 0
    };
 
    async componentDidMount() {
-      const { id } = this.props.match.params;
-      const response = await api.get(`products/${id}`);
-      this.setState({ produto: response.data });
+      const { slug } = this.props.match.params;
+      const response = await ApiWooCommerce.getProduct({ slug: slug });
+      console.log(response.data[0]);
+      this.setState({ produto: response.data[0] });
    }
 
    handleSubmit = e => {
@@ -38,7 +40,7 @@ export default class PaginaProduto extends Component {
    renderProduto = () => {
       const { produto } = this.state;
       return (
-         <div className="produtomostrado s12 m6">
+         <div className="produtomostrado s12 m6 card-large">
             <div className="card">
                <div className="card-image">
                   <img
@@ -60,8 +62,8 @@ export default class PaginaProduto extends Component {
                   </Link>
                </div>
                <div className="card-content">
-                  <h1 className="card-title">{produto.name}</h1>
-                  <p>{produto.regular_price}</p>
+                  <p className="nome grey-text text-darken-4">{produto.name}</p>
+                  <p className="preco">R$: {produto.price}</p>
                   {produto.short_description !== ""
                      ? produto.short_description.substring(
                           3,

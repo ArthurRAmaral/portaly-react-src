@@ -7,9 +7,7 @@ import Carrinho from "./util/Carrinho";
 import "materialize-css/dist/css/materialize.min.css";
 import "./css/Global.css";
 
-
 const App = () => {
-
    Carrinho.setCarrinho();
 
    return (
