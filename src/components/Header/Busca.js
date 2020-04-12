@@ -5,19 +5,20 @@ export default class Busca extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         value: ""
+         value: "",
       };
 
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
    }
-   handleSubmit = event => {
-      window.location.href = `/?q=${this.state.value}`;
+
+   handleSubmit = (event) => {
+      window.location.href = `/busca/${this.state.value}`;
       event.preventDefault();
       // this.props.history.push(`/?q=${e.target.value}`);
    };
 
-   handleChange = event => {
+   handleChange = (event) => {
       this.setState({ value: event.target.value });
    };
 

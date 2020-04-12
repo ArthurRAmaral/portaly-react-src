@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import PaginaCategoria from "./pages/PaginaCategoria";
 import PaginaProduto from "./pages/PaginaProduto";
 import MonteSuaPorta from "./pages/MonteSuaPorta";
+import ProdutoBuscado from "./pages/ProdutoBuscado";
 
 //From util
 import InitPath from "./services/InitPath";
@@ -31,6 +32,10 @@ function Routes() {
                <Route
                   path={`${InitPath}/montesuaporta`}
                   component={MonteSuaPorta}
+               />
+               <Route
+                  path={`${InitPath}/busca/:value`}
+                  component={ProdutoBuscado}
                />
             </section>
          </Fragment>
