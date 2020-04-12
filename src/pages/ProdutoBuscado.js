@@ -9,7 +9,7 @@ class ProdutosBuscado extends Component {
       super(props);
 
       this.state = {
-         produtos: [],
+         produtos: null,
       };
    }
 
@@ -21,10 +21,8 @@ class ProdutosBuscado extends Component {
             produto.name.toString().toUpperCase().includes(value.toUpperCase())
          );
 
-         console.log(produtos);
-
          this.setState({
-            produtos: [...this.state.produtos, ...produtos],
+            produtos: [...produtos],
          });
       });
    }
@@ -34,7 +32,7 @@ class ProdutosBuscado extends Component {
 
       return (
          <Fragment>
-            {this.state.produtos.length > 0 ? (
+            {this.state.produtos !== null ? (
                MostrarProdutos(this.state.produtos)
             ) : (
                <LineLoading />
