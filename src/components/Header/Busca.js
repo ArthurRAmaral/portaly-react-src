@@ -15,7 +15,6 @@ export default class Busca extends Component {
    handleSubmit = (event) => {
       window.location.href = `/busca/${this.state.value}`;
       event.preventDefault();
-      // this.props.history.push(`/?q=${e.target.value}`);
    };
 
    handleChange = (event) => {

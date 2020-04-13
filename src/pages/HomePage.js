@@ -40,14 +40,3 @@ class HomePage extends Component {
 
 export default HomePage;
 
-/* <section id="destaques">
-          {this.state.produtos.map(produto => {
-            return produto.on_sale ? (
-              <div key={produto.id} className="produto">
-                <img src={produto.images[0].src} alt="" width={300} />
-              </div>
-            ) : (
-              <div></div>
-            );
-          })}
-        </section> */
