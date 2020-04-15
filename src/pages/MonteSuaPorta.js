@@ -1,27 +1,27 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment } from 'react';
 // import ApiWooCommerce from "../util/ApiWooCommerce";
 // import LineLoaging from "../components/loading/LineLoading";
-import Carrinho from "../util/Carrinho";
+import Carrinho from '../util/Carrinho';
 
 class MonteSuaPorta extends Component {
-   constructor(props) {
-      super(props);
+  constructor(props) {
+    super(props);
 
-      this.state = {
-         produtos: [],
-         paginaId: props.match.params.id
-      };
-   }
+    this.state = {
+      produtos: [],
+      paginaId: props.match.params.id,
+    };
+  }
 
-   mostraMontagemPorta() {
-      return <div>Montesuaporta</div>;
-   }
+  mostraMontagemPorta() {
+    return <div>Montesuaporta</div>;
+  }
 
-   render() {
-      Carrinho.setCarrinho();
+  render() {
+    Carrinho.setCarrinho();
 
-      return <Fragment>{this.mostraMontagemPorta()}</Fragment>;
-   }
+    return <Fragment>{this.mostraMontagemPorta()}</Fragment>;
+  }
 }
 
 export default MonteSuaPorta;
