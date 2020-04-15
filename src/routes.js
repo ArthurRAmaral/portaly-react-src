@@ -8,6 +8,7 @@ import PaginaCategoria from "./pages/PaginaCategoria";
 import PaginaProduto from "./pages/PaginaProduto";
 import MonteSuaPorta from "./pages/MonteSuaPorta";
 import ProdutoBuscado from "./pages/ProdutoBuscado";
+import Carrinho from "./pages/PaginaCarrinho";
 
 //From util
 import InitPath from "./services/InitPath";
@@ -37,6 +38,7 @@ function Routes() {
                   path={`${InitPath}/busca/:value`}
                   component={ProdutoBuscado}
                />
+               <Route path={`${InitPath}/meuCarrinho`} component={Carrinho} />
             </section>
          </Fragment>
       </Switch>

@@ -7,12 +7,15 @@ const funcoesApiWooCommerce = {
    getAllCategorias: () => {
       return api.get("products/categories");
    },
-   getCategoria: id => {
+   getCategoria: (id) => {
       return api.get("products", { category: id });
    },
    getOnSale: () => {
       return api.get("products", { on_sale: true });
-   }
+   },
+   getProduto: (id) => {
+      return api.get(`products/${id}`);
+   },
 };
 
 export default funcoesApiWooCommerce;
