@@ -9,7 +9,7 @@ import "materialize-css/dist/css/materialize.min.css";
 import "./css/Global.css";
 
 const App = () => {
-   Carrinho.setCarrinho();
+   Carrinho.resetCarrinho();
 
    return (
       <BrowserRouter>

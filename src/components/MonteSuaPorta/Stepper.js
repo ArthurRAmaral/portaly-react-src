@@ -13,7 +13,11 @@ import Card from "@material-ui/core/Card";
 
 import EscolherItems from "./EscolherItem";
 
+import Montador from "../../util/MontadorPorta";
+import Carrinho from "../../util/Carrinho";
+
 import FecharMontagem from "../MonteSuaPorta/FecharMontagem";
+import funcoesApiWooCommerce from "../../util/ApiWooCommerce";
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -108,6 +112,30 @@ export default function HorizontalLinearStepper() {
       setSkipped(newSkipped);
    };
 
+   const handleSubmit = () => {
+      const montSize = Montador.getMontador().length;
+      let qnt = 0;
+      Montador.getMontador().forEach((pID) => {
+         funcoesApiWooCommerce.getProduto(pID).then((res) => {
+            const { price } = res.data;
+            Carrinho.addItem(pID, parseFloat(price));
+            qnt++;
+
+            if (qnt === montSize) {
+               Carrinho.addItem(-1, 150);
+               let newSkipped = skipped;
+               if (isStepSkipped(activeStep)) {
+                  newSkipped = new Set(newSkipped.values());
+                  newSkipped.delete(activeStep);
+               }
+
+               setActiveStep((prevActiveStep) => prevActiveStep + 1);
+               setSkipped(newSkipped);
+            }
+         });
+      });
+   };
+
    const handleBack = () => {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
    };
@@ -129,6 +157,7 @@ export default function HorizontalLinearStepper() {
 
    const handleReset = () => {
       setActiveStep(0);
+      Montador.resetMontador();
    };
 
    return (
@@ -157,10 +186,10 @@ export default function HorizontalLinearStepper() {
                {activeStep === steps.length ? (
                   <div>
                      <Typography className={classes.instructions}>
-                        All steps completed - you&apos;re finished
+                        Produtos adicionados ao carrinho!
                      </Typography>
                      <Button onClick={handleReset} className={classes.button}>
-                        Reset
+                        Montar outra
                      </Button>
                   </div>
                ) : (
@@ -187,17 +216,27 @@ export default function HorizontalLinearStepper() {
                            </Button>
                         )}
 
-                        <Button
-                           focusVisibleClassName="btn"
-                           variant="contained"
-                           color="primary"
-                           onClick={handleNext}
-                           className={classes.button}
-                        >
-                           {activeStep === steps.length - 1
-                              ? "Adicionar ao Carrinho"
-                              : "Próximo"}
-                        </Button>
+                        {activeStep === steps.length - 1 ? (
+                           <Button
+                              focusVisibleClassName="btn"
+                              variant="contained"
+                              color="primary"
+                              onClick={handleSubmit}
+                              className={classes.button}
+                           >
+                              Adicionar ao Carrinho
+                           </Button>
+                        ) : (
+                           <Button
+                              focusVisibleClassName="btn"
+                              variant="contained"
+                              color="primary"
+                              onClick={handleNext}
+                              className={classes.button}
+                           >
+                              Próximo
+                           </Button>
+                        )}
                      </div>
                   </div>
                )}

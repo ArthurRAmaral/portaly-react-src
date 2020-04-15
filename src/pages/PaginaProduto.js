@@ -9,6 +9,8 @@ import "../css/PaginaProduto.css";
 import imgDefault from "../assets/imgDefault.png";
 import ApiWooCommerce from "../util/ApiWooCommerce";
 
+import Carrinho from "../util/Carrinho";
+
 export default class PaginaProduto extends Component {
    state = {
       produto: null,
@@ -25,16 +27,16 @@ export default class PaginaProduto extends Component {
    handleSubmit = (e) => {
       // e.preventDefault();
       const { produto } = this.state;
-      const carrinho = JSON.parse(localStorage.getItem("carrinho"));
+      const carrinho = Carrinho.getCarrinho();
 
       carrinho.valor += Number.parseFloat(produto.price);
       carrinho.itens.push({ id: produto.id, preco: produto.price });
       console.log(carrinho);
 
-      localStorage.setItem("carrinho", JSON.stringify(carrinho));
+      Carrinho.setCarrinho(carrinho);
 
-      this.props.history.push("/");
-      window.location.reload();
+      // this.props.history.push("/");
+      // window.location.reload();
    };
 
    renderProduto = () => {

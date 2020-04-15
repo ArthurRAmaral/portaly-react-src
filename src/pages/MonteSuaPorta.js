@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import ApiWooCommerce from "../util/ApiWooCommerce";
 // import LineLoaging from "../components/loading/LineLoading";
-import Carrinho from "../util/Carrinho";
+// import Carrinho from "../util/Carrinho";
 import Setepper from "../components/MonteSuaPorta/Stepper";
 
 import Montador from "../util/MontadorPorta";
@@ -27,8 +27,6 @@ class MonteSuaPorta extends Component {
    addItem(item) {}
 
    render() {
-      Carrinho.setCarrinho();
-
       return (
          <section className="montagem-porta-container">
             {this.mostraMontagemPorta()}

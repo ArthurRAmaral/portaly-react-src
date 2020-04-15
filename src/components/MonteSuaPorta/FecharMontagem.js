@@ -16,24 +16,37 @@ class EscolherItems extends Component {
    }
 
    componentDidMount() {
-      let vet = [];
-      this.state.produtosSelecionados.forEach((id, indx) => {
-         funcoesApiWooCommerce.getProduto(id).then((res) => {
-            vet.push(res.data);
-            if (indx === this.state.produtosSelecionados.length - 1)
-               this.setState({ produtos: vet });
+      if (
+         this.state.produtosSelecionados &&
+         this.state.produtosSelecionados.length > 0
+      ) {
+         let vet = [];
+         let qnt = 0;
+         this.state.produtosSelecionados.forEach((id) => {
+            funcoesApiWooCommerce.getProduto(id).then((res) => {
+               vet.push(res.data);
+               qnt++;
+               if (qnt === this.state.produtosSelecionados.length)
+                  this.setState({ produtos: vet });
+            });
          });
-      });
+      } else {
+         this.setState({ produtos: [] });
+      }
    }
 
    render() {
       return (
          <Fragment>
             {this.state.produtos ? (
-               <MostraProdutosFinal
-                  key={this.state.categoriaID}
-                  produtos={this.state.produtos}
-               />
+               this.state.produtos.length > 0 ? (
+                  <MostraProdutosFinal
+                     key={this.state.categoriaID}
+                     produtos={this.state.produtos}
+                  />
+               ) : (
+                  <div>{"Nenhum produto selecionado"}</div>
+               )
             ) : (
                <CircleLoading />
             )}

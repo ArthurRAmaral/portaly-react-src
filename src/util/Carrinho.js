@@ -1,18 +1,33 @@
 const Carrinho = {
    valor: 0,
-   itens: []
+   itens: [],
 };
 
+const varName = "carrinho";
+
 const funcoesCarrinho = {
-   setCarrinho: () => {
-      localStorage.getItem("carrinho")
+   resetCarrinho: () => {
+      localStorage.getItem(varName)
          ? console.log()
-         : localStorage.setItem("carrinho", JSON.stringify(Carrinho));
+         : localStorage.setItem(varName, JSON.stringify(Carrinho));
+   },
+
+   setCarrinho: (val) => {
+      localStorage.setItem(varName, JSON.stringify(val));
    },
 
    getValorCarrinho: () => {
-      return JSON.parse(localStorage.getItem("carrinho")).valor;
-   }
+      return JSON.parse(localStorage.getItem(varName)).valor;
+   },
+
+   getCarrinho: () => JSON.parse(localStorage.getItem(varName)),
+
+   addItem: (id, preco) => {
+      let carrinho = funcoesCarrinho.getCarrinho();
+      carrinho.itens.push({ id: id, preco: preco });
+      carrinho.valor += preco;
+      funcoesCarrinho.setCarrinho(carrinho);
+   },
 };
 
 export default funcoesCarrinho;
