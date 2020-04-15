@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import Carrinho from "../util/Carrinho";
 import ApiWooCommerce from "../util/ApiWooCommerce";
-import MostraProdutos from "../components/MostraProdutos";
+import MostraProdutos from "../components/Carrinho/MostraProdutosCarrinho";
 import LineLoaging from "../components/loading/LineLoading";
 
 class PaginaCarrinho extends Component {
@@ -23,7 +23,6 @@ class PaginaCarrinho extends Component {
       for (const item of itens) {
          ApiWooCommerce.getProduto(item.id)
             .then((response) => {
-               console.log(response.data);
                this.setState({
                   produtos: [...this.state.produtos, response.data],
                });
@@ -36,7 +35,6 @@ class PaginaCarrinho extends Component {
 
    render() {
       Carrinho.setCarrinho();
-      console.log(this.state);
 
       return (
          <Fragment>

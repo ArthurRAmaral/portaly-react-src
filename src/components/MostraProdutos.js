@@ -5,8 +5,8 @@ import "../css/components/MostrarProdutos.css";
 
 import InitPath from "../services/InitPath";
 
-const MostrarProdutos = props => {
-   const cards = props.map(produto => {
+const MostrarProdutos = (props) => {
+   const cards = props.map((produto) => {
       return (
          <Link
             className="produto"
