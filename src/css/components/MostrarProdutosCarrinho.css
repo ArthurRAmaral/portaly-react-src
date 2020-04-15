@@ -3,9 +3,6 @@
    max-width: 500px;
 }
 
-.card-carrinho {
-}
-
 .produto-dados-carrinho {
    width: 100%;
 }
@@ -28,10 +25,15 @@
 }
 
 .nome-produto-carrinho {
-   font-weight: 800;
+   font-weight: 500;
    font-size: 23px;
 }
 
 .img-produto-carrinho {
    border-right: 2px #bbb solid;
+}
+
+.list-carrinho .title-carrinho .destaque {
+   font-weight: 700;
+   color: #6d4c41;
 }

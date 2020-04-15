@@ -53,17 +53,34 @@ const MostrarProdutos = (props) => {
                         <br></br>
                         <span>
                            Preço unitário: <br></br>
-                           <span className="preco">R$ {produto.price}</span>
+                           <span className="destaque">
+                              R${" "}
+                              {(Math.round(produto.price * 100) / 100).toFixed(
+                                 2
+                              )}
+                           </span>
                         </span>
                      </div>
-                     <div>
-                        <span>
-                           Quantidade: {qntProdutosCarrinho.get(produto.id)}
+                     <div className="title-carrinho">
+                        <span className="nome-produto-carrinho">
+                           Quantidade: <br></br>
+                           <span className="destaque">
+                              {qntProdutosCarrinho.get(produto.id)}
+                           </span>
                         </span>
                         <br></br>
-                        <span>
-                           Valor Total:{" "}
-                           {qntProdutosCarrinho.get(produto.id) * produto.price}
+                        <span className="nome-produto-carrinho">
+                           Valor Total: <br></br>
+                           <span className="destaque">
+                              R$
+                              {(
+                                 Math.round(
+                                    qntProdutosCarrinho.get(produto.id) *
+                                       produto.price *
+                                       100
+                                 ) / 100
+                              ).toFixed(2)}
+                           </span>
                         </span>
                      </div>
                   </div>
@@ -75,7 +92,7 @@ const MostrarProdutos = (props) => {
 
    return (
       <div className="container-carrinho container">
-         <div className="card-carrinho">
+         <div className="card-carrinho card">
             <ul className="list-carrinho">{cards}</ul>
          </div>
       </div>
