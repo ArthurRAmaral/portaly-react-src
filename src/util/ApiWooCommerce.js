@@ -19,7 +19,12 @@ const funcoesApiWooCommerce = {
 
    getAllCategorias: () => api.get("products/categories"),
 
-   getProducts: (param) => api.get("products", { ...param, status: "publish" }),
+   getProductSlug: (slug) =>
+      api.get("products", { slug: slug, status: "publish" }),
+
+   getProduto: (id) => {
+      return api.get(`products/${id}`);
+   },
 
    getTheVariationsOf: (id) => api.get(`products/${id}/variations`),
 };

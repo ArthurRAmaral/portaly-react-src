@@ -4,54 +4,40 @@
    align-items: center;
    flex-direction: row;
    flex-wrap: wrap;
-   padding: 0px 10%;
+   padding: 10px 10%;
    width: 100%;
 }
 
-.produto-montagem {
-   border: solid #6d4c41e1 3px;
-   width: 200px;
-   height: 200px;
+.produto {
+   width: 205px;
    display: block;
    margin: 10px;
-   cursor: pointer;
 }
 
-.selecionado {
-   border: solid 3px;
-   border-radius: 1%;
-   opacity: 55%;
-}
-
-.produto-montagem .preco {
-   opacity: 100%;
-   font-weight: 700;
+.produto .preco {
+   font-weight: 400;
    font-size: medium;
 }
 
-.produto-montagem:hover {
+.produto:hover {
    /* background-color: rgba(0, 0, 0, 0.144); */
    opacity: 45%;
 }
 
-.produto-montagem .nome {
-   font-weight: 700;
+.produto .nome {
+   font-weight: 400;
    font-size: large;
 }
 
-.produto-montagem img {
+.produto img {
    object-fit: contain;
-   height: 194px;
-   width: 194px;
+   height: 205px;
+   width: 205px;
    display: block;
    margin: 0 auto;
 }
 
-.produto-dados-montagem {
-   color: #6d4c41;
-   background-color: rgba(255, 255, 255, 0.5);
-   top: -85px;
-   height: 85px;
+.produto-dados {
+   padding: 10px;
    font-weight: bold;
-   position: relative;
 }

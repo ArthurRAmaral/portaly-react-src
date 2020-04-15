@@ -19,23 +19,11 @@ class EscolherItems extends Component {
          res.data.forEach((cat) => {
             if (cat.slug === categoriaSlug) {
                this.chamaApiParaRceberProdutos(cat.id);
-               console.log("{" + cat.id + " === " + categoriaSlug + "}");
                return;
             }
          });
       });
    }
-
-   // componentWillReceiveProps(nextProps) {
-   //    const id = nextProps.match.params.id;
-   //    this.chamaApiParaRceberProdutos(id);
-   // }
-
-   // chamaApiParaRceberProdutos(id) {
-   //    ApiWooCommerce.getCategoriaPublishProducts(id).then((res) => {
-   //       this.setState({ produtos: res.data, paginaId: id });
-   //    });
-   // }
 
    componentWillReceiveProps(nextProps) {
       const categoriaSlug = nextProps.categoriaSlug;
@@ -43,7 +31,6 @@ class EscolherItems extends Component {
          res.data.forEach((cat) => {
             if (cat.slug === categoriaSlug) {
                this.chamaApiParaRceberProdutos(cat.id);
-               console.log("{" + cat + " === " + categoriaSlug + "}");
                return;
             }
          });
@@ -54,7 +41,6 @@ class EscolherItems extends Component {
       funcoesApiWooCommerce
          .getCategoriaPublishProductsById(categoriaID)
          .then((res) => {
-            console.log(res.data);
             this.setState({ produtos: res.data, categoriaID: categoriaID });
             this.forceUpdate();
          });
@@ -70,9 +56,7 @@ class EscolherItems extends Component {
                   produtos={this.state.produtos}
                />
             ) : (
-               <center>
-                  <CircleLoading />
-               </center>
+               <CircleLoading />
             )}
          </Fragment>
       );

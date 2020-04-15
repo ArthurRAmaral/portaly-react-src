@@ -13,7 +13,7 @@ import Card from "@material-ui/core/Card";
 
 import EscolherItems from "./EscolherItem";
 
-import Footer from "../Footer";
+import FecharMontagem from "../MonteSuaPorta/FecharMontagem";
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(1),
    },
    instructions: {
+      alignItems: theme.shape,
+      minHeight: theme.spacing(50),
+      width: theme.spacing(100),
       marginTop: theme.spacing(1),
       marginBottom: theme.spacing(1),
    },
@@ -31,23 +34,14 @@ const useStyles = makeStyles((theme) => ({
 const theme = createMuiTheme({
    palette: {
       primary: {
-         // light: will be calculated from palette.primary.main,
          main: "#6d4c41",
-         // dark: will be calculated from palette.primary.main,
-         // contrastText: will be calculated to contrast with palette.primary.main
       },
       secondary: {
          light: "#0066ff",
          main: "#0044ff",
-         // dark: will be calculated from palette.secondary.main,
          contrastText: "#ffcc00",
       },
-      // Used by `getContrastText()` to maximize the contrast between
-      // the background and the text.
       contrastThreshold: 3,
-      // Used by the functions below to shift a color's luminance by approximately
-      // two indexes within its tonal palette.
-      // Por exemplo, mude de Red 500 para Red 300 ou Red 700.
       tonalOffset: 0.2,
    },
 });
@@ -83,7 +77,7 @@ function getStepContent(step) {
       case 4:
          return <EscolherItems categoriaSlug="porta" key="porta" />;
       case 5:
-         return <Footer />;
+         return <FecharMontagem />;
       default:
          return "Unknown step";
    }
@@ -180,7 +174,7 @@ export default function HorizontalLinearStepper() {
                            onClick={handleBack}
                            className={classes.button}
                         >
-                           Back
+                           Voltar
                         </Button>
                         {isStepOptional(activeStep) && (
                            <Button
@@ -189,7 +183,7 @@ export default function HorizontalLinearStepper() {
                               onClick={handleSkip}
                               className={classes.button}
                            >
-                              Skip
+                              Pular
                            </Button>
                         )}
 
@@ -200,7 +194,9 @@ export default function HorizontalLinearStepper() {
                            onClick={handleNext}
                            className={classes.button}
                         >
-                           {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                           {activeStep === steps.length - 1
+                              ? "Adicionar ao Carrinho"
+                              : "Próximo"}
                         </Button>
                      </div>
                   </div>

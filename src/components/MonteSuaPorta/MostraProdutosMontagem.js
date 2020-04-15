@@ -1,20 +1,17 @@
 import React, { Component } from "react";
 import imgDefault from "../../assets/imgDefault.png";
-import { Link } from "react-router-dom";
 import "../../css/components/MonteSuaPorta/MostrarProdutos.css";
 
-import InitPath from "../../services/InitPath";
+import Montador from "../../util/MontadorPorta";
 
 class MostrarProdutosMontagem extends Component {
    constructor(props) {
-      if (!sessionStorage.getItem("monteportaids"))
-         sessionStorage.setItem("monteportaids", JSON.stringify([30, 1, 2]));
+      Montador.resetMontadorIfEmpty();
+
       super(props);
 
       this.state = {
-         produtosSelcionados: JSON.parse(
-            sessionStorage.getItem("monteportaids")
-         ),
+         produtosSelcionados: Montador.getMontador(),
          produtos: this.props.produtos,
          selected: null,
       };
@@ -33,7 +30,7 @@ class MostrarProdutosMontagem extends Component {
       });
       if (!verif) vet.push(id);
 
-      sessionStorage.setItem("monteportaids", JSON.stringify(vet));
+      Montador.setMontador(vet);
       this.setState({ produtosSelcionados: vet });
    }
 
@@ -46,7 +43,7 @@ class MostrarProdutosMontagem extends Component {
                      <div
                         className="produto-montagem selecionado"
                         onClick={() => this.handleSelect(produto.id)}
-                        // key={`link-to-${produto.id}`}
+                        key={`intem-${produto.id}`}
                         // to={`${InitPath}/produto/${produto.slug}`}
                      >
                         <img
@@ -67,7 +64,7 @@ class MostrarProdutosMontagem extends Component {
                      <div
                         className="produto-montagem"
                         onClick={() => this.handleSelect(produto.id)}
-                        // key={`link-to-${produto.id}`}
+                        key={`intem-${produto.id}`}
                         // to={`${InitPath}/produto/${produto.slug}`}
                      >
                         <img

@@ -12,17 +12,17 @@ import ApiWooCommerce from "../util/ApiWooCommerce";
 export default class PaginaProduto extends Component {
    state = {
       produto: null,
-      opc: 0
+      opc: 0,
    };
 
    async componentDidMount() {
       const { slug } = this.props.match.params;
-      const response = await ApiWooCommerce.getProduct({ slug: slug });
+      const response = await ApiWooCommerce.getProductSlug(slug);
       console.log(response.data[0]);
       this.setState({ produto: response.data[0] });
    }
 
-   handleSubmit = e => {
+   handleSubmit = (e) => {
       // e.preventDefault();
       const { produto } = this.state;
       const carrinho = JSON.parse(localStorage.getItem("carrinho"));

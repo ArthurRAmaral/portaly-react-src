@@ -8,13 +8,12 @@
    width: 100%;
 }
 
-.produto-montagem {
+.produto-final {
    border: solid #6d4c41e1 3px;
    width: 200px;
    height: 200px;
    display: block;
    margin: 10px;
-   cursor: pointer;
 }
 
 .selecionado {
@@ -23,23 +22,24 @@
    opacity: 55%;
 }
 
-.produto-montagem .preco {
+.produto-final .preco {
    opacity: 100%;
    font-weight: 700;
    font-size: medium;
 }
 
-.produto-montagem:hover {
-   /* background-color: rgba(0, 0, 0, 0.144); */
+/* .produto-final:hover {
+   cursor: no-drop;
+   background-color: rgba(255, 47, 47, 0.479);
    opacity: 45%;
-}
+} */
 
-.produto-montagem .nome {
+.produto-final .nome {
    font-weight: 700;
    font-size: large;
 }
 
-.produto-montagem img {
+.produto-final img {
    object-fit: contain;
    height: 194px;
    width: 194px;
