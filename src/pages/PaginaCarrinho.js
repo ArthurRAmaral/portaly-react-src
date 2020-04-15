@@ -38,9 +38,11 @@ class PaginaCarrinho extends Component {
 
       return (
          <Fragment>
-            {this.state.produtos.length > 0
-               ? MostraProdutos(this.state.produtos)
-               : LineLoaging()}
+            {this.state.produtos.length > 0 ? (
+               MostraProdutos(this.state.produtos)
+            ) : (
+               <LineLoaging />
+            )}
          </Fragment>
       );
    }

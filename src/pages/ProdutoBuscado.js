@@ -3,6 +3,7 @@ import ApiWooCommerce from "../util/ApiWooCommerce";
 import LineLoading from "../components/loading/LineLoading";
 import MostrarProdutos from "../components/MostraProdutos";
 import Carrinho from "../util/Carrinho";
+import SemProdutos from "../components/semProdutos";
 
 class ProdutosBuscado extends Component {
    constructor(props) {
@@ -32,8 +33,12 @@ class ProdutosBuscado extends Component {
 
       return (
          <Fragment>
-            {this.state.produtos !== null ? (
-               MostrarProdutos(this.state.produtos)
+            {this.state.produtos !== null || undefined ? (
+               this.state.produtos.length > 0 ? (
+                  MostrarProdutos(this.state.produtos)
+               ) : (
+                  <SemProdutos />
+               )
             ) : (
                <LineLoading />
             )}
