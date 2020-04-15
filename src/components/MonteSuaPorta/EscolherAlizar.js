@@ -8,13 +8,22 @@ class EscolherAlizar extends Component {
       super(props);
 
       this.state = {
-         categoriaSlug: this.props.categoriaSlug,
+         categoriaID: "",
          produtos: null,
       };
    }
 
    componentDidMount() {
-      this.chamaApiParaRceberProdutos(this.state.categoriaSlug);
+      const categoriaSlug = this.props.categoriaSlug;
+      funcoesApiWooCommerce.getAllCategorias().then((res) => {
+         res.data.forEach((cat) => {
+            if (cat.slug === categoriaSlug) {
+               this.chamaApiParaRceberProdutos(cat.id);
+               console.log("{" + cat.id + " === " + categoriaSlug + "}");
+               return;
+            }
+         });
+      });
    }
 
    // componentWillReceiveProps(nextProps) {
@@ -29,16 +38,25 @@ class EscolherAlizar extends Component {
    // }
 
    componentWillReceiveProps(nextProps) {
-      console.log(nextProps.categoriaSlug);
       const categoriaSlug = nextProps.categoriaSlug;
-      this.chamaApiParaRceberProdutos(categoriaSlug);
+      funcoesApiWooCommerce.getAllCategorias().then((res) => {
+         res.data.forEach((cat) => {
+            if (cat.slug === categoriaSlug) {
+               this.chamaApiParaRceberProdutos(cat.id);
+               console.log("{" + cat + " === " + categoriaSlug + "}");
+               return;
+            }
+         });
+      });
    }
 
-   async chamaApiParaRceberProdutos(categoriaSlug) {
-      await funcoesApiWooCommerce
-         .getCategoriaPublishProductsBySlug("marco-tauari")
+   chamaApiParaRceberProdutos(categoriaID) {
+      funcoesApiWooCommerce
+         .getCategoriaPublishProductsById(categoriaID)
          .then((res) => {
-            this.setState({ produtos: res.data });
+            console.log(res.data);
+            this.setState({ produtos: res.data, categoriaID: categoriaID });
+            this.forceUpdate();
          });
    }
 
@@ -46,7 +64,7 @@ class EscolherAlizar extends Component {
       return (
          <Fragment>
             {this.state.produtos &&
-            this.state.paginaId === this.props.categoriaId ? (
+            this.state.paginaId === this.props.categoriaID ? (
                <MostraProdutos produtos={this.state.produtos} />
             ) : (
                <center>
