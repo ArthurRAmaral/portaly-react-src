@@ -4,40 +4,54 @@
    align-items: center;
    flex-direction: row;
    flex-wrap: wrap;
-   padding: 10px 10%;
+   padding: 0px 10%;
    width: 100%;
 }
 
-.produto {
-   width: 205px;
+.produto-montagem {
+   border: solid #6d4c41e1 3px;
+   width: 200px;
+   height: 200px;
    display: block;
    margin: 10px;
+   cursor: pointer;
 }
 
-.produto .preco {
-   font-weight: 400;
+.selecionado {
+   border: solid 3px;
+   border-radius: 1%;
+   opacity: 55%;
+}
+
+.produto-montagem .preco {
+   opacity: 100%;
+   font-weight: 700;
    font-size: medium;
 }
 
-.produto:hover {
+.produto-montagem:hover {
    /* background-color: rgba(0, 0, 0, 0.144); */
    opacity: 45%;
 }
 
-.produto .nome {
-   font-weight: 400;
+.produto-montagem .nome {
+   font-weight: 700;
    font-size: large;
 }
 
-.produto img {
+.produto-montagem img {
    object-fit: contain;
-   height: 205px;
-   width: 205px;
+   height: 194px;
+   width: 194px;
    display: block;
    margin: 0 auto;
 }
 
-.produto-dados {
-   padding: 10px;
+.produto-dados-montagem {
+   color: #6d4c41;
+   background-color: rgba(255, 255, 255, 0.5);
+   top: -85px;
+   height: 85px;
    font-weight: bold;
+   position: relative;
 }

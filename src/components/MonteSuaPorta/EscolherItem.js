@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
 import funcoesApiWooCommerce from "../../util/ApiWooCommerce";
-import MostraProdutos from "../MostraProdutos";
+import MostraProdutos from "./MostraProdutosMontagem";
 import CircleLoading from "../loading/CircleLoading";
 
-class EscolherAlizar extends Component {
+class EscolherItems extends Component {
    constructor(props) {
       super(props);
 
@@ -65,7 +65,10 @@ class EscolherAlizar extends Component {
          <Fragment>
             {this.state.produtos &&
             this.state.paginaId === this.props.categoriaID ? (
-               <MostraProdutos produtos={this.state.produtos} />
+               <MostraProdutos
+                  key={this.state.categoriaID}
+                  produtos={this.state.produtos}
+               />
             ) : (
                <center>
                   <CircleLoading />
@@ -76,4 +79,4 @@ class EscolherAlizar extends Component {
    }
 }
 
-export default EscolherAlizar;
+export default EscolherItems;

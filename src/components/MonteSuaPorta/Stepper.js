@@ -11,11 +11,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 
-import EscolherItem from "./EscolherAlizar";
-// import EscolherDobradica from "./EscolherDobradica";
-// import EscolherFechaduras from "./EscolherFechaduras";
-// import EscolherBatente from "./EscolherBatente";
-// import EscolherPorta from "./EscolherPorta";
+import EscolherItems from "./EscolherItem";
 
 import Footer from "../Footer";
 
@@ -74,15 +70,18 @@ function getOptionalSteps() {
 function getStepContent(step) {
    switch (step) {
       case 0:
-         return <EscolherItem categoriaSlug="alizar" />;
+         return <EscolherItems categoriaSlug="alizar" key="alizar" />;
       case 1:
-         return <EscolherItem categoriaSlug="dobradica" />;
+         return <EscolherItems categoriaSlug="dobradica" key="dobradica" />;
       case 2:
-         return <EscolherItem categoriaSlug="fechadura" />;
+         return <EscolherItems categoriaSlug="fechadura" key="fechadura" />;
       case 3:
-         return <EscolherItem categoriaSlug="marco-batente" />;
+         return (
+            <EscolherItems categoriaSlug="marco-batente" key="marco-batente" />
+         );
+
       case 4:
-         return <EscolherItem categoriaSlug="porta" />;
+         return <EscolherItems categoriaSlug="porta" key="porta" />;
       case 5:
          return <Footer />;
       default:
