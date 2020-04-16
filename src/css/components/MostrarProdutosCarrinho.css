@@ -1,43 +1,51 @@
 .container-carrinho {
-   margin-top: 30px;
-   max-width: 500px;
+  margin-top: 30px;
+  max-width: 500px;
 }
 
 .produto-dados-carrinho {
-   width: 100%;
+  width: 100%;
 }
 
 .list-carrinho {
-   width: 100%;
-   margin: 0;
+  width: 100%;
+  margin: 0;
 }
 
 .list-carrinho li {
-   padding: 0 16px;
+  padding: 0 16px;
 }
 
 .list-carrinho .title-carrinho span {
-   color: rgba(0, 0, 0, 0.54);
+  color: rgba(0, 0, 0, 0.54);
 }
 
 .title-carrinho {
-   padding: 20px;
+  padding: 20px;
 }
 
 .nome-produto-carrinho {
-   font-weight: 500;
-   font-size: 23px;
+  font-weight: 500;
+  font-size: 23px;
 }
 
 .img-produto-carrinho {
-   border-right: 2px #bbb solid;
+  border-right: 2px #bbb solid;
+  object-fit: contain;
+  height: 205px;
+  width: 205px;
+  padding: 10px;
 }
 
 .list-carrinho .title-carrinho .destaque {
-   font-weight: 700;
-   color: #6d4c41;
+  font-weight: 700;
+  color: #6d4c41;
 }
 
 .card-carrinho {
   display: flex;
+}
+
+.make-pointer {
+  cursor: pointer;
 }
