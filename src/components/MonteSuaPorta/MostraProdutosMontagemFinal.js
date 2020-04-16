@@ -4,7 +4,7 @@ import "../../css/components/MonteSuaPorta/MostrarProdutosFinal.css";
 
 import Montador from "../../util/MontadorPorta";
 
-class MostrarProdutosMontagem extends Component {
+class MostrarProdutosMontagemFinal extends Component {
    constructor(props) {
       Montador.resetMontadorIfEmpty();
 
@@ -14,23 +14,17 @@ class MostrarProdutosMontagem extends Component {
          produtosSelcionados: Montador.getMontador(),
          produtos: this.props.produtos,
          selected: null,
+         quantidade: 1,
       };
+
+      this.handleChange = this.handleChange.bind(this);
    }
 
-   // handleSelect(id) {
-   //    let vet = this.state.produtosSelcionados;
-   //    const verif = vet.includes(id);
-
-   //    this.state.produtos.forEach((prod) => {
-   //       if (vet.indexOf(prod.id) >= 0) {
-   //          vet.splice(vet.indexOf(prod.id), 1);
-   //       }
-   //    });
-   //    if (!verif) vet.push(id);
-
-   //    Montador.setMontador(vet);
-   //    this.setState({ produtosSelcionados: vet });
-   // }
+   handleChange(e) {
+      const quantidade = parseInt(e.target.value);
+      Montador.setQuantidade(quantidade);
+      this.setState({ quantidade: quantidade });
+   }
 
    render() {
       return (
@@ -62,9 +56,17 @@ class MostrarProdutosMontagem extends Component {
             ) : (
                <div>Nenhum produto encontrado</div>
             )}
+            <span>Quantidae de portas montadas: </span>
+            <input
+               type="number"
+               name="Quantidade"
+               id="quantidadedekits"
+               value={this.state.quantidade}
+               onChange={this.handleChange}
+            />
          </section>
       );
    }
 }
 
-export default MostrarProdutosMontagem;
+export default MostrarProdutosMontagemFinal;

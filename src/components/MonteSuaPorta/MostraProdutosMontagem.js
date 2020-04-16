@@ -20,18 +20,15 @@ class MostrarProdutosMontagem extends Component {
    }
 
    handleSelect(id) {
-      let vet = this.state.produtosSelcionados;
-      const verif = vet.includes(id);
+      const verif = Montador.includes(id);
 
       this.state.produtos.forEach((prod) => {
-         if (vet.indexOf(prod.id) >= 0) {
-            vet.splice(vet.indexOf(prod.id), 1);
-         }
+         Montador.removeItem(prod.id);
       });
-      if (!verif) vet.push(id);
 
-      Montador.setMontador(vet);
-      this.setState({ produtosSelcionados: vet });
+      if (!verif) Montador.addItem(id);
+
+      this.setState({ produtosSelcionados: Montador.getMontador() });
    }
 
    render() {
@@ -39,7 +36,7 @@ class MostrarProdutosMontagem extends Component {
          <section className="center-align produtos-list">
             {this.state.produtos.length > 0 ? (
                this.state.produtos.map((produto) => {
-                  return this.state.produtosSelcionados.includes(produto.id) ? (
+                  return Montador.includes(produto.id) ? (
                      <div
                         className="produto-montagem selecionado"
                         onClick={() => this.handleSelect(produto.id)}

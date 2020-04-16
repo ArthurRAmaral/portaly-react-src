@@ -113,27 +113,34 @@ export default function HorizontalLinearStepper() {
    };
 
    const handleSubmit = () => {
-      const montSize = Montador.getMontador().length;
-      let qnt = 0;
-      Montador.getMontador().forEach((pID) => {
-         funcoesApiWooCommerce.getProduto(pID).then((res) => {
-            const { price } = res.data;
-            Carrinho.addItem(pID, parseFloat(price));
-            qnt++;
+      const montSize = Montador.getMontador().ids.length;
+      const quantidade = Montador.getQuantidade();
 
-            if (qnt === montSize) {
-               Carrinho.addItem(-1, 150);
-               let newSkipped = skipped;
-               if (isStepSkipped(activeStep)) {
-                  newSkipped = new Set(newSkipped.values());
-                  newSkipped.delete(activeStep);
+      for (let mont = 0, qnt = 0; qnt < Montador.getQuantidade(); qnt++) {
+         Montador.getMontador().ids.forEach((pID) => {
+            funcoesApiWooCommerce.getProduto(pID).then((res) => {
+               const { price } = res.data;
+               Carrinho.addItem(pID, parseFloat(price));
+               mont++;
+
+               if (mont === montSize) {
+                  Carrinho.addItem(-1, 150);
+                  mont = 0;
                }
 
-               setActiveStep((prevActiveStep) => prevActiveStep + 1);
-               setSkipped(newSkipped);
-            }
+               if (qnt + 1 === quantidade) {
+                  let newSkipped = skipped;
+                  if (isStepSkipped(activeStep)) {
+                     newSkipped = new Set(newSkipped.values());
+                     newSkipped.delete(activeStep);
+                  }
+
+                  setActiveStep((prevActiveStep) => prevActiveStep + 1);
+                  setSkipped(newSkipped);
+               }
+            });
          });
-      });
+      }
    };
 
    const handleBack = () => {

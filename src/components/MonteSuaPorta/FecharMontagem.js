@@ -10,8 +10,9 @@ class EscolherItems extends Component {
       super(props);
 
       this.state = {
-         produtosSelecionados: Montador.getMontador(),
+         produtosSelecionados: Montador.getMontador().ids,
          produtos: null,
+         quantidade: 1,
       };
    }
 
@@ -40,10 +41,12 @@ class EscolherItems extends Component {
          <Fragment>
             {this.state.produtos ? (
                this.state.produtos.length > 0 ? (
-                  <MostraProdutosFinal
-                     key={this.state.categoriaID}
-                     produtos={this.state.produtos}
-                  />
+                  <Fragment>
+                     <MostraProdutosFinal
+                        key={this.state.categoriaID}
+                        produtos={this.state.produtos}
+                     />
+                  </Fragment>
                ) : (
                   <div>{"Nenhum produto selecionado"}</div>
                )
