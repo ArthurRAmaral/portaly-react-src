@@ -1,20 +1,32 @@
 import api from "../services/api";
 
 const funcoesApiWooCommerce = {
-   getAll: () => {
-      return api.get("products", { per_page: 20 });
+   getAllPublishedProducts: () => api.get("products", { status: "publish" }),
+
+   getCategoriaPublishProductsById: (id) =>
+      api.get("products", { category: id, status: "publish" }),
+
+   getCategoriaPublishProductsBySlug: async (slug) => {
+      console.log((await api.get("products/categories", { slug: slug })).data);
+      return api.get("products", {
+         category: await (await api.get("products/categories", { slug: slug }))
+            .data,
+         status: "publish",
+      });
    },
-   getAllCategorias: () => {
-      return api.get("products/categories");
+
+   getOnSale: () => api.get("products", { on_sale: true }),
+
+   getAllCategorias: () => api.get("products/categories"),
+
+   getProductSlug: (slug) =>
+      api.get("products", { slug: slug, status: "publish" }),
+
+   getProduto: (id) => {
+      return api.get(`products/${id}`);
    },
    getCategoria: (id) => {
       return api.get("products", { category: id });
-   },
-   getOnSale: () => {
-      return api.get("products", { on_sale: true });
-   },
-   getProduto: (id) => {
-      return api.get(`products/${id}`);
    },
 };
 

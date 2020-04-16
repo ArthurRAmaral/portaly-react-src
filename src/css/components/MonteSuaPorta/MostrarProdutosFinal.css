@@ -1,0 +1,57 @@
+.produtos-list {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: row;
+   flex-wrap: wrap;
+   padding: 0px 10%;
+   width: 100%;
+}
+
+.produto-final {
+   border: solid #6d4c41e1 3px;
+   width: 200px;
+   height: 200px;
+   display: block;
+   margin: 10px;
+}
+
+.selecionado {
+   border: solid 3px;
+   border-radius: 1%;
+   opacity: 55%;
+}
+
+.produto-final .preco {
+   opacity: 100%;
+   font-weight: 700;
+   font-size: medium;
+}
+
+/* .produto-final:hover {
+   cursor: no-drop;
+   background-color: rgba(255, 47, 47, 0.479);
+   opacity: 45%;
+} */
+
+.produto-final .nome {
+   font-weight: 700;
+   font-size: large;
+}
+
+.produto-final img {
+   object-fit: contain;
+   height: 194px;
+   width: 194px;
+   display: block;
+   margin: 0 auto;
+}
+
+.produto-dados-montagem {
+   color: #6d4c41;
+   background-color: rgba(255, 255, 255, 0.5);
+   top: -85px;
+   height: 85px;
+   font-weight: bold;
+   position: relative;
+}

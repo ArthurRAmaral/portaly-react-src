@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import api from "../services/api";
+// import api from "../services/api";
 import { Link } from "react-router-dom";
 
 import LineLoading from "../components/loading/LineLoading";
@@ -7,38 +7,42 @@ import LineLoading from "../components/loading/LineLoading";
 import "../css/PaginaProduto.css";
 
 import imgDefault from "../assets/imgDefault.png";
+import ApiWooCommerce from "../util/ApiWooCommerce";
+
+import Carrinho from "../util/Carrinho";
 
 export default class PaginaProduto extends Component {
    state = {
-      produto: undefined,
-      opc: 0
+      produto: null,
+      opc: 0,
    };
 
    async componentDidMount() {
-      const { id } = this.props.match.params;
-      const response = await api.get(`products/${id}`);
-      this.setState({ produto: response.data });
+      const { slug } = this.props.match.params;
+      const response = await ApiWooCommerce.getProductSlug(slug);
+      console.log(response.data[0]);
+      this.setState({ produto: response.data[0] });
    }
 
-   handleSubmit = e => {
+   handleSubmit = (e) => {
       // e.preventDefault();
       const { produto } = this.state;
-      const carrinho = JSON.parse(localStorage.getItem("carrinho"));
+      const carrinho = Carrinho.getCarrinho();
 
       carrinho.valor += Number.parseFloat(produto.price);
       carrinho.itens.push({ id: produto.id, preco: produto.price });
       console.log(carrinho);
 
-      localStorage.setItem("carrinho", JSON.stringify(carrinho));
+      Carrinho.setCarrinho(carrinho);
 
-      this.props.history.push("/");
-      window.location.reload();
+      // this.props.history.push("/");
+      // window.location.reload();
    };
 
    renderProduto = () => {
       const { produto } = this.state;
       return (
-         <div className="produtomostrado s12 m6">
+         <div className="produtomostrado s12 m6 card-large">
             <div className="card">
                <div className="card-image">
                   <img
@@ -60,8 +64,8 @@ export default class PaginaProduto extends Component {
                   </Link>
                </div>
                <div className="card-content">
-                  <h1 className="card-title">{produto.name}</h1>
-                  <p>{produto.regular_price}</p>
+                  <p className="nome grey-text text-darken-4">{produto.name}</p>
+                  <p className="preco">R$: {produto.price}</p>
                   {produto.short_description !== ""
                      ? produto.short_description.substring(
                           3,

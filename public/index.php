@@ -2,15 +2,41 @@
   $TEMPLATE_PATH = parse_url(get_template_directory_uri(), PHP_URL_PATH);
 ?>
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
+<html lang="pt">
+   <head>
+      <meta charset="utf-8" />
+      <link
+         rel="stylesheet"
+         href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      />
+
+      <link rel="stylesheet" href="path/to/materialize.css" />
+
+      <link
+         rel="stylesheet"
+         href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      />
+
+      <link
+         rel="stylesheet"
+         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      />
+
+      <link
+         href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+         rel="stylesheet"
+         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+         crossorigin="anonymous"
+      />
+
+      <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Web site created using create-react-wptheme"
+      content="Venda de portas em Belo Horizonte"
     />
     <link rel="apple-touch-icon" href="<?php echo $TEMPLATE_PATH; ?>/logo192.png" />
     <!--
@@ -31,12 +57,9 @@
         work correctly both with client-side routing and a non-root public URL.
         Learn how to configure a non-root public URL by running `npm run wpbuild`.
     -->
-    <title>React WordPress Theme</title>
+    <title>Portaly</title>
 </head>
     <body>
-    <noscript>
-        You need to enable JavaScript to run this app.
-    </noscript>
     <div id="root"></div>
     <!--
         This PHP file is a template.
