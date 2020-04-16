@@ -37,3 +37,7 @@
    font-weight: 700;
    color: #6d4c41;
 }
+
+.card-carrinho {
+  display: flex;
+}
