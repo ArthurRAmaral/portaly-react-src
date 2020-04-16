@@ -1,12 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import imgDefault from "../../assets/imgDefault.png";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import imgDefault from '../../assets/imgDefault.png';
 
-import Carrinho from "../../util/Carrinho";
+import Carrinho from '../../util/Carrinho';
 
-import "../../css/components/MostrarProdutosCarrinho.css";
+import '../../css/components/MostrarProdutosCarrinho.css';
 
-import InitPath from "../../services/InitPath";
+import InitPath from '../../services/InitPath';
 
 const MostrarProdutos = (props) => {
   const qntProdutosCarrinho = new Map();
@@ -16,7 +16,7 @@ const MostrarProdutos = (props) => {
     if (qntProdutosCarrinho.has(produto.id)) {
       qntProdutosCarrinho.set(
         produto.id,
-        qntProdutosCarrinho.get(produto.id) + 1
+        qntProdutosCarrinho.get(produto.id) + 1,
       );
       return 0;
     }
@@ -40,7 +40,7 @@ const MostrarProdutos = (props) => {
           </i>
           <Link
             key={`link-to-${produto.id}`}
-            to={`${InitPath}/produto/${produto.id}`}
+            to={`${InitPath}/produto/${produto.slug}`}
           >
             <div className="valign-wrapper">
               <img
@@ -75,9 +75,9 @@ const MostrarProdutos = (props) => {
                     R$
                     {(
                       Math.round(
-                        qntProdutosCarrinho.get(produto.id) *
-                          produto.price *
-                          100
+                        qntProdutosCarrinho.get(produto.id)
+                          * produto.price
+                          * 100,
                       ) / 100
                     ).toFixed(2)}
                   </span>
