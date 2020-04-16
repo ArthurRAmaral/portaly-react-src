@@ -3,6 +3,7 @@ import Carrinho from "../util/Carrinho";
 import ApiWooCommerce from "../util/ApiWooCommerce";
 import MostraProdutos from "../components/Carrinho/MostraProdutosCarrinho";
 import LineLoaging from "../components/loading/LineLoading";
+import SemProduto from "../components/semProdutos";
 
 class PaginaCarrinho extends Component {
    constructor(props) {
@@ -38,10 +39,14 @@ class PaginaCarrinho extends Component {
 
       return (
          <Fragment>
-            {this.state.produtos.length > 0 ? (
-               MostraProdutos(this.state.produtos)
+            {Carrinho.getValorCarrinho() > 0 ? (
+               this.state.produtos.length > 0 ? (
+                  MostraProdutos(this.state.produtos)
+               ) : (
+                  <LineLoaging />
+               )
             ) : (
-               <LineLoaging />
+               <SemProduto />
             )}
          </Fragment>
       );
