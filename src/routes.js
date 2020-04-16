@@ -1,28 +1,30 @@
-//From dependencies
-import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
+// From dependencies
+import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-//From componets
-import HomePage from "./pages/HomePage";
-import PaginaCategoria from "./pages/PaginaCategoria";
-import PaginaProduto from "./pages/PaginaProduto";
-import MonteSuaPorta from "./pages/MonteSuaPorta";
-import ProdutoBuscado from "./pages/ProdutoBuscado";
+// From componets
+import HomePage from './pages/HomePage';
+import PaginaCategoria from './pages/PaginaCategoria';
+import PaginaProduto from './pages/PaginaProduto';
+import MonteSuaPorta from './pages/MonteSuaPorta';
+import ProdutoBuscado from './pages/ProdutoBuscado';
+import Carrinho from './pages/PaginaCarrinho';
+import DefaultPage from './pages/DefaultPage';
 
-//From util
-import InitPath from "./services/InitPath";
+// From util
+import InitPath from './services/InitPath';
 
-//From css
-import "./css/Global.css";
+// From css
+import './css/Global.css';
 
 class Routes extends Component {
-   constructor(props) {
-      super(props);
-      this.state = {};
-   }
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-   render() {
-      return (
+  render() {
+    return (
          <section id="homepage">
             <Switch>
                <Route path={`${InitPath}/`} exact component={HomePage} />
@@ -46,8 +48,8 @@ class Routes extends Component {
                <Route path={`${InitPath}/`} component={DefaultPage} />
             </Switch>
          </section>
-      );
-   }
+    );
+  }
 }
 
 export default Routes;

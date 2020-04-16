@@ -1,10 +1,9 @@
 
-import React, { Component, Fragment } from "react";
-import ApiWooCommerce from "../util/ApiWooCommerce";
-import LineLoading from "../components/loading/LineLoading";
-import MostrarProdutos from "../components/MostraProdutos";
-import Carrinho from "../util/Carrinho";
-import SemProdutos from "../components/semProdutos";
+import React, { Component, Fragment } from 'react';
+import ApiWooCommerce from '../util/ApiWooCommerce';
+import LineLoading from '../components/loading/LineLoading';
+import MostrarProdutos from '../components/MostraProdutos';
+import SemProdutos from '../components/semProdutos';
 
 class ProdutosBuscado extends Component {
   constructor(props) {
@@ -18,7 +17,7 @@ class ProdutosBuscado extends Component {
   componentDidMount() {
     const { value } = this.props.match.params;
 
-    ApiWooCommerce.getAll().then((res) => {
+    ApiWooCommerce.getAllPublishedProducts().then((res) => {
       const produtos = res.data.filter((produto) => produto.name.toString().toUpperCase().includes(value.toUpperCase()));
 
       this.setState({
@@ -28,16 +27,14 @@ class ProdutosBuscado extends Component {
   }
 
   render() {
-    Carrinho.setCarrinho();
-
     return (
          <Fragment>
             {this.state.produtos !== null || undefined ? (
-               this.state.produtos.length > 0 ? (
-                  MostrarProdutos(this.state.produtos)
-               ) : (
+              this.state.produtos.length > 0 ? (
+                <MostrarProdutos produtos={this.state.produtos}/>
+              ) : (
                   <SemProdutos />
-               )
+              )
             ) : (
                <LineLoading />
             )}

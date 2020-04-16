@@ -1,28 +1,27 @@
-import React, { Component, Fragment } from "react";
-import ApiWooCommerce from "../util/ApiWooCommerce";
-import LineLoading from "../components/loading/LineLoading";
-import MostrarProdutos from "../components/MostraProdutos";
+import React, { Component, Fragment } from 'react';
+import ApiWooCommerce from '../util/ApiWooCommerce';
+import LineLoading from '../components/loading/LineLoading';
+import MostrarProdutos from '../components/MostraProdutos';
 
 class HomePage extends Component {
   constructor(props) {
     super(props);
 
-      this.state = {
-         produtos: null
-      };
-   }
+    this.state = {
+      produtos: null,
+    };
+  }
 
-   componentDidMount() {
-      ApiWooCommerce.getAllPublishedProducts().then(res => {
-         this.setState({
-            produtos: res.data
-         });
+  componentDidMount() {
+    ApiWooCommerce.getAllPublishedProducts().then((res) => {
+      this.setState({
+        produtos: res.data,
       });
     });
   }
 
-   render() {
-      return (
+  render() {
+    return (
          <Fragment>
             {this.state.produtos ? (
                <MostrarProdutos produtos={this.state.produtos} />

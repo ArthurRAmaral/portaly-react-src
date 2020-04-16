@@ -1,192 +1,191 @@
-import React from "react";
+import React from 'react';
 import {
-   makeStyles,
-   ThemeProvider,
-   createMuiTheme,
-} from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Card from "@material-ui/core/Card";
+  makeStyles,
+  ThemeProvider,
+  createMuiTheme,
+} from '@material-ui/core/styles';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
 
-import EscolherItems from "./EscolherItem";
+import EscolherItems from './EscolherItem';
 
-import Montador from "../../util/MontadorPorta";
-import Carrinho from "../../util/Carrinho";
+import Montador from '../../util/MontadorPorta';
+import Carrinho from '../../util/Carrinho';
 
-import FecharMontagem from "../MonteSuaPorta/FecharMontagem";
-import funcoesApiWooCommerce from "../../util/ApiWooCommerce";
+import FecharMontagem from './FecharMontagem';
+import funcoesApiWooCommerce from '../../util/ApiWooCommerce';
 
 const useStyles = makeStyles((theme) => ({
-   root: {
-      width: "100%",
-   },
-   button: {
-      marginRight: theme.spacing(1),
-   },
-   instructions: {
-      alignItems: theme.shape,
-      minHeight: theme.spacing(50),
-      width: theme.spacing(100),
-      marginTop: theme.spacing(1),
-      marginBottom: theme.spacing(1),
-   },
+  root: {
+    width: '100%',
+  },
+  button: {
+    marginRight: theme.spacing(1),
+  },
+  instructions: {
+    alignItems: theme.shape,
+    minHeight: theme.spacing(50),
+    width: theme.spacing(100),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
 }));
 
 const theme = createMuiTheme({
-   palette: {
-      primary: {
-         main: "#6d4c41",
-      },
-      secondary: {
-         light: "#0066ff",
-         main: "#0044ff",
-         contrastText: "#ffcc00",
-      },
-      contrastThreshold: 3,
-      tonalOffset: 0.2,
-   },
+  palette: {
+    primary: {
+      main: '#6d4c41',
+    },
+    secondary: {
+      light: '#0066ff',
+      main: '#0044ff',
+      contrastText: '#ffcc00',
+    },
+    contrastThreshold: 3,
+    tonalOffset: 0.2,
+  },
 });
 
 function getSteps() {
-   return [
-      "Alizar",
-      "Dobradiça",
-      "Fechaduras",
-      "Marco/Batente",
-      "Porta",
-      "Concluir",
-   ];
+  return [
+    'Alizar',
+    'Dobradiça',
+    'Fechaduras',
+    'Marco/Batente',
+    'Porta',
+    'Concluir',
+  ];
 }
 
 function getOptionalSteps() {
-   return [];
+  return [];
 }
 
 function getStepContent(step) {
-   switch (step) {
-      case 0:
-         return <EscolherItems categoriaSlug="alizar" key="alizar" />;
-      case 1:
-         return <EscolherItems categoriaSlug="dobradica" key="dobradica" />;
-      case 2:
-         return <EscolherItems categoriaSlug="fechadura" key="fechadura" />;
-      case 3:
-         return (
+  switch (step) {
+    case 0:
+      return <EscolherItems categoriaSlug="alizar" key="alizar" />;
+    case 1:
+      return <EscolherItems categoriaSlug="dobradica" key="dobradica" />;
+    case 2:
+      return <EscolherItems categoriaSlug="fechadura" key="fechadura" />;
+    case 3:
+      return (
             <EscolherItems categoriaSlug="marco-batente" key="marco-batente" />
-         );
+      );
 
-      case 4:
-         return <EscolherItems categoriaSlug="porta" key="porta" />;
-      case 5:
-         return <FecharMontagem />;
-      default:
-         return "Unknown step";
-   }
+    case 4:
+      return <EscolherItems categoriaSlug="porta" key="porta" />;
+    case 5:
+      return <FecharMontagem />;
+    default:
+      return 'Unknown step';
+  }
 }
 
 export default function HorizontalLinearStepper() {
-   const classes = useStyles();
-   const [activeStep, setActiveStep] = React.useState(0);
-   const [skipped, setSkipped] = React.useState(new Set());
-   const steps = getSteps();
+  const classes = useStyles();
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [skipped, setSkipped] = React.useState(new Set());
+  const steps = getSteps();
 
-   const isStepOptional = (step) => {
-      return getOptionalSteps().includes(step);
-   };
+  const isStepOptional = (step) => getOptionalSteps().includes(step);
 
-   const isStepSkipped = (step) => {
-      return skipped.has(step);
-   };
+  const isStepSkipped = (step) => skipped.has(step);
 
-   const handleNext = () => {
-      let newSkipped = skipped;
-      if (isStepSkipped(activeStep)) {
-         newSkipped = new Set(newSkipped.values());
-         newSkipped.delete(activeStep);
-      }
+  const handleNext = () => {
+    let newSkipped = skipped;
+    if (isStepSkipped(activeStep)) {
+      newSkipped = new Set(newSkipped.values());
+      newSkipped.delete(activeStep);
+    }
 
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      setSkipped(newSkipped);
-   };
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSkipped(newSkipped);
+  };
 
-   const handleSubmit = () => {
-      const montSize = Montador.getMontador().ids.length;
-      const quantidade = Montador.getQuantidade();
+  const handleSubmit = () => {
+    const montSize = Montador.getMontador().ids.length;
+    const quantidade = Montador.getQuantidade();
 
-      for (let mont = 0, qnt = 0; qnt < Montador.getQuantidade(); qnt++) {
-         Montador.getMontador().ids.forEach((pID) => {
-            funcoesApiWooCommerce.getProduto(pID).then((res) => {
-               const { price } = res.data;
-               Carrinho.addItem(pID, parseFloat(price));
-               mont++;
+    let q = 0;
 
-               if (mont === montSize) {
-                  Carrinho.addItem(-1, 150);
-                  mont = 0;
-               }
 
-               if (qnt + 1 === quantidade) {
-                  let newSkipped = skipped;
-                  if (isStepSkipped(activeStep)) {
-                     newSkipped = new Set(newSkipped.values());
-                     newSkipped.delete(activeStep);
-                  }
+    for (let i = 0; i < quantidade; i++) {
+      Carrinho.addItem(-1, 150);
+    }
 
-                  setActiveStep((prevActiveStep) => prevActiveStep + 1);
-                  setSkipped(newSkipped);
-               }
-            });
-         });
-      }
-   };
+    Montador.getMontador().ids.forEach((pID) => {
+      funcoesApiWooCommerce.getProduto(pID).then((res) => {
+        const { price } = res.data;
 
-   const handleBack = () => {
-      setActiveStep((prevActiveStep) => prevActiveStep - 1);
-   };
+        for (let i = 0; i < quantidade; i++) {
+          Carrinho.addItem(pID, parseFloat(price));
+        }
+        q++;
 
-   const handleSkip = () => {
-      if (!isStepOptional(activeStep)) {
-         // You probably want to guard against something like this,
-         // it should never occur unless someone's actively trying to break something.
-         throw new Error("You can't skip a step that isn't optional.");
-      }
+        if (q === montSize) {
+          let newSkipped = skipped;
+          if (isStepSkipped(activeStep)) {
+            newSkipped = new Set(newSkipped.values());
+            newSkipped.delete(activeStep);
+          }
 
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      setSkipped((prevSkipped) => {
-         const newSkipped = new Set(prevSkipped.values());
-         newSkipped.add(activeStep);
-         return newSkipped;
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+          setSkipped(newSkipped);
+        }
       });
-   };
+    });
+  };
 
-   const handleReset = () => {
-      setActiveStep(0);
-      Montador.resetMontador();
-   };
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
 
-   return (
+  const handleSkip = () => {
+    if (!isStepOptional(activeStep)) {
+      // You probably want to guard against something like this,
+      // it should never occur unless someone's actively trying to break something.
+      throw new Error("You can't skip a step that isn't optional.");
+    }
+
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSkipped((prevSkipped) => {
+      const newSkipped = new Set(prevSkipped.values());
+      newSkipped.add(activeStep);
+      return newSkipped;
+    });
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+    Montador.resetMontador();
+  };
+
+  return (
       <div className={classes.root}>
          <ThemeProvider theme={theme}>
             <Stepper activeStep={activeStep}>
                {steps.map((label, index) => {
-                  const stepProps = {};
-                  const labelProps = {};
-                  if (isStepOptional(index)) {
-                     labelProps.optional = (
+                 const stepProps = {};
+                 const labelProps = {};
+                 if (isStepOptional(index)) {
+                   labelProps.optional = (
                         <Typography variant="caption">Optional</Typography>
-                     );
-                  }
-                  if (isStepSkipped(index)) {
-                     stepProps.completed = false;
-                  }
-                  return (
+                   );
+                 }
+                 if (isStepSkipped(index)) {
+                   stepProps.completed = false;
+                 }
+                 return (
                      <Step key={label} {...stepProps}>
                         <StepLabel {...labelProps}>{label}</StepLabel>
                      </Step>
-                  );
+                 );
                })}
             </Stepper>
             <div>
@@ -250,5 +249,5 @@ export default function HorizontalLinearStepper() {
             </div>
          </ThemeProvider>
       </div>
-   );
+  );
 }
