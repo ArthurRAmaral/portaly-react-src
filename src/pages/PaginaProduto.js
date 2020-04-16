@@ -35,7 +35,7 @@ export default class PaginaProduto extends Component {
 
       Carrinho.setCarrinho(carrinho);
 
-      this.props.history.push("/");
+      // this.props.history.push("/");
       window.location.reload();
    };
 
