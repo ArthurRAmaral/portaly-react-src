@@ -1,6 +1,6 @@
 const Carrinho = {
    valor: 0,
-   itens: []
+   itens: [],
 };
 
 const funcoesCarrinho = {
@@ -12,7 +12,11 @@ const funcoesCarrinho = {
 
    getValorCarrinho: () => {
       return JSON.parse(localStorage.getItem("carrinho")).valor;
-   }
+   },
+
+   getItensCarrinho: () => {
+      return JSON.parse(localStorage.getItem("carrinho")).itens;
+   },
 };
 
 export default funcoesCarrinho;

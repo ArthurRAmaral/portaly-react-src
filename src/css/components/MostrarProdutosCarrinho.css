@@ -1,0 +1,39 @@
+.container-carrinho {
+   margin-top: 30px;
+   max-width: 500px;
+}
+
+.produto-dados-carrinho {
+   width: 100%;
+}
+
+.list-carrinho {
+   width: 100%;
+   margin: 0;
+}
+
+.list-carrinho li {
+   padding: 0 16px;
+}
+
+.list-carrinho .title-carrinho span {
+   color: rgba(0, 0, 0, 0.54);
+}
+
+.title-carrinho {
+   padding: 20px;
+}
+
+.nome-produto-carrinho {
+   font-weight: 500;
+   font-size: 23px;
+}
+
+.img-produto-carrinho {
+   border-right: 2px #bbb solid;
+}
+
+.list-carrinho .title-carrinho .destaque {
+   font-weight: 700;
+   color: #6d4c41;
+}
