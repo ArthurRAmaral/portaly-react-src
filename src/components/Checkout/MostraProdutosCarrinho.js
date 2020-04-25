@@ -8,27 +8,15 @@ import '../../css/components/MostrarProdutosCarrinho.css';
 
 import InitPath from '../../services/InitPath';
 
-const MostrarProdutos = (props) => {
+const MostrarProdutos = (produtos, itens) => {
   const qntProdutosCarrinho = new Map();
-  const produtosListados = [];
 
-  props.map((produto) => {
-    if (qntProdutosCarrinho.has(produto.id)) {
-      qntProdutosCarrinho.set(
-        produto.id,
-        qntProdutosCarrinho.get(produto.id) + 1,
-      );
-      return 0;
-    }
-    qntProdutosCarrinho.set(produto.id, 1);
+  itens.map((item) => {
+    qntProdutosCarrinho.set(item.product_id, item.quantity);
     return 0;
   });
 
-  const cards = props.map((produto) => {
-    if (produtosListados.includes(produto.id)) {
-      return null;
-    }
-    produtosListados.push(produto.id);
+  const cards = produtos.map((produto) => {
     return (
       <div key={produto.id}>
         <li className="produto-dados-carrinho">
@@ -65,21 +53,21 @@ const MostrarProdutos = (props) => {
                 <span className="nome-produto-carrinho">
                   Quantidade: <br></br>
                   <span className="destaque">
-                    {qntProdutosCarrinho.get(produto.id)}
+                      {qntProdutosCarrinho.get(produto.id)}
                   </span>
                 </span>
                 <br></br>
                 <span className="nome-produto-carrinho">
                   Valor Total: <br></br>
                   <span className="destaque">
-                    R$
-                    {(
+                     R$ {
+                    (
                       Math.round(
                         qntProdutosCarrinho.get(produto.id)
                           * produto.price
                           * 100,
                       ) / 100
-                    ).toFixed(2)}
+                    ).toFixed(2) }
                   </span>
                 </span>
               </div>

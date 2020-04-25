@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import funcoesApiWooCommerce from "../../util/ApiWooCommerce";
+import ApiProdutos from "../../util/ApiProdutos";
 import MostraProdutosFinal from "./MostraProdutosMontagemFinal";
 import CircleLoading from "../loading/CircleLoading";
 
@@ -24,7 +24,7 @@ class EscolherItems extends Component {
          let vet = [];
          let qnt = 0;
          this.state.produtosSelecionados.forEach((id) => {
-            funcoesApiWooCommerce.getProduto(id).then((res) => {
+            ApiProdutos.getProduto(id).then((res) => {
                vet.push(res.data);
                qnt++;
                if (qnt === this.state.produtosSelecionados.length)

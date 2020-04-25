@@ -3,7 +3,7 @@ import React, { Component, Fragment } from "react";
 import { NavLink } from "react-router-dom";
 
 //From utils
-import ApiWooCommerce from "../../util/ApiWooCommerce";
+import ApiCategorias from "../../util/ApiCategorias";
 
 import InitPath from "../../services/InitPath";
 
@@ -56,7 +56,7 @@ class Categorias extends Component {
    }
 
    componentDidMount() {
-      ApiWooCommerce.getAllCategorias().then(res => {
+      ApiCategorias.getAllCategorias().then(res => {
          this.setState({ categories: [...this.state.categories, ...res.data] });
       });
    }

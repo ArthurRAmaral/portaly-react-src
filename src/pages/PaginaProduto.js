@@ -7,7 +7,7 @@ import LineLoading from "../components/loading/LineLoading";
 import "../css/PaginaProduto.css";
 
 import imgDefault from "../assets/imgDefault.png";
-import ApiWooCommerce from "../util/ApiWooCommerce";
+import ApiProdutos from "../util/ApiProdutos";
 
 import Carrinho from "../util/Carrinho";
 
@@ -19,21 +19,15 @@ export default class PaginaProduto extends Component {
 
    async componentDidMount() {
       const { slug } = this.props.match.params;
-      const response = await ApiWooCommerce.getProductSlug(slug);
+      const response = await ApiProdutos.getProductSlug(slug);
       console.log(response.data[0]);
       this.setState({ produto: response.data[0] });
    }
 
    handleSubmit = (e) => {
-      // e.preventDefault();
       const { produto } = this.state;
-      const carrinho = Carrinho.getCarrinho();
 
-      carrinho.valor += Number.parseFloat(produto.price);
-      carrinho.itens.push({ id: produto.id, preco: produto.price });
-      console.log(carrinho);
-
-      Carrinho.setCarrinho(carrinho);
+      Carrinho.addItem(produto.id);
 
       // this.props.history.push("/");
       window.location.reload();

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import funcoesApiWooCommerce from "../../util/ApiWooCommerce";
+import ApiCategorias from "../../util/ApiCategorias";
 import MostraProdutos from "./MostraProdutosMontagem";
 import CircleLoading from "../loading/CircleLoading";
 
@@ -15,7 +15,7 @@ class EscolherItems extends Component {
 
    componentDidMount() {
       const categoriaSlug = this.props.categoriaSlug;
-      funcoesApiWooCommerce.getAllCategorias().then((res) => {
+      ApiCategorias.getAllCategorias().then((res) => {
          res.data.forEach((cat) => {
             if (cat.slug === categoriaSlug) {
                this.chamaApiParaRceberProdutos(cat.id);
@@ -27,7 +27,7 @@ class EscolherItems extends Component {
 
    componentWillReceiveProps(nextProps) {
       const categoriaSlug = nextProps.categoriaSlug;
-      funcoesApiWooCommerce.getAllCategorias().then((res) => {
+      ApiCategorias.getAllCategorias().then((res) => {
          res.data.forEach((cat) => {
             if (cat.slug === categoriaSlug) {
                this.chamaApiParaRceberProdutos(cat.id);
@@ -38,7 +38,7 @@ class EscolherItems extends Component {
    }
 
    chamaApiParaRceberProdutos(categoriaID) {
-      funcoesApiWooCommerce
+      ApiCategorias
          .getCategoriaPublishProductsById(categoriaID)
          .then((res) => {
             this.setState({ produtos: res.data, categoriaID: categoriaID });

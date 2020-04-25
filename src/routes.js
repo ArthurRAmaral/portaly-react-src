@@ -8,7 +8,7 @@ import PaginaCategoria from './pages/PaginaCategoria';
 import PaginaProduto from './pages/PaginaProduto';
 import MonteSuaPorta from './pages/MonteSuaPorta';
 import ProdutoBuscado from './pages/ProdutoBuscado';
-import Carrinho from './pages/PaginaCarrinho';
+import Carrinho from './pages/PaginaCheckout';
 import DefaultPage from './pages/DefaultPage';
 
 // From util

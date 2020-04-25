@@ -1,5 +1,6 @@
+import ApiProdutos from "./ApiProdutos";
+
 const Carrinho = {
-  valor: 0,
   itens: [],
 };
 
@@ -16,33 +17,34 @@ const funcoesCarrinho = {
     localStorage.setItem(varName, JSON.stringify(val));
   },
 
-  getValorCarrinho: () => JSON.parse(localStorage.getItem(varName)).valor,
-
   getCarrinho: () => JSON.parse(localStorage.getItem(varName)),
 
-  addItem: (id, preco) => {
-    preco = parseFloat(preco);
+  addItem: (id) => {
     const carrinho = funcoesCarrinho.getCarrinho();
-    carrinho.itens.push({ id, preco });
-    carrinho.valor += preco;
+
+    let achou = false;
+    carrinho.itens.forEach(element => {
+      if(element.product_id === id) {
+        element.quantity++;
+        achou = true;
+      }
+    });
+
+    if(!achou)
+      carrinho.itens.push({product_id: id, quantity: 1});
+
     funcoesCarrinho.setCarrinho(carrinho);
   },
+
   getItensCarrinho: () => JSON.parse(localStorage.getItem('carrinho')).itens,
-  remove: (id) => {
+
+  remove: async (id) => {
     const carrinho = funcoesCarrinho.getCarrinho();
-    const novoCarro = { valor: 0, itens: [] };
 
-    carrinho.itens.forEach((item) => {
-      if (item.id !== id) { novoCarro.itens.push(item); }
-    });
+    carrinho.itens = carrinho.itens.filter((item) => (item.product_id !== id));
 
-    novoCarro.itens.forEach((item) => {
-      novoCarro.valor += parseFloat(item.preco);
-    });
-
-    funcoesCarrinho.setCarrinho(novoCarro);
-  },
-
+    funcoesCarrinho.setCarrinho(carrinho);
+  }
 };
 
 export default funcoesCarrinho;

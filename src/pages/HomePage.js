@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import ApiWooCommerce from '../util/ApiWooCommerce';
+import ApiProdutos from '../util/ApiProdutos';
 import LineLoading from '../components/loading/LineLoading';
 import MostrarProdutos from '../components/MostraProdutos';
 
@@ -13,7 +13,7 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    ApiWooCommerce.getAllPublishedProducts().then((res) => {
+    ApiProdutos.getAllPublishedProducts().then((res) => {
       this.setState({
         produtos: res.data,
       });
