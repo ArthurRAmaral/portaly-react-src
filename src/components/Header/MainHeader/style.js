@@ -3,10 +3,10 @@ import colors from '../../../util/Colors'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: 200,
+    minHeight: 150,
     backgroundColor: colors.orangeLightLight,
-    padding: theme.spacing(2)
-  }
+    padding: theme.spacing(2),
+  },
 }));
 
 export default useStyles;

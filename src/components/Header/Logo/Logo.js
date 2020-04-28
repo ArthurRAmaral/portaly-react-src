@@ -1,10 +1,10 @@
 //From dependencies
 import React from "react";
 import { Link } from "react-router-dom";
-import InitPath from "../../services/InitPath";
+import InitPath from "../../../services/InitPath";
 
 //Material-ui
-import useStyles from './styles/styleLogo'
+import useStyles from './style'
 
 const Logo = () => {
   const classes = useStyles();
