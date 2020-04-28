@@ -7,16 +7,16 @@ import MainHeader from "./MainHeader";
 import "../../css/Header.css";
 
 class Headers extends Component {
-   render() {
-      return (
-         <Fragment>
-            <header className="header">
-               <TopHeader />
-               <MainHeader />
-            </header>
-         </Fragment>
-      );
-   }
+  render() {
+    return (
+      <Fragment>
+        <header>
+          <TopHeader />
+          <MainHeader />
+        </header>
+      </Fragment>
+    );
+  }
 }
 
 export default Headers;
