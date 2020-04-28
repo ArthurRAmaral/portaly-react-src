@@ -3,6 +3,6 @@
     "source.fixAll.eslint": true,
     "source.fixAll": true
   },
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "validateLineBreaks": "LF"
 }
