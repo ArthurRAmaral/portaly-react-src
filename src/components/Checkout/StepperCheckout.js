@@ -1,38 +1,33 @@
-import React from 'react';
+import React from "react";
 import {
   makeStyles,
   ThemeProvider,
   createMuiTheme,
-} from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import LocalShippingIcon from '@material-ui/icons/LocalShipping';
-import PaymentIcon from '@material-ui/icons/Payment';
+} from "@material-ui/core/styles";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Card from "@material-ui/core/Card";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import AssignmentIcon from "@material-ui/icons/Assignment";
+import LocalShippingIcon from "@material-ui/icons/LocalShipping";
+import PaymentIcon from "@material-ui/icons/Payment";
 
-import clsx from 'clsx';
-import Carrinho from './Carrinho';
-import Cadastro from './Cadastro';
-import Frete from './Frete';
-import Pagamento from './Pagamento';
-import useStyles from './styles/style';
-import theme from './styles/theme';
-import useStepIconStyles from './styles/IconStyle';
+import clsx from "clsx";
+import Carrinho from "./Carrinho";
+import Cadastro from "./Cadastro";
+import Frete from "./Frete";
+import Pagamento from "./Pagamento";
+import useStyles from "./styles/style";
+import theme from "./styles/theme";
+import useStepIconStyles from "./styles/IconStyle";
 
-import ApiProdutos from '../../util/ApiProdutos';
+import ApiProdutos from "../../util/ApiProdutos";
 
 function getSteps() {
-  return [
-    'Carrinho',
-    'Cadastro',
-    'Frete',
-    'Pagamento'
-  ];
+  return ["Carrinho", "Cadastro", "Frete", "Pagamento"];
 }
 
 function getOptionalSteps() {
@@ -42,15 +37,15 @@ function getOptionalSteps() {
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <Carrinho/>;
+      return <Carrinho />;
     case 1:
-      return <Cadastro/>;
+      return <Cadastro />;
     case 2:
-      return <Frete/>;
+      return <Frete />;
     case 3:
-        return <Pagamento/>;
+      return <Pagamento />;
     default:
-      return 'Unknown step';
+      return "Unknown step";
   }
 }
 
@@ -98,8 +93,7 @@ export default function HorizontalLinearStepper() {
     setSkipped(newSkipped);
   };
 
-  const handleSubmit = () => {
-  };
+  const handleSubmit = () => {};
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -125,87 +119,89 @@ export default function HorizontalLinearStepper() {
   };
 
   return (
-      <div className={classes.root}>
-         <ThemeProvider theme={theme}>
-            <Stepper activeStep={activeStep}>
-               {steps.map((label, index) => {
-                 const stepProps = {};
-                 const labelProps = {};
-                 if (isStepOptional(index)) {
-                   labelProps.optional = (
-                        <Typography variant="caption">Optional</Typography>
-                   );
-                 }
-                 if (isStepSkipped(index)) {
-                   stepProps.completed = false;
-                 }
-                 return (
-                     <Step key={label} {...stepProps}>
-                        <StepLabel StepIconComponent={StepIcon} {...labelProps}>{label}</StepLabel>
-                     </Step>
-                 );
-               })}
-            </Stepper>
+    <div className={classes.root}>
+      <ThemeProvider theme={theme}>
+        <Stepper activeStep={activeStep}>
+          {steps.map((label, index) => {
+            const stepProps = {};
+            const labelProps = {};
+            if (isStepOptional(index)) {
+              labelProps.optional = (
+                <Typography variant="caption">Optional</Typography>
+              );
+            }
+            if (isStepSkipped(index)) {
+              stepProps.completed = false;
+            }
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel StepIconComponent={StepIcon} {...labelProps}>
+                  {label}
+                </StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+        <div>
+          {activeStep === steps.length ? (
             <div>
-               {activeStep === steps.length ? (
-                  <div>
-                     <Typography className={classes.instructions}>
-                        Produtos adicionados ao carrinho!
-                     </Typography>
-                     <Button onClick={handleReset} className={classes.button}>
-                        Montar outra
-                     </Button>
-                  </div>
-               ) : (
-                  <div>
-                     <Card className={classes.instructions}>
-                        {getStepContent(activeStep)}
-                     </Card>
-                     <div>
-                        <Button
-                           disabled={activeStep === 0}
-                           onClick={handleBack}
-                           className={classes.button}
-                        >
-                           Voltar
-                        </Button>
-                        {isStepOptional(activeStep) && (
-                           <Button
-                              variant="contained"
-                              color="primary"
-                              onClick={handleSkip}
-                              className={classes.button}
-                           >
-                              Pular
-                           </Button>
-                        )}
-
-                        {activeStep === steps.length - 1 ? (
-                           <Button
-                              focusVisibleClassName="btn"
-                              variant="contained"
-                              color="primary"
-                              onClick={handleSubmit}
-                              className={classes.button}
-                           >
-                              Adicionar ao Carrinho
-                           </Button>
-                        ) : (
-                           <Button
-                              focusVisibleClassName="btn"
-                              variant="contained"
-                              color="primary"
-                              onClick={handleNext}
-                              className={classes.button}
-                           >
-                              Próximo
-                           </Button>
-                        )}
-                     </div>
-                  </div>
-               )}
+              <Typography className={classes.instructions}>
+                Produtos adicionados ao carrinho!
+              </Typography>
+              <Button onClick={handleReset} className={classes.button}>
+                Montar outra
+              </Button>
             </div>
-         </ThemeProvider>
-      </div>
+          ) : (
+            <div>
+              <Card className={classes.instructions}>
+                {getStepContent(activeStep)}
+              </Card>
+              <div>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  className={classes.button}
+                >
+                  Voltar
+                </Button>
+                {isStepOptional(activeStep) && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSkip}
+                    className={classes.button}
+                  >
+                    Pular
+                  </Button>
+                )}
+
+                {activeStep === steps.length - 1 ? (
+                  <Button
+                    focusVisibleClassName="btn"
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                    className={classes.button}
+                  >
+                    Adicionar ao Carrinho
+                  </Button>
+                ) : (
+                  <Button
+                    focusVisibleClassName="btn"
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                  >
+                    Próximo
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </ThemeProvider>
+    </div>
   );
 }
