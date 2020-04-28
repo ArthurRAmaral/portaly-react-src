@@ -2,10 +2,10 @@
 import React, { Component } from "react";
 
 //Material-ui
-import Grid from '@material-ui/core/Grid';
-import SearchIcon from '@material-ui/icons/Search';
-
-import colors from '../../../util/Colors'
+import Grid from "@material-ui/core/Grid";
+import SearchIcon from "@material-ui/icons/Search";
+import InitPath from '../../../services/InitPath';
+import colors from "../../../util/Colors";
 
 class Busca extends Component {
   constructor(props) {
@@ -19,7 +19,11 @@ class Busca extends Component {
   }
 
   handleSubmit = (event) => {
-    window.location.href = `/busca/${this.state.value}`;
+    if(this.state.value !==""){
+window.location.href = `/busca/${this.state.value}`;
+    } else {
+window.location.href = `${InitPath}/`;
+    }
     event.preventDefault();
   };
 
@@ -29,34 +33,35 @@ class Busca extends Component {
 
   render() {
     return (
-      <Grid item  >
-        <form onSubmit={this.handleSubmit}
+      <Grid item>
+        <form
+          onSubmit={this.handleSubmit}
           style={{
             backgroundColor: colors.orangeLight,
             borderRadius: 10,
-            height: 50
-          }}>
-          <Grid container
+            height: 50,
+          }}
+        >
+          <Grid
+            container
             spacing={1}
             direction="row"
             alignItems="center"
             justify="flex-start"
             wrap="nowrap"
           >
-            <Grid item
-              container
-              justify="center"
-              alignContent="center"
-            >
-              <SearchIcon onClick={this.handleSubmit}
+            <Grid item container justify="center" alignContent="center">
+              <SearchIcon
+                onClick={this.handleSubmit}
                 style={{
                   width: 50,
                   height: 50,
                   color: colors.orangeDark,
-                  cursor: 'pointer'
-                }} />
+                  cursor: "pointer",
+                }}
+              />
             </Grid>
-            <Grid item spacing={2}>
+            <Grid item>
               <input
                 type="text"
                 value={this.state.value}
@@ -68,8 +73,7 @@ class Busca extends Component {
             </Grid>
           </Grid>
         </form>
-      </Grid >
-
+      </Grid>
     );
   }
 }

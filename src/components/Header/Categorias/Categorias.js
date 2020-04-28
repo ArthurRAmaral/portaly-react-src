@@ -4,19 +4,18 @@ import { NavLink } from "react-router-dom";
 
 //From utils
 import ApiCategorias from "../../../util/ApiCategorias";
-import colors from '../../../util/Colors'
+import colors from "../../../util/Colors";
 
 //From services
 import InitPath from "../../../services/InitPath";
 
 //Materail-ui
-import Grid from '@material-ui/core/Grid';
+import Grid from "@material-ui/core/Grid";
 
-
-const ApiCategories = categorias => {
+const ApiCategories = (categorias) => {
   return (
     <Fragment>
-      <Grid >
+      <Grid>
         <NavLink
           exact
           key={`Todos`}
@@ -26,16 +25,15 @@ const ApiCategories = categorias => {
           {`Todos`}
         </NavLink>
       </Grid>
-      {categorias.map(cat => {
+      {categorias.map((cat) => {
         return (
-          <Grid>
+          <Grid key={cat.id}>
             <NavLink
-              key={cat.id}
               key={`categorias${cat.id}`}
               to={`${InitPath}/categoria/${cat.id}`}
               activeStyle={{ backgroundColor: colors.orangeLight }}
             >
-              {cat.name}
+              <div>{cat.name}</div>
             </NavLink>
           </Grid>
         );
@@ -58,19 +56,20 @@ class Categorias extends Component {
     super(props);
 
     this.state = {
-      categories: []
+      categories: [],
     };
   }
 
   componentDidMount() {
-    ApiCategorias.getAllCategorias().then(res => {
+    ApiCategorias.getAllCategorias().then((res) => {
       this.setState({ categories: [...this.state.categories, ...res.data] });
     });
   }
 
   render() {
     return (
-      <Grid container
+      <Grid
+        container
         direction="row"
         justify="space-around"
         alignItems="center"

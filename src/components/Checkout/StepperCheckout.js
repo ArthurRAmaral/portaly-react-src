@@ -184,7 +184,7 @@ export default function HorizontalLinearStepper() {
                     onClick={handleSubmit}
                     className={classes.button}
                   >
-                    Adicionar ao Carrinho
+                    Finalizar pedido
                   </Button>
                 ) : (
                   <Button

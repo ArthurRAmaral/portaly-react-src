@@ -6,7 +6,7 @@
 }
 
 #homepage {
-  min-height: calc(100vh - (200px + 225.344px));
+  min-height: calc(100vh - (262px + 225.344px));
   display: flex;
   align-items: center;
   justify-content: center;
