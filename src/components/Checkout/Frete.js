@@ -10,17 +10,28 @@ class Cadastro extends Component {
     let dadosCadastro = JSON.parse(sessionStorage.getItem(varCadastro));
     let dadosFrete = JSON.parse(sessionStorage.getItem(varFrete));
 
-    this.state = dadosFrete
+    this.state = dadosCadastro
       ? dadosFrete
+        ? dadosFrete
+        : {
+            first_name: dadosCadastro.first_name,
+            last_name: dadosCadastro.last_name,
+            address_1: dadosCadastro.address_1,
+            address_2: dadosCadastro.address_2,
+            city: dadosCadastro.city,
+            state: dadosCadastro.state,
+            postcode: dadosCadastro.postcode,
+            country: dadosCadastro.country,
+          }
       : {
-          first_name: dadosCadastro.first_name,
-          last_name: dadosCadastro.last_name,
-          address_1: dadosCadastro.address_1,
-          address_2: dadosCadastro.address_2,
-          city: dadosCadastro.city,
-          state: dadosCadastro.state,
-          postcode: dadosCadastro.postcode,
-          country: dadosCadastro.country,
+          first_name: "",
+          last_name: "",
+          address_1: "",
+          address_2: "",
+          city: "",
+          state: "",
+          postcode: "",
+          country: "",
         };
 
     this.handleChange = this.handleChange.bind(this);
@@ -30,6 +41,10 @@ class Cadastro extends Component {
     this.state[e.target.id] = e.target.value;
     this.setState({ [e.target.id]: e.target.value });
     console.log(this.state);
+    sessionStorage.setItem(varFrete, JSON.stringify(this.state));
+  }
+
+  componentDidMount(){
     sessionStorage.setItem(varFrete, JSON.stringify(this.state));
   }
 

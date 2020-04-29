@@ -34,6 +34,10 @@ class Cadastro extends Component {
     sessionStorage.setItem(varName, JSON.stringify(this.state));
   }
 
+componentDidMount(){
+    sessionStorage.setItem(varName, JSON.stringify(this.state));
+}
+
   render() {
     return (
       <Fragment>
