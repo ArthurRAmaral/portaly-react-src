@@ -13,6 +13,7 @@
       "@woocommerce/woocommerce-rest-api": "^1.0.1",
       "dotenv": "^8.2.0",
       "materialize-css": "^1.0.0",
+      "pagseguro-nodejs": "^0.1.2",
       "react": "^16.13.0",
       "react-dom": "^16.13.0",
       "react-router-dom": "^5.1.2"
