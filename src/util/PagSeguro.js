@@ -26,7 +26,9 @@ pag.currency("BRL");
 // pag.setNotificationURL("http://localhost:3000/");
 
 export default {
-  async gerarPagamento(dadosEntega, produtosArray, dadosComprador) {
+  async gerarPagamento(dados) {
+    const { dadosEntrega, dadosProdutos, dadosComprador } = dados;
+    console.log(dados);
     // {
     //   id: 1,
     //   description: "Descrição do primeiro produto",
@@ -35,7 +37,7 @@ export default {
     //   weight: 2342,
     // }
     //Adicionando itens
-    for (const item of produtosArray) {
+    for (const item of dadosProdutos) {
       pag.addItem({
         id: item.id,
         description: item.description,
@@ -66,28 +68,9 @@ export default {
     //   country: "BRA",
     // }
     //Configurando a entrega do pedido
-    pag.shipping(dadosEntega);
-
-    // pag.transaction(
-    //   {
-    //     method: "boleto",
-    //     // value: Number,
-    //     // installments: Number, //opcional, padrão 1
-    //     // hash: String, //senderHash gerado pela biblioteca do PagSeguro
-    //   },
-    //   function (err, data) {
-    //     console.log(data);
-    //   }
-    // );
-
-    // let retorno = null;
-    // pag.checkout(function (err, session_id) {
-    //   retorno = session_id;
-    // });
+    pag.shipping(dadosEntrega);
 
     const email = pag.email.replace("@", "%40");
-
-    // pag.sessionId(function (err, session_id) {});
 
     let code = await axios
       .post(
@@ -96,45 +79,6 @@ export default {
         pag.xml.checkout.toString()
       )
       .then((res) => xmlParser.parse(res.data).checkout.code);
-
-    // const email = pag.email.replace("@", "%40");
-
-    // //axios.get(`${pag.uri}/checkout?email=${pag.email}&token=${pag.token}`);
-
-    // const smee = new SmeeClient({
-    //   source: "https://smee.io/n3IV1bC9ge9yHC",
-    //   target: "http://189.51.107.154:3000/",
-    //   logger: console,
-    // });
-
-    // const events = smee.start();
-    // console.log(events);
-
-    // let http = new XMLHttpRequest();
-
-    // http.open(
-    //   "post",
-    //   `${pag.uri}/checkout?email=${email}&token=${pag.token}`,
-    //   true
-    // );
-
-    // http.setRequestHeader("Access-Control-Allow-Origin", "*");
-    // http.setRequestHeader(
-    //   "Access-Control-Allow-Methods",
-    //   "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-    // );
-    // http.setRequestHeader(
-    //   "Access-Control-Allow-Headers",
-    //   "X-Requested-With,content-type"
-    // );
-    // http.setRequestHeader("Access-Control-Allow-Credentials", true);
-
-    // const res = await http.send(pag.xml.checkout.toString());
-
-    // console.log(res);
-
-    // Stop forwarding events
-    // events.close();
     return code;
   },
 };

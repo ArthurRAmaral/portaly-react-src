@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import TextField from "@material-ui/core/TextField";
+import Validation from "../../util/Validation";
 
 const varName = "dadosCadastro";
 
@@ -22,15 +23,28 @@ class Cadastro extends Component {
           country: "",
           email: "",
           phone: "",
+          validators: {
+            first_name: false,
+            last_name: false,
+            cpf: "",
+            address_1: "",
+            address_2: "",
+            city: "",
+            state: "",
+            postcode: "",
+            country: "",
+            email: "",
+            phone: "",
+          },
         };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleValidator = this.handleValidator.bind(this);
   }
 
   handleChange(e) {
     this.state[e.target.id] = e.target.value;
     this.setState({ [e.target.id]: e.target.value });
-    console.log(this.state);
     sessionStorage.setItem(varName, JSON.stringify(this.state));
   }
 
@@ -40,12 +54,17 @@ class Cadastro extends Component {
   }
 
   handleDataValid() {
-    for (const dado in this.state) {
-      if (this.state.hasOwnProperty(dado)) {
-        const element = this.state[dado];
-        console.log(element);
+    for (const data in this.state) {
+      if (this.state.hasOwnProperty(data)) {
+        const element = this.state[data];
+        // console.log(element);
       }
     }
+  }
+
+  handleValidator(e) {
+    const v = Validation[e.target.name](e.target.value);
+    this.setState({ validators: { [e.target.id]: v } });
   }
 
   render() {
@@ -57,6 +76,9 @@ class Cadastro extends Component {
           label="Nome"
           value={this.state.first_name}
           variant="outlined"
+          error={this.state.validators.first_name}
+          onBlur={this.handleValidator}
+          name="isWord"
         />
         <TextField
           id="last_name"

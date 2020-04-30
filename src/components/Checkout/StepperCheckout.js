@@ -26,6 +26,7 @@ import useStepIconStyles from "./styles/IconStyle";
 import funcoesCarrinho from "../../util/Carrinho";
 
 import PagSeguro from "../../util/PagSeguro";
+import btnPagSeguro from "../../util/btnPagSeguro";
 
 function getSteps() {
   return ["Carrinho", "Cadastro", "Frete", "Pagamento"];
@@ -77,11 +78,28 @@ function btnHandler() {
   return !funcoesCarrinho.getItensCarrinho().length;
 }
 
+let controle = false;
+sessionStorage.setItem("payChk", JSON.stringify({ dadosProdutos: [] }));
+
 export default function HorizontalLinearStepper() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [btncode, setBtnCode] = React.useState(null);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
+
+  const pag = () => {
+    if (!controle) {
+      const dados = JSON.parse(sessionStorage.getItem("payChk"));
+      PagSeguro.gerarPagamento(dados).then((code) => {
+        if (dados.dadosProdutos.length > 0) controle = true;
+        console.log(code, controle);
+        setBtnCode(code);
+      });
+    }
+  };
+
+  // pag();
 
   const isStepOptional = (step) => getOptionalSteps().includes(step);
 
@@ -98,9 +116,7 @@ export default function HorizontalLinearStepper() {
     setSkipped(newSkipped);
   };
 
-  const handleSubmit = async () => {
-    let code = await PagSeguro.gerarPagamento();
-  };
+  const handleSubmit = async () => {};
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -184,15 +200,19 @@ export default function HorizontalLinearStepper() {
                 )}
 
                 {activeStep === steps.length - 1 ? (
-                  <Button
-                    focusVisibleClassName="btn"
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSubmit}
-                    className={classes.button}
-                  >
-                    Finalizar pedido
-                  </Button>
+                  btncode ? (
+                    btnPagSeguro(btncode)
+                  ) : (
+                    <Button
+                      focusVisibleClassName="btn"
+                      variant="contained"
+                      color="primary"
+                      disabled
+                      className={classes.button}
+                    >
+                      Finalizar pedido
+                    </Button>
+                  )
                 ) : (
                   <Button
                     focusVisibleClassName="btn"

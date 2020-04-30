@@ -10,6 +10,8 @@ const varFrete = "dadosFrete";
 class Pagamento extends Component {
   constructor(props) {
     super(props);
+    this.pagseguro();
+
     let dadosCadastro = JSON.parse(sessionStorage.getItem(varCadastro));
     let dadosFrete = JSON.parse(sessionStorage.getItem(varFrete));
 
@@ -23,8 +25,9 @@ class Pagamento extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({ line_items: Carrinho.getItensCarrinho() });
+    await this.pagseguro();
   }
 
   pagamento = () => {
@@ -45,9 +48,13 @@ class Pagamento extends Component {
       const itemToPush = {
         id: item.product_id,
         description: responseItem.data.name,
-        amount: responseItem.data.price,
-        quantity: item.quantity,
-        weight: responseItem.data.weight,
+        amount: responseItem.data.price.split(".")[1]
+          ? responseItem.data.price
+          : responseItem.data.price + ".00",
+        quantity: parseInt(item.quantity),
+        weight: parseFloat(responseItem.data.weight)
+          ? parseFloat(responseItem.data.weight)
+          : 1,
       };
       arrayItens.push(itemToPush);
     }
@@ -58,7 +65,7 @@ class Pagamento extends Component {
     const buyer = {
       name: this.state.billing.first_name + " " + this.state.billing.last_name,
       email: this.state.billing.email,
-      phoneAreaCode: this.state.billing.phone.substring(0, 2),
+      phoneAreaCode: this.state.billing.phone.substring(1, 3),
       phoneNumber: this.state.billing.phone,
     };
 
@@ -81,19 +88,27 @@ class Pagamento extends Component {
   };
 
   pagseguro = async () => {
+    //Cria Ordem
+    this.pagamento();
     //Forma array de produtos
-    const products = await this.createPagseguroProducts();
-    //Froma array de comprador
-    const buyer = await this.createPagseguroBuyer();
-    //Forma array de entrega
-    const shipping = await this.createPagseguroShipping();
-    console.log(products);
-    console.log(buyer);
-    console.log(shipping);
+    const dadosProdutos = await this.createPagseguroProducts();
+    //Froma json de comprador
+    const dadosComprador = await this.createPagseguroBuyer();
+    //Forma json de entrega
+    const dadosEntrega = await this.createPagseguroShipping();
+    sessionStorage.setItem(
+      "payChk",
+      JSON.stringify({
+        dadosProdutos,
+        dadosComprador,
+        dadosEntrega,
+      })
+    );
   };
 
   render() {
-    return <button onClick={this.pagamento}>Comprar</button>;
+    this.pagseguro();
+    return <div></div>;
   }
 }
 
