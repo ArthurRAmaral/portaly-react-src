@@ -21,6 +21,7 @@ class MostrarProdutosMontagem extends Component {
   }
 
   handleSelect(id) {
+    this.props.disabled(false);
     Montador.setItem(id, this.state.categoriaSlug);
 
     console.log(id, this.state.categoriaSlug);

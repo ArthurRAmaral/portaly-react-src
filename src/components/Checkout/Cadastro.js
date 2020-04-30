@@ -34,9 +34,19 @@ class Cadastro extends Component {
     sessionStorage.setItem(varName, JSON.stringify(this.state));
   }
 
-componentDidMount(){
+  componentDidMount() {
     sessionStorage.setItem(varName, JSON.stringify(this.state));
-}
+    this.handleDataValid();
+  }
+
+  handleDataValid() {
+    for (const dado in this.state) {
+      if (this.state.hasOwnProperty(dado)) {
+        const element = this.state[dado];
+        console.log(element);
+      }
+    }
+  }
 
   render() {
     return (

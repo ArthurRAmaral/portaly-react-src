@@ -53,6 +53,7 @@ class EscolherItems extends Component {
             categoriaSlug={this.state.categoriaSlug}
             key={this.state.categoriaSlug}
             produtos={this.state.produtos}
+            disabled={this.props.disabled}
           />
         ) : (
           <CircleLoading />

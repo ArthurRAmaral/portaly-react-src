@@ -14,12 +14,14 @@
     "axios": "^0.19.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "fast-xml-parser": "^3.16.0",
     "materialize-css": "^1.0.0",
     "pagseguro": "^0.1.0",
     "pagseguro-nodejs": "^0.1.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-router-dom": "^5.1.2"
+    "react-router-dom": "^5.1.2",
+    "smee-client": "^1.1.0"
   },
   "scripts": {
     "crabuild": "react-scripts build",

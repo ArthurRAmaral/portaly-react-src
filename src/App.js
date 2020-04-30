@@ -8,7 +8,6 @@ import Carrinho from "./util/Carrinho";
 import "materialize-css/dist/css/materialize.min.css";
 import "./css/Global.css";
 import "cors";
-
 const App = () => {
   Carrinho.resetCarrinho();
 

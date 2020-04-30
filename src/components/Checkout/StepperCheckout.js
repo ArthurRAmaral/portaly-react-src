@@ -25,7 +25,7 @@ import theme from "./styles/theme";
 import useStepIconStyles from "./styles/IconStyle";
 import funcoesCarrinho from "../../util/Carrinho";
 
-import ApiProdutos from "../../util/ApiProdutos";
+import PagSeguro from "../../util/PagSeguro";
 
 function getSteps() {
   return ["Carrinho", "Cadastro", "Frete", "Pagamento"];
@@ -98,7 +98,9 @@ export default function HorizontalLinearStepper() {
     setSkipped(newSkipped);
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    let code = await PagSeguro.gerarPagamento();
+  };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);

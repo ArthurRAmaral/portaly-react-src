@@ -45,13 +45,8 @@ const produtosArray = [
     phoneNumber: "12345678",
   };
 
-const testar = () => {
-  console.log(
-    pagSeguro.gerarPagamento(dadosEntega, produtosArray, dadosComprador)
-  );
-};
+// let code = "94865BE20A0A753CC4174FADBB56C43A";
 
-let code = "94865BE20A0A753CC4174FADBB56C43A";
 class DefaultPage extends Component {
   constructor(props) {
     super(props);
@@ -64,7 +59,6 @@ class DefaultPage extends Component {
       produtosArray,
       dadosComprador
     );
-    console.log(code);
     this.setState({ code });
   }
 

@@ -1,4 +1,5 @@
 import axios from "axios";
+import xmlParser from "fast-xml-parser";
 
 var PagSeguro = require("pagseguro-nodejs");
 
@@ -10,6 +11,11 @@ var pag = new PagSeguro({
   sandbox: true,
   sandbox_email: "c71116547086085144918@sandbox.pagseguro.com.br",
 });
+
+axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com";
+axios.defaults.headers.post["Content-Type"] =
+  "application/xml;charset=ISO-8859-1";
+axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 
 pag.currency("BRL");
 
@@ -79,36 +85,56 @@ export default {
     //   retorno = session_id;
     // });
 
-    // console.log(
-    //   await axios({
-    //     method: "post",
-    //     url: `${pag.uri}?email=${pag.email}&token=${pag.token}`,
-    //     headers: {
-    //       "Content-Type": "application/xml;charset=UTF-8",
-    //       "Access-Control-Allow-Origin": "localhost:3000",
-    //     },
-    //     data: pag.xml.checkout.toString(),
-    //   })
-    // );
+    const email = pag.email.replace("@", "%40");
+
+    // pag.sessionId(function (err, session_id) {});
+
+    let code = await axios
+      .post(
+        `/${pag.uri}/checkout?email=${email}&token=${pag.token}`,
+
+        pag.xml.checkout.toString()
+      )
+      .then((res) => xmlParser.parse(res.data).checkout.code);
+
+    // const email = pag.email.replace("@", "%40");
+
+    // //axios.get(`${pag.uri}/checkout?email=${pag.email}&token=${pag.token}`);
+
+    // const smee = new SmeeClient({
+    //   source: "https://smee.io/n3IV1bC9ge9yHC",
+    //   target: "http://189.51.107.154:3000/",
+    //   logger: console,
+    // });
+
+    // const events = smee.start();
+    // console.log(events);
 
     // let http = new XMLHttpRequest();
+
     // http.open(
     //   "post",
-    //   `${pag.uri}/checkout?email=${pag.email}&token=${pag.token}`,
+    //   `${pag.uri}/checkout?email=${email}&token=${pag.token}`,
     //   true
     // );
 
-    // console.log(pag.xml.checkout.toString());
-
+    // http.setRequestHeader("Access-Control-Allow-Origin", "*");
     // http.setRequestHeader(
-    //   "Access-Control-Allow-Origin",
-    //   "https://sandbox.pagseguro.uol.com.br"
+    //   "Access-Control-Allow-Methods",
+    //   "GET, POST, OPTIONS, PUT, PATCH, DELETE"
     // );
+    // http.setRequestHeader(
+    //   "Access-Control-Allow-Headers",
+    //   "X-Requested-With,content-type"
+    // );
+    // http.setRequestHeader("Access-Control-Allow-Credentials", true);
 
     // const res = await http.send(pag.xml.checkout.toString());
 
     // console.log(res);
 
-    // return;
+    // Stop forwarding events
+    // events.close();
+    return code;
   },
 };

@@ -11,46 +11,18 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 
-import EscolherItems from "./EscolherItem";
+import EscolherItems from "../EscolherItem";
 
-import Montador from '../../util/MontadorPorta';
-import Carrinho from "../../util/Carrinho";
+import Montador from "../../../util/MontadorPorta";
+import Carrinho from "../../../util/Carrinho";
 
-import FecharMontagem from "./FecharMontagem";
-import ApiProdutos from "../../util/ApiProdutos";
+import FecharMontagem from "../FecharMontagem";
+import ApiProdutos from "../../../util/ApiProdutos";
+
+import useStyles from "./style";
+import theme from "./theme";
 
 const maoDeObraID = -1;
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-  },
-  button: {
-    marginRight: theme.spacing(1),
-  },
-  instructions: {
-    alignItems: theme.shape,
-    minHeight: theme.spacing(50),
-    width: theme.spacing(100),
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-}));
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#6d4c41",
-    },
-    secondary: {
-      light: "#0066ff",
-      main: "#0044ff",
-      contrastText: "#ffcc00",
-    },
-    contrastThreshold: 3,
-    tonalOffset: 0.2,
-  },
-});
 
 function getSteps() {
   return [
@@ -67,21 +39,49 @@ function getOptionalSteps() {
   return [];
 }
 
-function getStepContent(step) {
+function getStepContent(step, btnHandler) {
   switch (step) {
     case 0:
-      return <EscolherItems categoriaSlug="alizar" key="alizar" />;
+      return (
+        <EscolherItems
+          categoriaSlug="alizar"
+          key="alizar"
+          disabled={btnHandler}
+        />
+      );
     case 1:
-      return <EscolherItems categoriaSlug="dobradica" key="dobradica" />;
+      return (
+        <EscolherItems
+          categoriaSlug="dobradica"
+          key="dobradica"
+          disabled={btnHandler}
+        />
+      );
     case 2:
-      return <EscolherItems categoriaSlug="fechadura" key="fechadura" />;
+      return (
+        <EscolherItems
+          categoriaSlug="fechadura"
+          key="fechadura"
+          disabled={btnHandler}
+        />
+      );
     case 3:
       return (
-        <EscolherItems categoriaSlug="marco-batente" key="marco-batente" />
+        <EscolherItems
+          categoriaSlug="marco-batente"
+          key="marco-batente"
+          disabled={btnHandler}
+        />
       );
 
     case 4:
-      return <EscolherItems categoriaSlug="porta" key="porta" />;
+      return (
+        <EscolherItems
+          categoriaSlug="porta"
+          key="porta"
+          disabled={btnHandler}
+        />
+      );
     case 5:
       return <FecharMontagem />;
     default:
@@ -92,6 +92,7 @@ function getStepContent(step) {
 export default function HorizontalLinearStepper() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [btnvalid, setBtnValid] = React.useState(1);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
 
@@ -154,6 +155,15 @@ export default function HorizontalLinearStepper() {
     Montador.resetMontador();
   };
 
+  function btnHandler(valid) {
+    setBtnValid(valid);
+  }
+
+  const twoFunctionsHandler = () => {
+    btnHandler(true);
+    handleNext();
+  };
+
   return (
     <div className={classes.root}>
       <ThemeProvider theme={theme}>
@@ -189,7 +199,7 @@ export default function HorizontalLinearStepper() {
           ) : (
             <div>
               <Card className={classes.instructions}>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep, btnHandler)}
               </Card>
               <div>
                 <Button
@@ -199,7 +209,7 @@ export default function HorizontalLinearStepper() {
                 >
                   Voltar
                 </Button>
-                {isStepOptional(activeStep) && (
+                {/* {isStepOptional(activeStep) && (
                   <Button
                     variant="contained"
                     color="primary"
@@ -208,8 +218,7 @@ export default function HorizontalLinearStepper() {
                   >
                     Pular
                   </Button>
-                )}
-
+                )} */}
                 {activeStep === steps.length - 1 ? (
                   <Button
                     focusVisibleClassName="btn"
@@ -225,8 +234,9 @@ export default function HorizontalLinearStepper() {
                     focusVisibleClassName="btn"
                     variant="contained"
                     color="primary"
-                    onClick={handleNext}
+                    onClick={twoFunctionsHandler}
                     className={classes.button}
+                    disabled={btnvalid}
                   >
                     Próximo
                   </Button>
