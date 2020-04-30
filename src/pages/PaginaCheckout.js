@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import Stepper from '../components/Checkout/StepperCheckout';
+import React, { Component } from "react";
+import Stepper from "../components/Checkout/StepperCheckout";
 
 class PaginaCarrinho extends Component {
   constructor(props) {
@@ -11,9 +11,7 @@ class PaginaCarrinho extends Component {
   }
 
   render() {
-    return (
-      <Stepper />
-    );
+    return <Stepper />;
   }
 }
 

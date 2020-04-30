@@ -1,53 +1,56 @@
 {
-   "name": "portaly_react_theme",
-   "version": "0.1.0",
-   "private": true,
-   "main": "src/index.js",
-   "dependencies": {
-      "@devloco/react-scripts-wptheme": "^3.4.0-wp.1",
-      "@material-ui/core": "^4.9.9",
-      "@material-ui/icons": "^4.9.1",
-      "@testing-library/jest-dom": "^4.2.4",
-      "@testing-library/react": "^9.3.2",
-      "@testing-library/user-event": "^7.1.2",
-      "@woocommerce/woocommerce-rest-api": "^1.0.1",
-      "dotenv": "^8.2.0",
-      "materialize-css": "^1.0.0",
-      "pagseguro-nodejs": "^0.1.2",
-      "react": "^16.13.0",
-      "react-dom": "^16.13.0",
-      "react-router-dom": "^5.1.2"
-   },
-   "scripts": {
-      "crabuild": "react-scripts build",
-      "craeject": "react-scripts eject",
-      "crastart": "react-scripts start",
-      "cratest": "react-scripts test",
-      "build": "wptheme-scripts build",
-      "start": "wptheme-scripts start",
-      "wpbuild": "wptheme-scripts wpbuild",
-      "wpstart": "wptheme-scripts wpstart"
-   },
-   "eslintConfig": {
-      "extends": "react-app"
-   },
-   "browserslist": {
-      "production": [
-         ">0.2%",
-         "not dead",
-         "not op_mini all"
-      ],
-      "development": [
-         "last 1 chrome version",
-         "last 1 firefox version",
-         "last 1 safari version"
-      ]
-   },
-   "homepage": "/wp-content/themes/portaly-react-theme",
-   "browserLaunchTo": "http://localhost/",
-   "devDependencies": {
-      "eslint": "^6.8.0",
-      "eslint-config-airbnb-base": "^14.1.0",
-      "eslint-plugin-import": "^2.20.2"
-   }
+  "name": "portaly_react_theme",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.js",
+  "dependencies": {
+    "@devloco/react-scripts-wptheme": "^3.4.0-wp.1",
+    "@material-ui/core": "^4.9.9",
+    "@material-ui/icons": "^4.9.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@woocommerce/woocommerce-rest-api": "^1.0.1",
+    "axios": "^0.19.2",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "materialize-css": "^1.0.0",
+    "pagseguro": "^0.1.0",
+    "pagseguro-nodejs": "^0.1.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-router-dom": "^5.1.2"
+  },
+  "scripts": {
+    "crabuild": "react-scripts build",
+    "craeject": "react-scripts eject",
+    "crastart": "react-scripts start",
+    "cratest": "react-scripts test",
+    "build": "wptheme-scripts build",
+    "start": "wptheme-scripts start",
+    "wpbuild": "wptheme-scripts wpbuild",
+    "wpstart": "wptheme-scripts wpstart"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "homepage": "./",
+  "browserLaunchTo": "http://localhost/",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  }
 }

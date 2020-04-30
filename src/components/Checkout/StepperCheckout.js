@@ -23,6 +23,7 @@ import Pagamento from "./Pagamento";
 import useStyles from "./styles/style";
 import theme from "./styles/theme";
 import useStepIconStyles from "./styles/IconStyle";
+import funcoesCarrinho from "../../util/Carrinho";
 
 import ApiProdutos from "../../util/ApiProdutos";
 
@@ -70,6 +71,10 @@ function StepIcon(props) {
       {icons[String(props.icon)]}
     </div>
   );
+}
+
+function btnHandler() {
+  return !funcoesCarrinho.getItensCarrinho().length;
 }
 
 export default function HorizontalLinearStepper() {
@@ -193,6 +198,7 @@ export default function HorizontalLinearStepper() {
                     color="primary"
                     onClick={handleNext}
                     className={classes.button}
+                    disabled={btnHandler()}
                   >
                     Próximo
                   </Button>

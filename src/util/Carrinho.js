@@ -1,10 +1,8 @@
-import ApiProdutos from "./ApiProdutos";
-
 const Carrinho = {
   itens: [],
 };
 
-const varName = 'carrinho';
+const varName = "carrinho";
 
 const funcoesCarrinho = {
   resetCarrinho: () => {
@@ -23,28 +21,27 @@ const funcoesCarrinho = {
     const carrinho = funcoesCarrinho.getCarrinho();
 
     let achou = false;
-    carrinho.itens.forEach(element => {
-      if(element.product_id === id) {
+    carrinho.itens.forEach((element) => {
+      if (element.product_id === id) {
         element.quantity++;
         achou = true;
       }
     });
 
-    if(!achou)
-      carrinho.itens.push({product_id: id, quantity: 1});
+    if (!achou) carrinho.itens.push({ product_id: id, quantity: 1 });
 
     funcoesCarrinho.setCarrinho(carrinho);
   },
 
-  getItensCarrinho: () => JSON.parse(localStorage.getItem('carrinho')).itens,
+  getItensCarrinho: () => JSON.parse(localStorage.getItem("carrinho")).itens,
 
   remove: async (id) => {
     const carrinho = funcoesCarrinho.getCarrinho();
 
-    carrinho.itens = carrinho.itens.filter((item) => (item.product_id !== id));
+    carrinho.itens = carrinho.itens.filter((item) => item.product_id !== id);
 
     funcoesCarrinho.setCarrinho(carrinho);
-  }
+  },
 };
 
 export default funcoesCarrinho;

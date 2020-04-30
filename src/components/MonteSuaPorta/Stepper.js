@@ -13,7 +13,7 @@ import Card from "@material-ui/core/Card";
 
 import EscolherItems from "./EscolherItem";
 
-import Montador from "../../util/MontadorPorta";
+import Montador from '../../util/MontadorPorta';
 import Carrinho from "../../util/Carrinho";
 
 import FecharMontagem from "./FecharMontagem";
