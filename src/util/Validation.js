@@ -7,6 +7,7 @@ const regras = {
     ),
   isWord: (value) => /^[a-zA-Z]+$/g.test(value),
   isPhone: (value) => /^\(\d{2}\) \d{4,5}-\d{4}$/.test(value),
+  isCep: (value) => /^[0-9]{2}.[0-9]{3}-[0-9]{3}$/.test(value),
 };
 
 export default regras;

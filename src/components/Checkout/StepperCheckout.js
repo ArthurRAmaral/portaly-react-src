@@ -27,6 +27,8 @@ import funcoesCarrinho from "../../util/Carrinho";
 
 import PagSeguro from "../../util/PagSeguro";
 import btnPagSeguro from "../../util/btnPagSeguro";
+import ApiProdutos from "../../util/ApiProdutos";
+import ApiPedidos from "../../util/ApiPedidos";
 
 function getSteps() {
   return ["Carrinho", "Cadastro", "Frete", "Pagamento"];
@@ -36,7 +38,7 @@ function getOptionalSteps() {
   return [];
 }
 
-function getStepContent(step) {
+function getStepContent(step, validCode) {
   switch (step) {
     case 0:
       return <Carrinho />;
@@ -45,6 +47,33 @@ function getStepContent(step) {
     case 2:
       return <Frete />;
     case 3:
+      (async () => {
+        //Forma array de produtos
+        const dadosProdutos = await createPagseguroProducts();
+        //Froma json de comprador
+        const dadosComprador = await createPagseguroBuyer();
+        //Forma json de entrega
+        const dadosEntrega = await createPagseguroShipping();
+
+        dados = {
+          dadosProdutos,
+          dadosComprador,
+          dadosEntrega,
+        };
+        if (dadosProdutos.length > 0 && contador === 0) {
+          contador++;
+          PagSeguro.gerarPagamento(dados).then((codigo) => {
+            //Cria Ordem
+
+            pagamento();
+            // if (dados.dadosProdutos.length > 0) controle = true;
+            console.log(codigo);
+            code = codigo;
+            validCode(code);
+            // funcoesCarrinho.reset();
+          });
+        }
+      })();
       return <Pagamento />;
     default:
       return "Unknown step";
@@ -78,28 +107,118 @@ function btnHandler() {
   return !funcoesCarrinho.getItensCarrinho().length;
 }
 
-let controle = false;
-sessionStorage.setItem("payChk", JSON.stringify({ dadosProdutos: [] }));
+const varCadastro = "dadosCadastro";
+const varFrete = "dadosFrete";
+let dadosCadastro = JSON.parse(sessionStorage.getItem(varCadastro));
+let dadosFrete = JSON.parse(sessionStorage.getItem(varFrete));
+
+const createPagseguroProducts = async () => {
+  const arrayItens = [];
+  for (const item of funcoesCarrinho.getItensCarrinho()) {
+    const responseItem = await ApiProdutos.getProduto(item.product_id);
+    const itemToPush = {
+      id: item.product_id,
+      description: responseItem.data.name,
+      amount: responseItem.data.price.split(".")[1]
+        ? responseItem.data.price
+        : responseItem.data.price + ".00",
+      quantity: parseInt(item.quantity),
+      weight: parseFloat(responseItem.data.weight)
+        ? parseFloat(responseItem.data.weight)
+        : 1,
+    };
+    arrayItens.push(itemToPush);
+  }
+  return arrayItens;
+};
+
+const createPagseguroBuyer = async () => {
+  const buyer = {
+    name: dadosCadastro.first_name + " " + dadosCadastro.last_name,
+    email: dadosCadastro.email,
+    phoneAreaCode: dadosCadastro.phone.substring(1, 3),
+    phoneNumber: dadosCadastro.phone,
+  };
+
+  return buyer;
+};
+
+const createPagseguroShipping = async () => {
+  const shipping = {
+    type: 1,
+    street: dadosFrete.address_2,
+    number: dadosFrete.address_1,
+    complement: "",
+    district: "",
+    postalCode: dadosFrete.postcode,
+    city: dadosFrete.city,
+    state: dadosFrete.state,
+    country: dadosFrete.country,
+  };
+  return shipping;
+};
+
+let code;
+
+const pagamento = () => {
+  if (contador === 1) {
+    ApiPedidos.createOrder({
+      payment_method: "delete",
+      payment_method_title: "delete",
+      set_paid: false,
+      billing: dadosCadastro,
+      shipping: dadosFrete,
+      line_items: funcoesCarrinho.getItensCarrinho(),
+    })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+  }
+};
+
+let dados = null;
+
+// (async () => {
+//   //Cria Ordem
+//   pagamento();
+//   //Forma array de produtos
+//   const dadosProdutos = await createPagseguroProducts();
+//   //Froma json de comprador
+//   const dadosComprador = await createPagseguroBuyer();
+//   //Forma json de entrega
+//   const dadosEntrega = await createPagseguroShipping();
+
+//   dados = {
+//     dadosProdutos,
+//     dadosComprador,
+//     dadosEntrega,
+//   };
+
+//   PagSeguro.gerarPagamento(dados).then((codigo) => {
+//     // if (dados.dadosProdutos.length > 0) controle = true;
+//     console.log(codigo);
+//     code = codigo;
+//     // setBtnCode(code);
+//   });
+// })();
+
+let contador = 0;
 
 export default function HorizontalLinearStepper() {
   const classes = useStyles();
+  const [finalCcode, setCode] = React.useState(null);
   const [activeStep, setActiveStep] = React.useState(0);
-  const [btncode, setBtnCode] = React.useState(null);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
 
-  const pag = () => {
-    if (!controle) {
-      const dados = JSON.parse(sessionStorage.getItem("payChk"));
-      PagSeguro.gerarPagamento(dados).then((code) => {
-        if (dados.dadosProdutos.length > 0) controle = true;
-        console.log(code, controle);
-        setBtnCode(code);
-      });
+  function validCode(code) {
+    if (!finalCcode) {
+      setCode(code);
     }
-  };
-
-  // pag();
+  }
 
   const isStepOptional = (step) => getOptionalSteps().includes(step);
 
@@ -178,7 +297,7 @@ export default function HorizontalLinearStepper() {
           ) : (
             <div>
               <Card className={classes.instructions}>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep, validCode)}
               </Card>
               <div>
                 <Button
@@ -200,8 +319,8 @@ export default function HorizontalLinearStepper() {
                 )}
 
                 {activeStep === steps.length - 1 ? (
-                  btncode ? (
-                    btnPagSeguro(btncode)
+                  finalCcode ? (
+                    btnPagSeguro(finalCcode)
                   ) : (
                     <Button
                       focusVisibleClassName="btn"

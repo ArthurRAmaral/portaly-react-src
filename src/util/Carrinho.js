@@ -5,6 +5,9 @@ const Carrinho = {
 const varName = "carrinho";
 
 const funcoesCarrinho = {
+  reset: () => {
+    localStorage.setItem(varName, JSON.stringify(Carrinho));
+  },
   resetCarrinho: () => {
     localStorage.getItem(varName)
       ? console.log()
