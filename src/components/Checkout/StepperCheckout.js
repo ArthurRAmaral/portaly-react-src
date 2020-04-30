@@ -48,12 +48,16 @@ function getStepContent(step, validCode) {
       return <Frete />;
     case 3:
       (async () => {
+        const varCadastro = "dadosCadastro";
+        const varFrete = "dadosFrete";
+        let dadosCadastro = JSON.parse(sessionStorage.getItem(varCadastro));
+        let dadosFrete = JSON.parse(sessionStorage.getItem(varFrete));
         //Forma array de produtos
         const dadosProdutos = await createPagseguroProducts();
         //Froma json de comprador
-        const dadosComprador = await createPagseguroBuyer();
+        const dadosComprador = await createPagseguroBuyer(dadosCadastro);
         //Forma json de entrega
-        const dadosEntrega = await createPagseguroShipping();
+        const dadosEntrega = await createPagseguroShipping(dadosFrete);
 
         dados = {
           dadosProdutos,
@@ -65,12 +69,12 @@ function getStepContent(step, validCode) {
           PagSeguro.gerarPagamento(dados).then((codigo) => {
             //Cria Ordem
 
-            pagamento();
+            pagamento(dadosCadastro, dadosFrete);
             // if (dados.dadosProdutos.length > 0) controle = true;
             console.log(codigo);
             code = codigo;
             validCode(code);
-            // funcoesCarrinho.reset();
+            funcoesCarrinho.reset();
           });
         }
       })();
@@ -107,11 +111,6 @@ function btnHandler() {
   return !funcoesCarrinho.getItensCarrinho().length;
 }
 
-const varCadastro = "dadosCadastro";
-const varFrete = "dadosFrete";
-let dadosCadastro = JSON.parse(sessionStorage.getItem(varCadastro));
-let dadosFrete = JSON.parse(sessionStorage.getItem(varFrete));
-
 const createPagseguroProducts = async () => {
   const arrayItens = [];
   for (const item of funcoesCarrinho.getItensCarrinho()) {
@@ -132,7 +131,7 @@ const createPagseguroProducts = async () => {
   return arrayItens;
 };
 
-const createPagseguroBuyer = async () => {
+const createPagseguroBuyer = async (dadosCadastro) => {
   const buyer = {
     name: dadosCadastro.first_name + " " + dadosCadastro.last_name,
     email: dadosCadastro.email,
@@ -143,7 +142,7 @@ const createPagseguroBuyer = async () => {
   return buyer;
 };
 
-const createPagseguroShipping = async () => {
+const createPagseguroShipping = async (dadosFrete) => {
   const shipping = {
     type: 1,
     street: dadosFrete.address_2,
@@ -160,7 +159,7 @@ const createPagseguroShipping = async () => {
 
 let code;
 
-const pagamento = () => {
+const pagamento = (dadosCadastro, dadosFrete) => {
   if (contador === 1) {
     ApiPedidos.createOrder({
       payment_method: "delete",
