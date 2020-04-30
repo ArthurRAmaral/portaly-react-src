@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import ApiProdutos from "../util/ApiProdutos";
 import LineLoading from "../components/loading/LineLoading";
 import MostrarProdutos from "../components/MostraProdutos";
+import Slide from "../components/Slide";
 
 class HomePage extends Component {
   constructor(props) {
@@ -22,13 +23,14 @@ class HomePage extends Component {
 
   render() {
     return (
-      <Fragment>
+      <div style={{ width: "100%", backgroundColor: "#ebebeb", display: "inline-table" }}>
+        <Slide />
         {this.state.produtos ? (
           <MostrarProdutos produtos={this.state.produtos} />
         ) : (
-          <LineLoading />
-        )}
-      </Fragment>
+            <LineLoading />
+          )}
+      </div>
     );
   }
 }
