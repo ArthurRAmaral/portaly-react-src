@@ -16,20 +16,26 @@ class HomePage extends Component {
   componentDidMount() {
     ApiProdutos.getAllPublishedProducts().then((res) => {
       this.setState({
-        produtos: res.data._links,
+        produtos: res.data,
       });
     });
   }
 
   render() {
     return (
-      <div style={{ width: "100%", backgroundColor: "#ebebeb", display: "inline-table" }}>
+      <div
+        style={{
+          width: "100%",
+          backgroundColor: "#ebebeb",
+          display: "inline-table",
+        }}
+      >
         <Slide />
         {this.state.produtos ? (
           <MostrarProdutos produtos={this.state.produtos} />
         ) : (
-            <LineLoading />
-          )}
+          <LineLoading />
+        )}
       </div>
     );
   }

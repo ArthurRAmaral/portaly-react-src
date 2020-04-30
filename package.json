@@ -20,6 +20,7 @@
     "pagseguro-nodejs": "^0.1.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-material-ui-carousel": "^1.4.3",
     "react-router-dom": "^5.1.2",
     "smee-client": "^1.1.0"
   },
