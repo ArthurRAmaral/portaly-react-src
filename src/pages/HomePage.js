@@ -1,25 +1,8 @@
 import React, { Component, Fragment } from "react";
-import ApiProdutos from "../util/ApiProdutos";
-import LineLoading from "../components/loading/LineLoading";
-import MostrarProdutos from "../components/MostraProdutos";
 import Slide from "../components/Slide";
+import Tabs from "../components/Tabs";
 
 class HomePage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      produtos: null,
-    };
-  }
-
-  componentDidMount() {
-    ApiProdutos.getAllPublishedProducts().then((res) => {
-      this.setState({
-        produtos: res.data,
-      });
-    });
-  }
 
   render() {
     return (
@@ -31,11 +14,7 @@ class HomePage extends Component {
         }}
       >
         <Slide />
-        {this.state.produtos ? (
-          <MostrarProdutos produtos={this.state.produtos} />
-        ) : (
-          <LineLoading />
-        )}
+        <Tabs />
       </div>
     );
   }
