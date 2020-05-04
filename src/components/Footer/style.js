@@ -11,7 +11,11 @@ const useStyles = makeStyles((theme) => ({
   },
   direitos: {
     backgroundColor: colors.orangeDarkDark,
-    minHeight: 50,
+    minHeight: 30,
+  },
+  textFooter: {
+    color: colors.white,
+    fontSize: 13,
   },
   portaly: {
     maxWidth: 250,
@@ -48,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 5,
   },
   text: {
+    color: colors.orangeDark,
+  },
+  svg: {
     color: colors.orangeDark,
   },
 }));

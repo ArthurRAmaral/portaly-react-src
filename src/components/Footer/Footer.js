@@ -34,7 +34,7 @@ const Footer = () => {
   return (
     <Grid container direction="column" wrap="nowrap" className={classes.root}>
       <Grid container direction="row" justify="space-around">
-        <Grid item xs={4} container direction="column" wrap="wrap">
+        <Grid item xs={12} sm={4} container direction="column" wrap="wrap">
           <List>
             <ListItem key="logo">
               <img
@@ -44,26 +44,62 @@ const Footer = () => {
               />
             </ListItem>
             <ListItem>
-              <Grid>
-                <MapIcon />
-                <Typography className={classes.text}>
-                  Av. Francisco Negrão de Lima, 860 - Céu Azul, Belo Horizonte
-                </Typography>
+              <Grid container direction="row">
+                <Grid
+                  item
+                  xs={1}
+                  container
+                  justify="center"
+                  alignItems="center"
+                >
+                  <MapIcon className={classes.svg} />
+                </Grid>
+                <Grid item xs={8}>
+                  <Typography className={classes.text}>
+                    Av. Francisco Negrão de Lima, 860 - Céu Azul, Belo Horizonte
+                  </Typography>
+                </Grid>
               </Grid>
             </ListItem>
             <ListItem>
-              <WhatsAppIcon />
-              <Typography className={classes.text}>(31) 2522-2915</Typography>
+              <Grid container directio="row">
+                <Grid
+                  item
+                  xs={1}
+                  container
+                  justify="center"
+                  alignItems="center"
+                >
+                  <WhatsAppIcon className={classes.svg} />
+                </Grid>
+                <Grid item xs={8}>
+                  <Typography className={classes.text}>
+                    (31) 2522-2915
+                  </Typography>
+                </Grid>
+              </Grid>
             </ListItem>
             <ListItem>
-              <EmailIcon />
-              <Typography className={classes.text}>
-                portalyportas@gmail.com
-              </Typography>
+              <Grid container direction=" row">
+                <Grid
+                  item
+                  xs={1}
+                  container
+                  justify="center"
+                  alignItems="center"
+                >
+                  <EmailIcon className={classes.svg} />
+                </Grid>
+                <Grid item xs={8}>
+                  <Typography className={classes.text}>
+                    portalyportas@gmail.com
+                  </Typography>
+                </Grid>
+              </Grid>
             </ListItem>
           </List>
         </Grid>
-        <Grid item xs={4} container direction="column">
+        <Grid item xs={12} sm={4} container direction="column">
           <List>
             <Typography variant="h5" className={classes.tille}>
               VEJA MAIS PRODUTOS
@@ -86,7 +122,7 @@ const Footer = () => {
             </Grid>
           </List>
         </Grid>
-        <Grid item xs={4} container direction="column">
+        <Grid item xs={12} sm={4} container direction="column">
           <Typography variant="h5" className={classes.titlePagamento}>
             FORMAS DE PAGAMENTO
           </Typography>
@@ -194,7 +230,7 @@ const Footer = () => {
         alignContent="center"
         className={classes.direitos}
       >
-        <Typography className={classes.tesxt}>
+        <Typography className={classes.textFooter}>
           © 2020 PORTALY. TODAS AS FOTOS E DIREITOS SÃO EXCLUSIVOS.
         </Typography>
       </Grid>
