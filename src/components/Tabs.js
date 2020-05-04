@@ -39,7 +39,7 @@ TabPanel.propTypes = {
 
 function getProdutos(setProdutos) {
   ApiProdutos.getAllPublishedProducts().then((res) => {
-    setProdutos(...res.data);
+    setProdutos(res.data);
   });
 }
 
@@ -61,7 +61,7 @@ export default function FullWidthTabs() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-  const [produtos, setProdutos] = React.useState([]);
+  const [produtos, setProdutos] = React.useState();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
