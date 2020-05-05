@@ -10,12 +10,6 @@ import {
   Typography,
   Grid,
   Button,
-  Checkbox,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  FormLabel,
-  Slider,
 } from "@material-ui/core";
 
 function Banner(props) {

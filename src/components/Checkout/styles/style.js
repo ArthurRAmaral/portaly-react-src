@@ -1,15 +1,8 @@
-import React from 'react';
-import {
-  makeStyles,
-  ThemeProvider,
-  createMuiTheme,
-} from '@material-ui/core/styles';
-import theme from "./theme";
-
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: "100%",
   },
   button: {
     marginRight: theme.spacing(1),

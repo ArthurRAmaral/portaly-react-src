@@ -1,5 +1,5 @@
 // From dependencies
-import React, { Component } from "react";
+import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 // From componets
@@ -18,31 +18,21 @@ import InitPath from "./services/InitPath";
 // From css
 import "./css/Global.css";
 
-class Routes extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <section id="homepage">
-        <Switch>
-          <Route path={`${InitPath}/`} exact component={HomePage} />
-          <Route
-            path={`${InitPath}/categoria/:id`}
-            component={PaginaCategoria}
-          />
-          <Route path={`${InitPath}/produto/:slug`} component={PaginaProduto} />
-          <Route path={`${InitPath}/montesuaporta`} component={MonteSuaPorta} />
-          <Route path={`${InitPath}/busca/:value`} component={ProdutoBuscado} />
-          <Route path={`${InitPath}/meuCarrinho`} component={Carrinho} />
-          <Route path={`${InitPath}/teste`} component={TestPage} />
-          <Route path={`${InitPath}/`} component={DefaultPage} />
-        </Switch>
-      </section>
-    );
-  }
-}
+const Routes = () => {
+  return (
+    <section id="homepage">
+      <Switch>
+        <Route path={`${InitPath}/`} exact component={HomePage} />
+        <Route path={`${InitPath}/categoria/:id`} component={PaginaCategoria} />
+        <Route path={`${InitPath}/produto/:slug`} component={PaginaProduto} />
+        <Route path={`${InitPath}/montesuaporta`} component={MonteSuaPorta} />
+        <Route path={`${InitPath}/busca/:value`} component={ProdutoBuscado} />
+        <Route path={`${InitPath}/meuCarrinho`} component={Carrinho} />
+        <Route path={`${InitPath}/teste`} component={TestPage} />
+        <Route path={`${InitPath}/`} component={DefaultPage} />
+      </Switch>
+    </section>
+  );
+};
 
 export default Routes;

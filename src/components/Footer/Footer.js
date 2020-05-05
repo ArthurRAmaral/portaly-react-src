@@ -14,7 +14,6 @@ import useStyles from "./style";
 
 //From util
 import ApiCategorias from "../../util/ApiCategorias";
-import colors from "../../util/Colors";
 
 //From services
 import InitPath from "../../services/InitPath";

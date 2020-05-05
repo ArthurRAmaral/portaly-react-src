@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react';
-import ApiWooCommerce from '../util/ApiCategorias';
-import MostraProdutos from '../components/MostraProdutos';
-import LineLoaging from '../components/loading/LineLoading';
+import React, { Component, Fragment } from "react";
+import ApiWooCommerce from "../util/ApiCategorias";
+import MostraProdutos from "../components/MostraProdutos";
+import LineLoaging from "../components/loading/LineLoading";
 
 class PaginaCategorias extends Component {
   constructor(props) {
@@ -29,14 +29,15 @@ class PaginaCategorias extends Component {
   }
 
   render() {
+    const { produtos } = this.state;
     return (
       <Fragment>
-        {this.state.produtos
-          && this.state.paginaId === this.props.match.params.id ? (
-            <MostraProdutos produtos={this.state.produtos} />
-          ) : (
-            <LineLoaging />
-          )}
+        {this.state.produtos &&
+        this.state.paginaId === this.props.match.params.id ? (
+          MostraProdutos(produtos)
+        ) : (
+          <LineLoaging />
+        )}
       </Fragment>
     );
   }

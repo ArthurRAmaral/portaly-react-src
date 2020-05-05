@@ -1,15 +1,18 @@
+//From depedencies
 import React, { Component } from "react";
-// import api from "../services/api";
 import { Link } from "react-router-dom";
 
+//From components
 import LineLoading from "../components/loading/LineLoading";
 
-import "../css/PaginaProduto.css";
-
+//From assets
 import imgDefault from "../assets/imgDefault.png";
-import ApiProdutos from "../util/ApiProdutos";
 
+//From util
+import ApiProdutos from "../util/ApiProdutos";
 import Carrinho from "../util/Carrinho";
+
+import "../css/PaginaProduto.css";
 
 export default class PaginaProduto extends Component {
   state = {
