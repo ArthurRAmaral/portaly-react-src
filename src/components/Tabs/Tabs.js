@@ -10,6 +10,7 @@ import Box from "@material-ui/core/Box";
 import LineLoading from "../loading/LineLoading";
 import MostrarProdutos from "../MostraProdutos";
 import ApiProdutos from "../../util/ApiProdutos";
+import "./Tabs.css";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -76,9 +77,9 @@ export default function FullWidthTabs() {
     };
 
     return (
-        <div className={classes.root}>
-            <AppBar position="static" color="default">
-                <Tabs
+        <div className={classes.root} id="tabs">
+            <AppBar position="static" className="category_tab" color="default">
+                <Tabs className="tab"
                     value={value}
                     onChange={handleChange}
                     indicatorColor="primary"
@@ -87,7 +88,7 @@ export default function FullWidthTabs() {
                     centered
                     aria-label="full width tabs example"
                 >
-                    <Tab label="Item One" {...a11yProps(0)} />
+                    <Tab label="Mais Vendidos" {...a11yProps(0)} />
                     <Tab label="Item Two" {...a11yProps(1)} />
                     <Tab label="Item Three" {...a11yProps(2)} />
                 </Tabs>
@@ -97,17 +98,17 @@ export default function FullWidthTabs() {
                 index={value}
                 onChangeIndex={handleChangeIndex}
             >
-                <TabPanel value={value} index={0} dir={theme.direction}>
+                <TabPanel className="product_tab" value={value} index={0} dir={theme.direction}>
                     {produtos ? (
                         <MostrarProdutos produtos={produtos} />
                     ) : (
                             getProdutos(handlesetProdutos)
                         )}
                 </TabPanel>
-                <TabPanel value={value} index={1} dir={theme.direction}>
+                <TabPanel className="product_tab" value={value} index={1} dir={theme.direction}>
                     Item Two
         </TabPanel>
-                <TabPanel value={value} index={2} dir={theme.direction}>
+                <TabPanel className="product_tab" value={value} index={2} dir={theme.direction}>
                     Item Three
         </TabPanel>
             </SwipeableViews>
