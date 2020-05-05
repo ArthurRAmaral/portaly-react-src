@@ -7,6 +7,8 @@ import WhatsAppIcon from "@material-ui/icons/WhatsApp";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import RemoveIcon from "@material-ui/icons/Remove";
 import useStyles from "./style";
 
 const TopHeader = () => {
@@ -23,16 +25,17 @@ const TopHeader = () => {
       <Grid item className={classes.hover}>
         <WhatsAppIcon className={classes.icon} />
         <Typography variant="body1" component="span" className={classes.span}>
-          {" "}
-          (31) 2522-2915{" "}
+          (31) 2522-2915
         </Typography>
       </Grid>
       <Divider orientation="vertical" flexItem className={classes.divider} />
       <Grid item>
         <AccessTimeIcon className={classes.icon} />
         <Typography variant="body1" component="span" className={classes.span}>
-          {" "}
-          Segunda a Sexta 8a.m 18p.m{" "}
+          Segunda a Sexta
+          <RemoveIcon className={classes.svg} /> 8a.m
+          <ArrowForwardIcon className={classes.svg} />
+          18p.m
         </Typography>
       </Grid>
       <Divider orientation="vertical" flexItem className={classes.divider} />

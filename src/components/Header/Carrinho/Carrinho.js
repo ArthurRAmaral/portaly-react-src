@@ -8,6 +8,7 @@ import InitPath from "../../../services/InitPath";
 //From Material-ui
 import Grid from "@material-ui/core/Grid";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import TrendingFlatIcon from "@material-ui/icons/TrendingFlat";
 
 //From utils
 import colors from "../../../util/Colors";
@@ -35,11 +36,23 @@ class CarrinhoCompras extends Component {
   render() {
     return (
       <NavLink key={`carrinho`} to={`${InitPath}/meuCarrinho`}>
-        <Grid item className="cart" style={{ color: colors.gray }}>
-          <ShoppingCartIcon />
-          Valor total:{" "}
+        <Grid
+          item
+          container
+          direction="row"
+          alignItems="center"
+          style={{
+            color: colors.gray,
+            backgroundColor: colors.orangeLight,
+            width: "100%",
+            height: "100%",
+            borderRadius: 5,
+          }}
+        >
+          <ShoppingCartIcon size="large" />
+          <TrendingFlatIcon />
           <span id="value">
-            {(Math.round(this.state.valor * 100) / 100).toFixed(2)}
+            R$: {(Math.round(this.state.valor * 100) / 100).toFixed(2)}
           </span>
         </Grid>
       </NavLink>

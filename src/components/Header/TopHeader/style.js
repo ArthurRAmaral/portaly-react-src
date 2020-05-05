@@ -18,6 +18,11 @@ const useStyles = makeStyles((theme) => ({
     // marginBottom: 10,
     marginRight: 20,
   },
+  svg: {
+    paddingTop: 10,
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
   // hover: {
   //   display: 'flex',
   //   alignItems: 'center',

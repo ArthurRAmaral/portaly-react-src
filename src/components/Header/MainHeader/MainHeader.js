@@ -20,29 +20,27 @@ const MainHeader = () => {
 
   return (
     <Fragment>
-      <Grid container>
-        <Grid
-          container
-          direction="row"
-          justify="space-around"
-          alignItems="center"
-          className={classes.root}
-        >
-          <Logo />
-          <Busca />
-          <Carrinho />
-        </Grid>
-        <Box
-          className="classes.nav"
-          borderTop={2}
-          borderColor={colors.orangeLight}
-          component="div"
-          flexGrow={1}
-          bgcolor={colors.orangeLightLight}
-        >
-          <Categorias />
-        </Box>
+      <Grid
+        container
+        direction="row"
+        justify="space-around"
+        alignItems="center"
+        className={classes.root}
+      >
+        <Logo />
+        <Busca />
+        <Carrinho />
       </Grid>
+      <Box
+        className="classes.nav"
+        borderTop={2}
+        borderColor={colors.orangeLight}
+        component="div"
+        flexGrow={1}
+        bgcolor={colors.orangeLightLight}
+      >
+        <Categorias />
+      </Box>
     </Fragment>
   );
 };
