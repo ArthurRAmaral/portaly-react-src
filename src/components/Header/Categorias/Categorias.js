@@ -17,7 +17,6 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import Divider from "@material-ui/core/Divider";
 
 //Stylesheet
-import "./Categorias.css";
 import useStyles from "./style";
 
 const getCategorias = (setCategorias) => {
