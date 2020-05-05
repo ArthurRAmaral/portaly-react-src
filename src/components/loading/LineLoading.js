@@ -1,14 +1,34 @@
 import React from "react";
-import "../../css/Loading.css";
 
-const LineLoading = () => {
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import LinearProgress from "@material-ui/core/LinearProgress";
+
+import colors from "../../util/Colors";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "50%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
+
+const ColorLinearProgress = withStyles({
+  colorPrimary: {
+    backgroundColor: colors.orangeLight,
+  },
+  barColorPrimary: {
+    backgroundColor: colors.orangeDarkDark,
+  },
+})(LinearProgress);
+
+export default function LinearIndeterminate() {
+  const classes = useStyles();
+
   return (
-    <div className="loading">
-      <div className="progress brown lighten-4">
-        <div className="indeterminate brown darken-1"></div>
-      </div>
+    <div className={classes.root}>
+      <ColorLinearProgress />
     </div>
   );
-};
-
-export default LineLoading;
+}
