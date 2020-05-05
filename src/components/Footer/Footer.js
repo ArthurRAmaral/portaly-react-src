@@ -43,7 +43,7 @@ const Footer = () => {
                 className={classes.portaly}
               />
             </ListItem>
-            <ListItem>
+            <ListItem key="map">
               <Grid container direction="row">
                 <Grid
                   item
@@ -61,7 +61,7 @@ const Footer = () => {
                 </Grid>
               </Grid>
             </ListItem>
-            <ListItem>
+            <ListItem key="wahts-app">
               <Grid container directio="row">
                 <Grid
                   item
@@ -79,8 +79,8 @@ const Footer = () => {
                 </Grid>
               </Grid>
             </ListItem>
-            <ListItem>
-              <Grid container direction=" row">
+            <ListItem key="email">
+              <Grid container direction="row">
                 <Grid
                   item
                   xs={1}
@@ -108,7 +108,7 @@ const Footer = () => {
               {!categorias.length
                 ? getCatergorias(setCat)
                 : categorias.map((cat) => (
-                    <ListItem>
+                    <ListItem key={`categoria-${cat.id}`}>
                       <NavLink
                         key={`categorias${cat.id}`}
                         to={`${InitPath}/categoria/${cat.id}`}
@@ -126,7 +126,7 @@ const Footer = () => {
           <Typography variant="h5" className={classes.titlePagamento}>
             FORMAS DE PAGAMENTO
           </Typography>
-          <ListItem>
+          <ListItem key="pag-seguro">
             <img
               src="https://skeavee.com/imagens/portaly/assets/PAGSEGURO.png"
               alt="pagseguro"
@@ -204,8 +204,8 @@ const Footer = () => {
               className={classes.debito}
             />
           </Grid>
-          <Grid container>
-            <Grid item xs={6} justify="center">
+          <Grid container justify="center">
+            <Grid item xs={6}>
               <Typography className={classes.tille}>BOLETO</Typography>
               <img
                 src="https://skeavee.com/imagens/portaly/assets/BOLETO.png"

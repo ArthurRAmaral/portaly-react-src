@@ -11,43 +11,101 @@ import InitPath from "../../../services/InitPath";
 
 //Materail-ui
 import Grid from "@material-ui/core/Grid";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 const ApiCategories = (categorias) => {
   return (
-    <Fragment>
-      <Grid>
+    <List
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        width: "100%",
+        height: "100%",
+        padding: 0,
+      }}
+    >
+      <ListItem
+        key="categoria-todos"
+        style={{
+          padding: 0,
+        }}
+      >
         <NavLink
           exact
           key={`Todos`}
           to={`${InitPath}/`}
-          activeStyle={{ backgroundColor: colors.orangeLight }}
+          activeStyle={{ fontWeight: "bold" }}
+          style={{
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+            color: colors.orangeDark,
+            textAlign: "center",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
-          {`Todos`}
+          <p>{`Todos`}</p>
         </NavLink>
-      </Grid>
+      </ListItem>
       {categorias.map((cat) => {
         return (
-          <Grid key={cat.id}>
+          <ListItem
+            key={`lista-${cat.id}`}
+            style={{
+              padding: 0,
+            }}
+          >
             <NavLink
               key={`categorias${cat.id}`}
               to={`${InitPath}/categoria/${cat.id}`}
-              activeStyle={{ backgroundColor: colors.orangeLight }}
+              activeStyle={{ fontWeight: "bold" }}
+              style={{
+                width: "100%",
+                height: "100%",
+                alignItems: "center",
+                color: colors.orangeDark,
+                textAlign: "center",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              <div>{cat.name}</div>
+              <p>{cat.name}</p>
             </NavLink>
-          </Grid>
+          </ListItem>
         );
       })}
-      <Grid>
+      <ListItem
+        key="categoria-monte-sua-porta"
+        style={{
+          padding: 0,
+        }}
+      >
         <NavLink
           key={`montesuaporta`}
           to={`/montesuaporta`}
-          activeStyle={{ backgroundColor: colors.orangeLight }}
+          activeStyle={{ fontWeight: "bold" }}
+          style={{
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+            color: colors.orangeDark,
+            backgroundColor: colors.orangeLight,
+            textAlign: "center",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
-          {`Monte Sua Porta`}
+          <p>{`Monte Sua Porta`}</p>
+          <ArrowForwardIcon fontSize="large" />
         </NavLink>
-      </Grid>
-    </Fragment>
+      </ListItem>
+    </List>
   );
 };
 
@@ -73,6 +131,7 @@ class Categorias extends Component {
         direction="row"
         justify="space-around"
         alignItems="center"
+        wrap="wrap"
         style={{
           height: 60,
         }}
