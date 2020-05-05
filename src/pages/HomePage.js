@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
-import Slide from "../components/Slide";
-import Tabs from "../components/Tabs";
+import Slide from "../components/Slide/Slide";
+import Tabs from "../components/Tabs/Tabs";
 
 class HomePage extends Component {
 

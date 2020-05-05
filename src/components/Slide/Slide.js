@@ -1,7 +1,7 @@
 import React from "react";
 import Carousel from "react-material-ui-carousel";
 import autoBind from "auto-bind";
-import "../css/Slide.css";
+import "./Slide.css";
 
 import {
   Card,

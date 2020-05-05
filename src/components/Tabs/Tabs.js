@@ -7,9 +7,9 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import LineLoading from "../components/loading/LineLoading";
-import MostrarProdutos from "../components/MostraProdutos";
-import ApiProdutos from "../util/ApiProdutos";
+import LineLoading from "../loading/LineLoading";
+import MostrarProdutos from "../MostraProdutos";
+import ApiProdutos from "../../util/ApiProdutos";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -58,10 +58,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FullWidthTabs() {
-  const classes = useStyles();
-  const theme = useTheme();
-  const [value, setValue] = React.useState(0);
-  const [produtos, setProdutos] = React.useState();
+    const classes = useStyles();
+    const theme = useTheme();
+    const [value, setValue] = React.useState(0);
+    const [produtos, setProdutos] = React.useState();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -83,9 +83,9 @@ export default function FullWidthTabs() {
                     onChange={handleChange}
                     indicatorColor="primary"
                     textColor="primary"
-                    aria-label="full width tabs example"
                     variant="fullWidth"
                     centered
+                    aria-label="full width tabs example"
                 >
                     <Tab label="Item One" {...a11yProps(0)} />
                     <Tab label="Item Two" {...a11yProps(1)} />
