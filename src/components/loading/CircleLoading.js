@@ -1,24 +1,22 @@
 import React from "react";
-import "../../css/Loading.css";
+import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-const CircleLoading = () => {
-   return (
-      <div className="center">
-         <div className="preloader-wrapper medium active ">
-            <div className="spinner-layer ">
-               <div className="circle-clipper left">
-                  <div className="circle "></div>
-               </div>
-               <div className="gap-patch">
-                  <div className="circle "></div>
-               </div>
-               <div className="circle-clipper right">
-                  <div className="circle   "></div>
-               </div>
-            </div>
-         </div>
-      </div>
-   );
-};
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    "& > * + *": {
+      marginLeft: theme.spacing(2),
+    },
+  },
+}));
 
-export default CircleLoading;
+export default function CircularIndeterminate() {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <CircularProgress />
+    </div>
+  );
+}
