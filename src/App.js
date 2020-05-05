@@ -10,7 +10,7 @@ import Wpp from "./components/WppBtn/WppBtn";
 import Carrinho from "./util/Carrinho";
 
 // From css
-import "materialize-css/dist/css/materialize.min.css";
+// import "materialize-css/dist/css/materialize.min.css";
 import "./css/Global.css";
 
 // From Cors
