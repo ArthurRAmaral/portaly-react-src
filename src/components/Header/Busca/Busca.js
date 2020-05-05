@@ -4,6 +4,9 @@ import React, { Component } from "react";
 //Material-ui
 import Grid from "@material-ui/core/Grid";
 import SearchIcon from "@material-ui/icons/Search";
+import TextField from "@material-ui/core/TextField";
+import { withStyles } from "@material-ui/core/styles";
+
 import InitPath from "../../../services/InitPath";
 import colors from "../../../util/Colors";
 
@@ -43,36 +46,26 @@ class Busca extends Component {
               height: 50,
             }}
           >
-            <Grid
-              container
-              spacing={1}
-              direction="row"
-              alignItems="center"
-              justify="flex-start"
-              wrap="nowrap"
-            >
-              <Grid item container justify="center" alignContent="center">
-                <SearchIcon
-                  onClick={this.handleSubmit}
-                  style={{
-                    width: 50,
-                    height: 50,
-                    color: colors.orangeDark,
-                    cursor: "pointer",
-                  }}
-                />
-              </Grid>
-              <Grid item>
-                <input
-                  type="text"
-                  value={this.state.value}
-                  onChange={this.handleChange}
-                  label="Buscar"
-                  id="buscaInput"
-                  style={{ minWidth: 400 }}
-                />
-              </Grid>
-            </Grid>
+            <SearchIcon
+              onClick={this.handleSubmit}
+              style={{
+                width: 50,
+                height: 50,
+                color: colors.orangeDark,
+                cursor: "pointer",
+              }}
+            />
+            <TextField
+              label="Buscar"
+              variant="outlined"
+              id="buscaInput"
+              type="text"
+              value={this.state.value}
+              onChange={this.handleChange}
+              style={{
+                minWidth: 400,
+              }}
+            />
           </form>
         </Grid>
       </Grid>
