@@ -9,7 +9,7 @@ import LineLoading from "../components/loading/LineLoading";
 import imgDefault from "../assets/imgDefault.png";
 
 //From util
-import ApiProdutos from "../util/ApiProdutos";
+import ApiProdutos from "../services/ApiProdutos";
 import Carrinho from "../util/Carrinho";
 
 import "../css/PaginaProduto.css";
@@ -22,8 +22,9 @@ export default class PaginaProduto extends Component {
 
   async componentDidMount() {
     const { slug } = this.props.match.params;
-    const response = await ApiProdutos.getProductSlug(slug);
-    this.setState({ produto: response.data[0] });
+    await ApiProdutos.getProductSlug(slug).then((res) =>
+      this.setState({ produto: res.data[0] })
+    );
   }
 
   handleSubmit = (e) => {

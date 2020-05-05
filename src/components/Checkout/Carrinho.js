@@ -1,9 +1,9 @@
-import React, { Component, Fragment } from 'react';
-import Carrinho from '../../util/Carrinho';
-import ApiProdutos from '../../util/ApiProdutos';
-import MostraProdutos from './MostraProdutosCarrinho';
-import LineLoaging from '../loading/LineLoading';
-import SemProduto from '../semProdutos';
+import React, { Component, Fragment } from "react";
+import Carrinho from "../../util/Carrinho";
+import ApiProdutos from "../../services/ApiProdutos";
+import MostraProdutos from "./MostraProdutosCarrinho";
+import LineLoaging from "../loading/LineLoading";
+import SemProduto from "../semProdutos";
 
 class PaginaCarrinho extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class PaginaCarrinho extends Component {
 
     this.state = {
       produtos: [],
-      itens: []
+      itens: [],
     };
   }
 
@@ -27,27 +27,26 @@ class PaginaCarrinho extends Component {
         .then((response) => {
           this.setState({
             produtos: [...this.state.produtos, response.data],
-            itens
+            itens,
           });
         })
-        .catch(() => {
-        });
+        .catch(() => {});
     }
   }
 
   render() {
     return (
-         <Fragment>
-            {Carrinho.getItensCarrinho().length > 0 ? (
-              this.state.produtos.length > 0 ? (
-                MostraProdutos(this.state.produtos, this.state.itens)
-              ) : (
-                  <LineLoaging />
-              )
-            ) : (
-               <SemProduto />
-            )}
-         </Fragment>
+      <Fragment>
+        {Carrinho.getItensCarrinho().length > 0 ? (
+          this.state.produtos.length > 0 ? (
+            MostraProdutos(this.state.produtos, this.state.itens)
+          ) : (
+            <LineLoaging />
+          )
+        ) : (
+          <SemProduto />
+        )}
+      </Fragment>
     );
   }
 }

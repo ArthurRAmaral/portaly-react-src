@@ -13,7 +13,7 @@ import EmailIcon from "@material-ui/icons/Email";
 import useStyles from "./style";
 
 //From util
-import ApiCategorias from "../../util/ApiCategorias";
+import ApiCategorias from "../../services/ApiCategorias";
 
 //From services
 import InitPath from "../../services/InitPath";

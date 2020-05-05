@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import ApiWooCommerce from "../util/ApiCategorias";
+import ApiWooCommerce from "../services/ApiCategorias";
 import MostraProdutos from "../components/MostraProdutos";
 import LineLoaging from "../components/loading/LineLoading";
 

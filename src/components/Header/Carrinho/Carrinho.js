@@ -1,7 +1,7 @@
 //From dependencies
 import React, { Component } from "react";
 import Carrinho from "../../../util/Carrinho";
-import ApiProdutos from "../../../util/ApiProdutos";
+import ApiProdutos from "../../../services/ApiProdutos";
 import { NavLink } from "react-router-dom";
 import InitPath from "../../../services/InitPath";
 

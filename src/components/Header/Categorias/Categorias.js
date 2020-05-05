@@ -3,7 +3,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 //From utils
-import ApiCategorias from "../../../util/ApiCategorias";
+import ApiCategorias from "../../../services/ApiCategorias";
 
 //From services
 import InitPath from "../../../services/InitPath";
@@ -18,12 +18,14 @@ import Divider from "@material-ui/core/Divider";
 
 //Stylesheet
 import "./Categorias.css";
+import useStyles from "./style";
 
 const getCategorias = (setCategorias) => {
   ApiCategorias.getAllCategorias().then((res) => setCategorias([...res.data]));
 };
 
 const Categorias = () => {
+  const classes = useStyles();
   const [categorias, setCategorias] = React.useState([]);
 
   function setCat(categorias) {
@@ -31,13 +33,13 @@ const Categorias = () => {
   }
 
   return (
-    <div className="second_header">
-      <MenuList className="menu">
-        <div className="div_link">
+    <div className={classes.second_header}>
+      <MenuList className={classes.menu}>
+        <div className={classes.div_link}>
           <MenuItem
             exact
             key={`Todos`}
-            className="link"
+            className={classes.link}
             component={NavLink}
             to={`${InitPath}/`}
           >
@@ -47,11 +49,15 @@ const Categorias = () => {
         {!categorias.length
           ? getCategorias(setCat)
           : categorias.map((cat) => (
-              <div className="div_link">
-                <Divider className="Line" orientation="vertical" flexItem />
+              <div className={classes.div_link}>
+                <Divider
+                  className={classes.Line}
+                  orientation="vertical"
+                  flexItem
+                />
                 <MenuItem
                   key={`categorias${cat.id}`}
-                  className="link"
+                  className={classes.link}
                   component={NavLink}
                   to={`${InitPath}/categoria/${cat.id}`}
                 >
@@ -60,19 +66,20 @@ const Categorias = () => {
               </div>
             ))}
       </MenuList>
-      <div className="botao">
+      <div className={classes.botao}>
         <Button
           aria-controls="simple-menu"
           aria-haspopup="true"
-          className="button_link"
+          className={classes.button_link}
           component={NavLink}
           to="/montesuaporta"
         >
           Monte a sua porta
-          <ArrowForwardIcon className="arrow" fontSize="large" />
+          <ArrowForwardIcon className={classes.arrow} fontSize="large" />
         </Button>
       </div>
     </div>
   );
 };
+
 export default Categorias;

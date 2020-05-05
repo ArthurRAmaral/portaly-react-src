@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import ApiProdutos from "../../util/ApiProdutos";
+import ApiProdutos from "../../services/ApiProdutos";
 import MostraProdutosFinal from "./MostraProdutosMontagemFinal";
 import CircleLoading from "../loading/CircleLoading";
 

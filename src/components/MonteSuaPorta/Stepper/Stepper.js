@@ -13,7 +13,7 @@ import Montador from "../../../util/MontadorPorta";
 import Carrinho from "../../../util/Carrinho";
 
 import FecharMontagem from "../FecharMontagem";
-import ApiProdutos from "../../../util/ApiProdutos";
+import ApiProdutos from "../../../services/ApiProdutos";
 
 import useStyles from "./style";
 import theme from "./theme";

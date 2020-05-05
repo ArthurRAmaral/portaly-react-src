@@ -23,8 +23,8 @@ import funcoesCarrinho from "../../util/Carrinho";
 
 import PagSeguro from "../../util/PagSeguro";
 import btnPagSeguro from "../../util/btnPagSeguro";
-import ApiProdutos from "../../util/ApiProdutos";
-import ApiPedidos from "../../util/ApiPedidos";
+import ApiProdutos from "../../services/ApiProdutos";
+import ApiPedidos from "../../services/ApiPedidos";
 
 function getSteps() {
   return ["Carrinho", "Cadastro", "Frete", "Pagamento"];

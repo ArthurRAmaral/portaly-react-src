@@ -15,7 +15,7 @@ import Box from "@material-ui/core/Box";
 import MostrarProdutos from "../MostraProdutos";
 
 //From utils
-import ApiProdutos from "../../util/ApiProdutos";
+import ApiProdutos from "../../services/ApiProdutos";
 
 //Stylesheet
 import "./Tabs.css";
