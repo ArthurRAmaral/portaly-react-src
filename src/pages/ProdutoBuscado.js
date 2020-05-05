@@ -28,11 +28,12 @@ class ProdutosBuscado extends Component {
   }
 
   render() {
+    const { produtos } = this.state;
     return (
       <Fragment>
         {this.state.produtos !== null || undefined ? (
           this.state.produtos.length > 0 ? (
-            <MostrarProdutos produtos={this.state.produtos} />
+            MostrarProdutos(produtos)
           ) : (
             <SemProdutos />
           )
