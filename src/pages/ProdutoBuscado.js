@@ -1,6 +1,6 @@
 
 import React, { Component, Fragment } from 'react';
-import ApiWooCommerce from '../util/ApiWooCommerce';
+import ApiProdutos from '../util/ApiProdutos';
 import LineLoading from '../components/loading/LineLoading';
 import MostrarProdutos from '../components/MostraProdutos';
 import SemProdutos from '../components/semProdutos';
@@ -17,7 +17,7 @@ class ProdutosBuscado extends Component {
   componentDidMount() {
     const { value } = this.props.match.params;
 
-    ApiWooCommerce.getAllPublishedProducts().then((res) => {
+    ApiProdutos.getAllPublishedProducts().then((res) => {
       const produtos = res.data.filter((produto) => produto.name.toString().toUpperCase().includes(value.toUpperCase()));
 
       this.setState({

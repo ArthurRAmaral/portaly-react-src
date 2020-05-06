@@ -2,37 +2,37 @@ import React, { Component } from "react";
 // import ApiWooCommerce from "../util/ApiWooCommerce";
 // import LineLoaging from "../components/loading/LineLoading";
 // import Carrinho from "../util/Carrinho";
-import Setepper from "../components/MonteSuaPorta/Stepper";
+import Setepper from "../components/MonteSuaPorta/Stepper/Stepper.js";
 
 import Montador from "../util/MontadorPorta";
 
 import "../css/MonteSuaPorta.css";
 
 class MonteSuaPorta extends Component {
-   constructor(props) {
-      Montador.resetMontador();
+  constructor(props) {
+    Montador.resetMontador();
 
-      super(props);
+    super(props);
 
-      this.state = {
-         porta: null,
-         itens: [],
-      };
-   }
+    this.state = {
+      porta: null,
+      itens: [],
+    };
+  }
 
-   mostraMontagemPorta() {
-      return <Setepper />;
-   }
+  mostraMontagemPorta() {
+    return <Setepper />;
+  }
 
-   addItem(item) {}
+  addItem(item) {}
 
-   render() {
-      return (
-         <section className="montagem-porta-container">
-            {this.mostraMontagemPorta()}
-         </section>
-      );
-   }
+  render() {
+    return (
+      <section className="montagem-porta-container">
+        {this.mostraMontagemPorta()}
+      </section>
+    );
+  }
 }
 
 export default MonteSuaPorta;

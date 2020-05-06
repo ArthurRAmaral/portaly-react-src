@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "node": true
   },
   "extends": [
     "eslint:recommended",
@@ -10,11 +11,12 @@
   ],
   "globals": {
     "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
+    "SharedArrayBuffer": "readonly",
   },
   "parserOptions": {
     "ecmaVersion": 2018,
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaFeatures": {"jsx": true,"arrowFunctions": true,"modules": true}
   },
   "rules": {
     "linebreak-style": 0,
@@ -23,8 +25,6 @@
     // ignore: optional array of props name to ignore during validation.
     // customValidators: optional array of validators used for propTypes validation.
     // skipUndeclared: optional boolean to only error on components that have a propTypes block declared.
-    "react/prop-types": [0] 
-
-
-  }
+    "react/prop-types": [0]
+  }  
 }

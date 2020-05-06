@@ -7,17 +7,17 @@ import Wpp from "./components/WppBtn/WppBtn";
 import Carrinho from "./util/Carrinho";
 import "materialize-css/dist/css/materialize.min.css";
 import "./css/Global.css";
-
+import "cors";
 const App = () => {
-   Carrinho.resetCarrinho();
+  Carrinho.resetCarrinho();
 
-   return (
-      <BrowserRouter>
-         <Header />
-         <Routes />
-         <Wpp />
-         <Footer />
-      </BrowserRouter>
+  return (
+    <BrowserRouter>
+      <Header />
+      <Routes />
+      <Wpp />
+      <Footer />
+    </BrowserRouter>
   );
 };
 
