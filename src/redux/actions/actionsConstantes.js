@@ -1,0 +1,1 @@
+export const SALVA_CATEGORIAS = "SALVA_CATEGORIAS";

@@ -1,6 +1,7 @@
 //From dependencies
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
 
 //From utils
 import ApiCategorias from "../../../services/ApiCategorias";
@@ -19,11 +20,17 @@ import Divider from "@material-ui/core/Divider";
 //Stylesheet
 import useStyles from "./style";
 
+//From redux
+import { salvaCategorias } from "../../../redux/actions/index";
+
 const getCategorias = (setCategorias) => {
   ApiCategorias.getAllCategorias().then((res) => setCategorias([...res.data]));
 };
+const mapStateToProps = (categorias) => categorias;
 
-const Categorias = () => {
+export default connect(mapStateToProps, salvaCategorias)(Categorias);
+
+function Categorias() {
   const classes = useStyles();
   const [categorias, setCategorias] = React.useState([]);
 
@@ -79,6 +86,4 @@ const Categorias = () => {
       </div>
     </div>
   );
-};
-
-export default Categorias;
+}

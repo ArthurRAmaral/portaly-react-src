@@ -76,7 +76,7 @@ export default class PaginaProduto extends Component {
   render() {
     return (
       <section id="produto-pagina">
-        {this.state.produto ? this.renderProduto() : LineLoading()}
+        {this.state.produto ? this.renderProduto() : <LineLoading />}
       </section>
     );
   }

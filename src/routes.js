@@ -1,6 +1,6 @@
 // From dependencies
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Router } from "react-router-dom";
 
 // From componets
 import HomePage from "./pages/HomePage";
