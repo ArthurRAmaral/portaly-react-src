@@ -1,6 +1,7 @@
 // From dependencies
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
 
 //From Material-ui
 import Grid from "@material-ui/core/Grid";
@@ -12,23 +13,11 @@ import WhatsAppIcon from "@material-ui/icons/WhatsApp";
 import EmailIcon from "@material-ui/icons/Email";
 import useStyles from "./style";
 
-//From util
-import ApiCategorias from "../../services/ApiCategorias";
-
 //From services
 import InitPath from "../../services/InitPath";
 
-const getCatergorias = (setCategorias) => {
-  ApiCategorias.getAllCategorias().then((res) => setCategorias([...res.data]));
-};
-
-const Footer = () => {
+const Footer = (props) => {
   const classes = useStyles();
-  const [categorias, setCategorias] = React.useState([]);
-
-  function setCat(categorias) {
-    setCategorias(categorias);
-  }
 
   return (
     <Grid container direction="column" wrap="nowrap" className={classes.root}>
@@ -104,9 +93,9 @@ const Footer = () => {
               VEJA MAIS PRODUTOS
             </Typography>
             <Grid container direction="column">
-              {!categorias.length
-                ? getCatergorias(setCat)
-                : categorias.map((cat) => (
+              {!props.categorias
+                ? ""
+                : props.categorias.map((cat) => (
                     <ListItem key={`categoria-${cat.id}`}>
                       <NavLink
                         key={`categorias${cat.id}`}
@@ -237,4 +226,6 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+const mapStateToProps = (state) => ({ categorias: state.categorias });
+
+export default connect(mapStateToProps, null)(Footer);

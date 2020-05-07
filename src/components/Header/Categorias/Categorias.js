@@ -3,9 +3,6 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 
-//From utils
-import ApiCategorias from "../../../services/ApiCategorias";
-
 //From services
 import InitPath from "../../../services/InitPath";
 
@@ -23,20 +20,8 @@ import useStyles from "./style";
 //From redux
 import { salvaCategorias } from "../../../redux/actions/index";
 
-const getCategorias = (setCategorias) => {
-  ApiCategorias.getAllCategorias().then((res) => setCategorias([...res.data]));
-};
-const mapStateToProps = (categorias) => categorias;
-
-export default connect(mapStateToProps, salvaCategorias)(Categorias);
-
-function Categorias() {
+function Categorias(props) {
   const classes = useStyles();
-  const [categorias, setCategorias] = React.useState([]);
-
-  function setCat(categorias) {
-    setCategorias(categorias);
-  }
 
   return (
     <div className={classes.second_header}>
@@ -52,9 +37,9 @@ function Categorias() {
             <Typography>Home</Typography>
           </MenuItem>
         </div>
-        {!categorias.length
-          ? getCategorias(setCat)
-          : categorias.map((cat) => (
+        {!props.categorias
+          ? ""
+          : props.categorias.map((cat) => (
               <div className={classes.div_link}>
                 <Divider
                   className={classes.Line}
@@ -87,3 +72,12 @@ function Categorias() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({ categorias: state.categorias });
+
+// const mapDispatchToProps = {
+//   salvaCategorias,
+//   getCategorias1,
+// };
+
+export default connect(mapStateToProps, salvaCategorias)(Categorias);
