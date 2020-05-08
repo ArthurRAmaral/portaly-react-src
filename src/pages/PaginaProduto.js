@@ -22,7 +22,7 @@ export default class PaginaProduto extends Component {
 
   async componentDidMount() {
     const { slug } = this.props.match.params;
-    await ApiProdutos.getProductSlug(slug).then((res) =>
+    await ApiProdutos.getProductBySlug(slug).then((res) =>
       this.setState({ produto: res.data[0] })
     );
   }

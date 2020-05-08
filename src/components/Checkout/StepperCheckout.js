@@ -110,7 +110,7 @@ function btnHandler() {
 const createPagseguroProducts = async () => {
   const arrayItens = [];
   for (const item of funcoesCarrinho.getItensCarrinho()) {
-    const responseItem = await ApiProdutos.getProduto(item.product_id);
+    const responseItem = await ApiProdutos.getProductByid(item.product_id);
     const itemToPush = {
       id: item.product_id,
       description: responseItem.data.name,

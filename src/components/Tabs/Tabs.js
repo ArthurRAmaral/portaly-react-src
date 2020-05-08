@@ -46,7 +46,7 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function getProdutos(setProdutos) {
+function getProductByids(setProdutos) {
   ApiProdutos.getAllPublishedProducts().then((res) => {
     setProdutos(res.data);
   });
@@ -115,7 +115,7 @@ export default function FullWidthTabs() {
         >
           {produtos
             ? MostrarProdutos(produtos)
-            : getProdutos(handlesetProdutos)}
+            : getProductByids(handlesetProdutos)}
         </TabPanel>
         <TabPanel
           className="product_tab"

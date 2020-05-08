@@ -27,7 +27,7 @@ class EscolherItems extends Component {
       }
 
       for (const key in prods) {
-        ApiProdutos.getProduto(prods[key]).then((res) => {
+        ApiProdutos.getProductByid(prods[key]).then((res) => {
           vet.push(res.data);
           qnt++;
           if (qnt === size) this.setState({ produtos: vet });

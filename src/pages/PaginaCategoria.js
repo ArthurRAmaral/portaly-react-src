@@ -23,7 +23,7 @@ class PaginaCategorias extends Component {
   }
 
   chamaApiParaRceberProdutos(id) {
-    ApiWooCommerce.getPublishProductsByCategoriesId(id).then((res) => {
+    ApiWooCommerce.getAllPublishPoductsByCategoriesSlug(id).then((res) => {
       this.setState({ produtos: res.data, paginaId: id });
     });
   }

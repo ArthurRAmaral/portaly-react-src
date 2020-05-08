@@ -26,7 +26,7 @@ class CarrinhoCompras extends Component {
     const itens = Carrinho.getItensCarrinho();
     let val = 0;
     itens.forEach((element) => {
-      ApiProdutos.getProduto(element.product_id).then((res) => {
+      ApiProdutos.getProductByid(element.product_id).then((res) => {
         val = this.state.valor += parseFloat(res.data.price) * element.quantity;
         this.setState({ valor: val });
       });

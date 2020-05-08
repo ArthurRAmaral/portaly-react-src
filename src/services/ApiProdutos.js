@@ -4,10 +4,10 @@ const ApiWooCommerceProdutos = {
   getAllPublishedProducts: () =>
     api.get("products", { status: "publish", per_page: 40 }),
 
-  getPublishProductsByCategoriesId: (id) =>
+  getAllPublishPoductsByCategoriesSlug: (id) =>
     api.get("products", { category: id, status: "publish", per_page: 50 }),
 
-  // getPublishPoductsByCategoriesSlug: async (slug) => {
+  // getAllPublishPoductsByCategoriesSlug: async (slug) => {
   //   console.log((await api.get("products/categories", { slug })).data);
   //   return api.get("products", {
   //     category: await (await api.get("products/categories", { slug })).data,
@@ -17,9 +17,9 @@ const ApiWooCommerceProdutos = {
 
   getOnSale: () => api.get("products", { on_sale: true }),
 
-  getProductSlug: (slug) => api.get("products", { slug, status: "publish" }),
+  getProductBySlug: (slug) => api.get("products", { slug, status: "publish" }),
 
-  getProduto: (id) => api.get(`products/${id}`),
+  getProductByid: (id) => api.get(`products/${id}`),
 
   createKit: async (dados) => {
     let ids = [];
@@ -30,7 +30,7 @@ const ApiWooCommerceProdutos = {
       if (dados.hasOwnProperty(key)) {
         ids.push(dados[key]);
         prices.push(
-          (await ApiWooCommerceProdutos.getProduto(dados[key])).data.price
+          (await ApiWooCommerceProdutos.getProductByid(dados[key])).data.price
         );
       }
     }

@@ -23,7 +23,7 @@ class PaginaCarrinho extends Component {
     const itens = Carrinho.getItensCarrinho();
 
     for (const item of itens) {
-      ApiProdutos.getProduto(item.product_id)
+      ApiProdutos.getProductByid(item.product_id)
         .then((response) => {
           this.setState({
             produtos: [...this.state.produtos, response.data],
