@@ -18,7 +18,7 @@ import Divider from "@material-ui/core/Divider";
 import useStyles from "./style";
 
 //From redux
-import { salvaCategorias } from "../../../redux/actions/index";
+import { salvaCategorias } from "../../../redux/actions/categoriaActions";
 
 function Categorias(props) {
   const classes = useStyles();

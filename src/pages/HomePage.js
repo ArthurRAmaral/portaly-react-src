@@ -21,7 +21,7 @@ const HomePage = () => {
         display: "inline-table",
       }}
     >
-      {/* <Slide /> */}
+      <Slide />
       <div
         style={{
           marginTop: "50px",
@@ -37,7 +37,7 @@ const HomePage = () => {
           orientation="horizontal"
           flexItem
         />
-        {/* <Tabs /> */}
+        <Tabs />
       </div>
     </div>
   );

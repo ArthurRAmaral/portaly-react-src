@@ -1,7 +1,12 @@
+//From depedencies
 import React, { Component, Fragment } from "react";
-import ApiCategorias from "../../services/ApiCategorias";
+
+//From components
 import MostraProdutos from "./MostraProdutosMontagem";
 import CircleLoading from "../loading/CircleLoading";
+
+//From services
+import ApiCategorias from "../../services/ApiCategorias";
 
 class EscolherItems extends Component {
   constructor(props) {

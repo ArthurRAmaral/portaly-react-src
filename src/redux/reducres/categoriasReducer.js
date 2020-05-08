@@ -1,4 +1,4 @@
-import { SALVA_CATEGORIAS } from "../actions/actionsConstantes";
+import { SALVA_CATEGORIAS } from "../actions/actionsTypes";
 
 export default function setCategorias(state = {}, action) {
   switch (action.type) {

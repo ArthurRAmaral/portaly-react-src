@@ -1,11 +1,13 @@
+//From depedencies
 import React, { Component } from "react";
-// import ApiWooCommerce from "../util/ApiWooCommerce";
-// import LineLoaging from "../components/loading/LineLoading";
-// import Carrinho from "../util/Carrinho";
+
+//From componensts
 import Setepper from "../components/MonteSuaPorta/Stepper/Stepper.js";
 
+//From util
 import Montador from "../util/MontadorPorta";
 
+//Stylesheet
 import "../css/MonteSuaPorta.css";
 
 class MonteSuaPorta extends Component {
@@ -20,16 +22,10 @@ class MonteSuaPorta extends Component {
     };
   }
 
-  mostraMontagemPorta() {
-    return <Setepper />;
-  }
-
-  addItem(item) {}
-
   render() {
     return (
       <section className="montagem-porta-container">
-        {this.mostraMontagemPorta()}
+        <Setepper />
       </section>
     );
   }

@@ -1,4 +1,4 @@
-import { SALVA_CATEGORIAS, PEGA_CATEGORIAS } from "./actionsConstantes";
+import { SALVA_CATEGORIAS } from "./actionsTypes";
 
 //From utils
 import ApiCategorias from "../../services/ApiCategorias";
