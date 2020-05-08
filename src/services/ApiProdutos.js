@@ -4,6 +4,17 @@ const ApiWooCommerceProdutos = {
   getAllPublishedProducts: () =>
     api.get("products", { status: "publish", per_page: 40 }),
 
+  getPublishProductsByCategoriesId: (id) =>
+    api.get("products", { category: id, status: "publish", per_page: 50 }),
+
+  // getPublishPoductsByCategoriesSlug: async (slug) => {
+  //   console.log((await api.get("products/categories", { slug })).data);
+  //   return api.get("products", {
+  //     category: await (await api.get("products/categories", { slug })).data,
+  //     status: "publish",
+  //   });
+  // },
+
   getOnSale: () => api.get("products", { on_sale: true }),
 
   getProductSlug: (slug) => api.get("products", { slug, status: "publish" }),

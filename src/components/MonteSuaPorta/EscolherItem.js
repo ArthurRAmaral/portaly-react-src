@@ -6,7 +6,7 @@ import MostraProdutos from "./MostraProdutosMontagem";
 import CircleLoading from "../loading/CircleLoading";
 
 //From services
-import ApiCategorias from "../../services/ApiCategorias";
+import ApiCategorias from "../../services/ApiProdutos";
 
 class EscolherItems extends Component {
   constructor(props) {
@@ -43,7 +43,7 @@ class EscolherItems extends Component {
   }
 
   chamaApiParaRceberProdutos(categoriaID) {
-    ApiCategorias.getCategoriaPublishProductsById(categoriaID).then((res) => {
+    ApiCategorias.getPublishProductsByCategoriesId(categoriaID).then((res) => {
       this.setState({ produtos: res.data, categoriaID: categoriaID });
       this.forceUpdate();
     });
