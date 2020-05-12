@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "fast-xml-parser": "^3.16.0",
+    "mapbox-gl": "^1.10.0",
     "pagseguro": "^0.1.0",
     "pagseguro-nodejs": "^0.1.2",
     "react": "^16.13.0",

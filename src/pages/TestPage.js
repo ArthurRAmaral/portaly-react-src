@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import pagSeguro from "../util/PagSeguro";
+import mapBox from "../services/mapBoxAndReact/MapBoxApi";
 import btnPagSeguro from "../util/btnPagSeguro";
 import LineLoading from "../components/loading/LineLoading";
 
@@ -54,12 +54,16 @@ class DefaultPage extends Component {
   }
 
   async componentDidMount() {
+<<<<<<< Updated upstream
     let code = await pagSeguro.gerarPagamento({
       dadosEntrega,
       dadosProdutos,
       dadosComprador,
     });
     this.setState({ code });
+=======
+    mapBox.chamar();
+>>>>>>> Stashed changes
   }
 
   render() {
