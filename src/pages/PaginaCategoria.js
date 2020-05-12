@@ -14,17 +14,19 @@ class PaginaCategorias extends Component {
     super(props);
 
     this.state = {
-      categorias: props.state.categorias,
-      produtos: props.state.produtos,
+      produtos: props.produtos,
       paginaId: props.match.params.id,
     };
+  }
+  componentDidMount() {
+    this.props.buscaProduto(this.state.paginaId);
   }
 
   componentWillReceiveProps(nextProps) {
     this.props.buscaProduto(nextProps.match.params.id);
 
     this.setState({
-      produtos: nextProps.state.produtos,
+      produtos: nextProps.produtos,
       paginaId: nextProps.match.params.id,
     });
   }
@@ -51,7 +53,7 @@ class PaginaCategorias extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  state,
+  produtos: state.produtos,
 });
 
 const mapDispatchToProps = { buscaProduto };
