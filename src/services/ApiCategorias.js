@@ -1,7 +1,7 @@
 import api from "./api";
 
 const ApiWooCommerceCategorias = {
-  getAllCategorias: () => api.get("products/categories"),
+  getAllCategorias: async () => await api.get("products/categories"),
 
   getCategoria: (id) => api.get("products", { category: id }),
 };

@@ -6,7 +6,8 @@ import MostraProdutos from "./MostraProdutosMontagem";
 import CircleLoading from "../loading/CircleLoading";
 
 //From services
-import ApiCategorias from "../../services/ApiProdutos";
+import ApiCategorias from "../../services/ApiCategorias";
+import ApiProdutos from "../../services/ApiProdutos";
 
 class EscolherItems extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class EscolherItems extends Component {
     ApiCategorias.getAllCategorias().then((res) => {
       res.data.forEach((cat) => {
         if (cat.slug === categoriaSlug) {
-          this.chamaApiParaRceberProdutos(cat.id);
+          this.chamaApiParaReceberProdutos(cat.id);
           return;
         }
       });
@@ -35,20 +36,18 @@ class EscolherItems extends Component {
     ApiCategorias.getAllCategorias().then((res) => {
       res.data.forEach((cat) => {
         if (cat.slug === categoriaSlug) {
-          this.chamaApiParaRceberProdutos(cat.id);
+          this.chamaApiParaReceberProdutos(cat.id);
           return;
         }
       });
     });
   }
 
-  chamaApiParaRceberProdutos(categoriaID) {
-    ApiCategorias.getAllPublishPoductsByCategoriesId(categoriaID).then(
-      (res) => {
-        this.setState({ produtos: res.data, categoriaID: categoriaID });
-        this.forceUpdate();
-      }
-    );
+  chamaApiParaReceberProdutos(categoriaID) {
+    ApiProdutos.getAllPublishPoductsByCategoriesId(categoriaID).then((res) => {
+      this.setState({ produtos: res.data, categoriaID: categoriaID });
+      this.forceUpdate();
+    });
   }
 
   render() {
