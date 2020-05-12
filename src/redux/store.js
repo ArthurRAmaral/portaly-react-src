@@ -12,11 +12,4 @@ const middleware = applyMiddleware(createPromise(), thunk, createLogger());
 
 const store = createStore(rootReducer, composeWithDevTools(middleware));
 
-// store.subscribe(() => console.log("algo mudou", store.geState()));
-
-// store.dispatch((dispatch) => {
-//   dispatch({ type: "FOO" });
-//   dispatch({ type: "BAr" });
-// });
-
 export default store;

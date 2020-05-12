@@ -79,6 +79,7 @@ export default {
         pag.xml.checkout.toString()
       )
       .then((res) => xmlParser.parse(res.data).checkout.code);
+    console.log(code);
     return code;
   },
 };
