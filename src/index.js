@@ -10,7 +10,7 @@ import Routes from "./routes";
 import Footer from "./components/Footer/Footer";
 import Wpp from "./components/WppBtn/WppBtn";
 import Carrinho from "./util/Carrinho";
-import { persistGate } from "redux-persist/integration/react";
+import { PersistGate } from "redux-persist/integration/react";
 
 // From css
 import "./css/Global.css";
@@ -26,14 +26,14 @@ const rotas = () => {
 
   return (
     <Provider store={store}>
-      <persistGate loading={null} persistor={persistor}>
+      <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <Header />
           <Routes />
           <Wpp />
           <Footer />
         </BrowserRouter>
-      </persistGate>
+      </PersistGate>
     </Provider>
   );
 };

@@ -40,10 +40,11 @@ function Categorias(props) {
         {!Object.values(props.categorias).length
           ? ""
           : props.categorias.map((cat) => (
-              <div className={classes.div_link}>
+              <div className={classes.div_link} key={`div${cat.id}`}>
                 <Divider
                   className={classes.Line}
                   orientation="vertical"
+                  key={`divider${cat.id}`}
                   flexItem
                 />
                 <MenuItem
