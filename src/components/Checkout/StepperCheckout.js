@@ -169,7 +169,7 @@ const pagamento = (dadosCadastro, dadosFrete) => {
         console.log(response.data);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        console.log(error);
       });
   }
 };
