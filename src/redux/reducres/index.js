@@ -3,7 +3,8 @@ import { combineReducers } from "redux";
 
 //From reducers
 import categorias from "./categoriasReducer";
+import produtos from "./prdutosReducer";
 
-const rootReducer = combineReducers({ categorias });
+const rootReducer = combineReducers({ categorias, produtos });
 
-export default categorias;
+export default rootReducer;

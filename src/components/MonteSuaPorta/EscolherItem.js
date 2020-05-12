@@ -43,7 +43,7 @@ class EscolherItems extends Component {
   }
 
   chamaApiParaRceberProdutos(categoriaID) {
-    ApiCategorias.getAllPublishPoductsByCategoriesSlug(categoriaID).then(
+    ApiCategorias.getAllPublishPoductsByCategoriesId(categoriaID).then(
       (res) => {
         this.setState({ produtos: res.data, categoriaID: categoriaID });
         this.forceUpdate();

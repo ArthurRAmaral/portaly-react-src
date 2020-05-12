@@ -37,7 +37,7 @@ function Categorias(props) {
             <Typography>Home</Typography>
           </MenuItem>
         </div>
-        {!props.categorias
+        {!Object.values(props.categorias).length
           ? ""
           : props.categorias.map((cat) => (
               <div className={classes.div_link}>
@@ -74,10 +74,5 @@ function Categorias(props) {
 }
 
 const mapStateToProps = (state) => ({ categorias: state.categorias });
-
-// const mapDispatchToProps = {
-//   salvaCategorias,
-//   getCategorias1,
-// };
 
 export default connect(mapStateToProps, salvaCategorias)(Categorias);

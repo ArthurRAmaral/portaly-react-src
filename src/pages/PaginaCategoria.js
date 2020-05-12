@@ -1,40 +1,47 @@
+//From depedencies
 import React, { Component, Fragment } from "react";
-import ApiWooCommerce from "../services/ApiProdutos";
+import { connect } from "react-redux";
+
+//From components
 import MostraProdutos from "../components/MostraProdutos";
 import LineLoaging from "../components/loading/LineLoading";
+
+//From redux
+import { buscaProduto } from "../redux/actions/produtoActions";
 
 class PaginaCategorias extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      produtos: null,
+      categorias: props.state.categorias,
+      produtos: props.state.produtos,
       paginaId: props.match.params.id,
     };
   }
 
-  componentDidMount() {
-    this.chamaApiParaRceberProdutos(this.state.paginaId);
-  }
-
   componentWillReceiveProps(nextProps) {
-    const { id } = nextProps.match.params;
-    this.chamaApiParaRceberProdutos(id);
-  }
+    this.props.buscaProduto(nextProps.match.params.id);
 
-  chamaApiParaRceberProdutos(id) {
-    ApiWooCommerce.getAllPublishPoductsByCategoriesSlug(id).then((res) => {
-      this.setState({ produtos: res.data, paginaId: id });
+    this.setState({
+      produtos: nextProps.state.produtos,
+      paginaId: nextProps.match.params.id,
     });
   }
 
+  escolheProdutosCategorias() {
+    for (const id in this.state.produtos)
+      if (id === this.state.paginaId) return this.state.produtos[id];
+  }
+
   render() {
-    const { produtos } = this.state;
+    const { paginaId } = this.state;
+    const prods = this.escolheProdutosCategorias();
+
     return (
       <Fragment>
-        {this.state.produtos &&
-        this.state.paginaId === this.props.match.params.id ? (
-          MostraProdutos(produtos)
+        {prods && paginaId === this.props.match.params.id ? (
+          MostraProdutos(prods)
         ) : (
           <LineLoaging />
         )}
@@ -43,4 +50,10 @@ class PaginaCategorias extends Component {
   }
 }
 
-export default PaginaCategorias;
+const mapStateToProps = (state) => ({
+  state,
+});
+
+const mapDispatchToProps = { buscaProduto };
+
+export default connect(mapStateToProps, mapDispatchToProps)(PaginaCategorias);

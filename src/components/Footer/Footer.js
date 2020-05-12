@@ -93,7 +93,7 @@ const Footer = (props) => {
               VEJA MAIS PRODUTOS
             </Typography>
             <Grid container direction="column">
-              {!props.categorias
+              {!Object.values(props.categorias).length
                 ? ""
                 : props.categorias.map((cat) => (
                     <ListItem key={`categoria-${cat.id}`}>
