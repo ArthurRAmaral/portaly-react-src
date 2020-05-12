@@ -5,7 +5,7 @@ import thunk from "redux-thunk";
 import { createPromise } from "redux-promise-middleware";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage/session";
+import storage from "redux-persist/lib/storage";
 
 // import the root reducer
 import rootReducer from "./reducres/index";
