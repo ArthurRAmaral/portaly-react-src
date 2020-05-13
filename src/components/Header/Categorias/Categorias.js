@@ -19,7 +19,7 @@ import useStyles from "./style";
 
 //From redux
 import { salvaCategorias } from "../../../redux/actions/categoriaActions";
-import { saveAll } from "../../../redux/actions/saveAll";
+import { buscaProduto } from "../../../redux/actions/produtoActions";
 
 function Categorias(props) {
   const classes = useStyles();
@@ -28,7 +28,7 @@ function Categorias(props) {
     props.salvaCategorias();
   } else {
     console.log(props.categorias);
-    props.saveAll(props.categorias);
+    for (let cat of props.categorias) props.buscaProduto(cat.id);
   }
 
   return (
@@ -84,6 +84,6 @@ function Categorias(props) {
 
 const mapStateToProps = (state) => ({ categorias: state.categorias });
 
-const mapDispatchToProps = { salvaCategorias, saveAll };
+const mapDispatchToProps = { salvaCategorias, buscaProduto };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Categorias);
