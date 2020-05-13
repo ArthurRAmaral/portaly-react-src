@@ -61,7 +61,7 @@ class DefaultPage extends Component {
     //     });
     //     this.setState({ code });
     mapBox
-      .getTax("Rua%20Das%20Quaresmeiras%20Contagem%20Minas%20Gerais")
+      .getTax("Contagem%20Minas%20Gerais")
       .then((data) => console.log(data));
   }
 

@@ -19,11 +19,12 @@ const calcTax = async (search) => {
   let distance = null;
 
   await fetch(
-    `https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?types=address&proximity=-122.39738575285674,37.7925147111369453&access_token=${token}`
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?types=address&proximity=-43.996145,-19.832106&access_token=${token}`
   )
     .then((result) => result.json())
     .then((data) => {
       binData = data;
+      console.log(binData);
       distance = calculaDistancia(
         binData.features[0].center[0],
         binData.features[0].center[1]
