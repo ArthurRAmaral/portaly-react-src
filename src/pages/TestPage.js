@@ -55,13 +55,15 @@ class DefaultPage extends Component {
   }
 
   async componentDidMount() {
-    let code = await pagSeguro.gerarPagamento({
-      dadosEntrega,
-      dadosProdutos,
-      dadosComprador,
-    });
-    this.setState({ code });
-    mapBox.chamar();
+    //     let code = await pagSeguro.gerarPagamento({
+    //       dadosEntrega,
+    //       dadosProdutos,
+    //       dadosComprador,
+    //     });
+    //     this.setState({ code });
+    mapBox
+      .getTax("Contagem%20Minas%20Gerais")
+      .then((data) => console.log(data));
   }
 
   render() {
