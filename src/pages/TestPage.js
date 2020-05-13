@@ -54,16 +54,15 @@ class DefaultPage extends Component {
   }
 
   async componentDidMount() {
-<<<<<<< Updated upstream
-    let code = await pagSeguro.gerarPagamento({
-      dadosEntrega,
-      dadosProdutos,
-      dadosComprador,
-    });
-    this.setState({ code });
-=======
-    mapBox.chamar();
->>>>>>> Stashed changes
+    //     let code = await pagSeguro.gerarPagamento({
+    //       dadosEntrega,
+    //       dadosProdutos,
+    //       dadosComprador,
+    //     });
+    //     this.setState({ code });
+    mapBox
+      .getTax("Rua%20Das%20Quaresmeiras%20Contagem%20Minas%20Gerais")
+      .then((data) => console.log(data));
   }
 
   render() {

@@ -6,43 +6,43 @@ const token =
 
 mapboxgl.accessToken = token;
 
+const tax = 1.5;
+
 const calculaDistancia = (first, second) => {
-  const start = new mapboxgl.LngLat(-44.120926, -19.919362);
+  const start = new mapboxgl.LngLat(-43.996145, -19.832106);
   const destiny = new mapboxgl.LngLat(first, second);
   return start.distanceTo(destiny);
 };
 
-const makeRequest = (search) => {
-  let request = new XMLHttpRequest();
-  request.open(
-    "GET",
-    `https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?types=address&proximity=-122.39738575285674,37.7925147111369453&access_token=${token}`
-  );
-  request.send();
-  request.onload = () => {
-    if (request.status == 200) {
-      const result = JSON.parse(request.response);
-      return calculaDistancia(
-        result.features[0].center[0],
-        result.features[0].center[1]
-      );
-    } else {
-      console.log("erro");
-    }
-  };
-};
+const calcTax = async (search) => {
+  let binData = null;
+  let distance = null;
 
-const calcTax = (search) => {
-  const distance = makeRequest(search);
-  console.log("PRECISO DESSE ", distance);
+  await fetch(
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?types=address&proximity=-122.39738575285674,37.7925147111369453&access_token=${token}`
+  )
+    .then((result) => result.json())
+    .then((data) => {
+      binData = data;
+      distance = calculaDistancia(
+        binData.features[0].center[0],
+        binData.features[0].center[1]
+      );
+    });
+  return distance;
 };
 
 const mapbox = {
-  chamar: () => {
-    const distance = calcTax(
-      "Rua%20Das%20Quaresmeiras%20Contagem%20Minas%20Gerais"
-    );
-    console.log(distance);
+  getTax: async (search) => {
+    let distance = null;
+
+    await calcTax(search).then((data) => (distance = data));
+
+    distance = (distance / 1000).toFixed(3);
+
+    const shipping = (distance * tax).toFixed(2);
+
+    return shipping;
   },
 };
 
