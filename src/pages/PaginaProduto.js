@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 //From components
 import LineLoading from "../components/loading/LineLoading";
 import VerticalTab from "../components/ImagensTab/VerticalTab";
+import InformacoesProduto from "../components/informacoesProduto/informacoesProduto";
 
 //From assets
 import imgDefault from "../assets/imgDefault.png";
@@ -48,12 +49,17 @@ export default class PaginaProduto extends Component {
     const { produto } = this.state;
     return (
       <Fragment>
-        <Grid container direction="row">
-          <Grid item xs={8}>
+        <Grid
+          container
+          direction="row"
+          alignItems="center"
+          justify="space-evenly"
+        >
+          <Grid>
             <VerticalTab produto={produto} />
           </Grid>
-          <Grid item xs={4}>
-            balasdlasd
+          <Grid>
+            <InformacoesProduto produto={produto} />
           </Grid>
         </Grid>
         <Grid container> </Grid>
