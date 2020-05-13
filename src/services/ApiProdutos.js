@@ -1,11 +1,25 @@
 import api from "./api";
 
 const ApiWooCommerceProdutos = {
-  getAllPublishedProducts: () =>
-    api.get("products", { status: "publish", per_page: 40 }),
+  getAllPublishedProductsLentgh: async () =>
+    (await ApiWooCommerceProdutos.getAllPublishedProducts()).data.length,
+  getAllPublishedProducts: (per_page, page) =>
+    api.get("products", {
+      status: "publish",
+      per_page: per_page || 100,
+      page: page || 1,
+    }),
+  getAllPublishPoductsByCategoriesIdLentgh: async (id) =>
+    (await ApiWooCommerceProdutos.getAllPublishPoductsByCategoriesId(id)).data
+      .length,
 
-  getAllPublishPoductsByCategoriesId: (id) =>
-    api.get("products", { category: id, status: "publish", per_page: 50 }),
+  getAllPublishPoductsByCategoriesId: (id, per_page, page) =>
+    api.get("products", {
+      category: id,
+      status: "publish",
+      per_page: per_page || 300,
+      page: page || 1,
+    }),
 
   // getAllPublishPoductsByCategoriesSlug: async (slug) => {
   //   console.log((await api.get("products/categories", { slug })).data);

@@ -34,8 +34,8 @@ const MostrarProdutos = (produtos) => {
                   />
                 </div>
                 <div className="produto-dados">
-                  <p className="nome grey-text text-darken-4">{produto.name}</p>
-                  <p className="preco">R$: {produto.price}</p>
+                  <p className="nome grey-text text-darken-4">{`${produto.name}`}</p>
+                  <p className="preco">{`R$: ${produto.price}`}</p>
                 </div>
               </div>
             </Link>
