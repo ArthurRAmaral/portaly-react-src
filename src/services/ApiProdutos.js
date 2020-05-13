@@ -4,24 +4,56 @@ const ApiWooCommerceProdutos = {
   getAllPublishedProductsLentgh: async () =>
     (await ApiWooCommerceProdutos.getAllPublishedProducts()).data.length,
 
-  getAllPublishedProducts: (per_page, page) =>
-    api.get("products", {
-      status: "publish",
-      // per_page: per_page || 100,
-      // page: page || 1,
-    }),
+  getAllPublishedProducts: async () => {
+    let per_page = 100;
+    let prods = [];
+    let qnt;
+    let atual;
+    let page = 1;
+
+    do {
+      atual = (
+        await api.get("products", {
+          status: "publish",
+          per_page,
+          page,
+        })
+      ).data;
+      qnt = atual.length;
+      prods.push(atual);
+      page++;
+    } while (qnt >= per_page);
+
+    return prods;
+  },
 
   getAllPublishPoductsByCategoriesIdLentgh: async (id) =>
     (await ApiWooCommerceProdutos.getAllPublishPoductsByCategoriesId(id)).data
       .length,
 
-  getAllPublishPoductsByCategoriesId: (id, per_page, page) =>
-    api.get("products", {
-      category: id,
-      status: "publish",
-      // per_page: per_page || 300,
-      // page: page || 1,
-    }),
+  getAllPublishPoductsByCategoriesId: async (id) => {
+    let per_page = 100;
+    let prods = [];
+    let qnt;
+    let atual;
+    let page = 1;
+
+    do {
+      atual = (
+        await api.get("products", {
+          category: id,
+          status: "publish",
+          per_page,
+          page,
+        })
+      ).data;
+      qnt = atual.length;
+      prods = prods.concat(atual);
+      page++;
+    } while (qnt >= per_page);
+
+    return { data: prods };
+  },
 
   // getAllPublishPoductsByCategoriesSlug: async (slug) => {
   //   console.log((await api.get("products/categories", { slug })).data);

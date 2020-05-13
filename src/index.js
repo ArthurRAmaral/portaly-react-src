@@ -37,5 +37,4 @@ const rotas = () => {
     </Provider>
   );
 };
-
 ReactDom.render(rotas(), document.getElementById("root"));

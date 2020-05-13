@@ -88,7 +88,7 @@ function getStepContent(step, btnHandler) {
 export default function HorizontalLinearStepper() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [btnvalid, setBtnValid] = React.useState(1);
+  const [btnvalid, setBtnValid] = React.useState(true);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
 

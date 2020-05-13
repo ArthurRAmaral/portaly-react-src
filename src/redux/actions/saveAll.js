@@ -3,16 +3,19 @@ import { SALVA_PRODUTO_POR_CATEGORIA_POR_ID } from "./actionsTypes";
 //From utils
 import ApiProdutos from "../../services/ApiProdutos";
 
-function salvaProdutosPorCategoria(id) {
+function salvaProdutosPorCategoria(todasCat) {
   return function (dispatch) {
-    ApiProdutos.getAllPublishPoductsByCategoriesId(id).then((res) => {
-      console.log(res);
-      dispatch({
-        type: SALVA_PRODUTO_POR_CATEGORIA_POR_ID,
-        payload: res.data,
-        id: res.data[0].categories[0].id,
+    for (let cat of todasCat) {
+      console.log(cat);
+      ApiProdutos.getAllPublishPoductsByCategoriesId(cat.id).then((res) => {
+        console.log(res);
+        dispatch({
+          type: SALVA_PRODUTO_POR_CATEGORIA_POR_ID,
+          payload: res.data,
+          id: res.data[0].categories[0].id,
+        });
       });
-    });
+    }
   };
 }
 
@@ -26,7 +29,7 @@ function deveBuscar(state, categoriaId) {
   return true;
 }
 
-export function buscaProduto(categoriaId) {
+export function saveAll(categoriaId) {
   return function (dispatch, getState) {
     if (deveBuscar(getState(), categoriaId)) {
       dispatch(salvaProdutosPorCategoria(categoriaId));

@@ -19,9 +19,17 @@ import useStyles from "./style";
 
 //From redux
 import { salvaCategorias } from "../../../redux/actions/categoriaActions";
+import { saveAll } from "../../../redux/actions/saveAll";
 
 function Categorias(props) {
   const classes = useStyles();
+
+  if (Object.values(props.categorias).length === 0) {
+    props.salvaCategorias();
+  } else {
+    console.log(props.categorias);
+    props.saveAll(props.categorias);
+  }
 
   return (
     <div className={classes.second_header}>
@@ -76,4 +84,6 @@ function Categorias(props) {
 
 const mapStateToProps = (state) => ({ categorias: state.categorias });
 
-export default connect(mapStateToProps, salvaCategorias)(Categorias);
+const mapDispatchToProps = { salvaCategorias, saveAll };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Categorias);

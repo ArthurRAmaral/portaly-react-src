@@ -19,6 +19,7 @@ import InitPath from "./services/InitPath";
 import "./css/Global.css";
 
 const Routes = () => {
+
   return (
     <section id="homepage">
       <Switch>
