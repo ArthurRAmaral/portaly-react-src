@@ -15,7 +15,7 @@ function add(produto, quantidade, variacao) {
 
 export function addCart(produto, quantidade, variacao) {
   return function (dispatch, getState) {
-    if (quantidadeValida(quantidade) && produtoExiste(produto, getState()))
+    if (produtoExiste(produto, getState()))
       dispatch(add(produto, quantidade, variacao));
   };
 }
@@ -26,10 +26,6 @@ function produtoExiste(produto, state) {
   }
 
   return true;
-}
-
-function quantidadeValida(quantidade) {
-  return !!quantidade;
 }
 
 function calculaValorTotal(price, state) {

@@ -1,54 +1,23 @@
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+
 import Carrinho from "../../util/Carrinho";
 import ApiProdutos from "../../services/ApiProdutos";
+
 import MostraProdutos from "./MostraProdutosCarrinho";
 import LineLoaging from "../loading/LineLoading";
 import SemProduto from "../semProdutos";
 
-class PaginaCarrinho extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      produtos: [],
-      itens: [],
-    };
-  }
-
-  componentDidMount() {
-    this.recebeProdutosNoCarrinho();
-  }
-
-  recebeProdutosNoCarrinho() {
-    const itens = Carrinho.getItensCarrinho();
-
-    for (const item of itens) {
-      ApiProdutos.getProductByid(item.product_id)
-        .then((response) => {
-          this.setState({
-            produtos: [...this.state.produtos, response.data],
-            itens,
-          });
-        })
-        .catch(() => {});
-    }
-  }
-
-  render() {
-    return (
-      <Fragment>
-        {Carrinho.getItensCarrinho().length > 0 ? (
-          this.state.produtos.length > 0 ? (
-            MostraProdutos(this.state.produtos, this.state.itens)
-          ) : (
-            <LineLoaging />
-          )
-        ) : (
-          <SemProduto />
-        )}
-      </Fragment>
-    );
-  }
+function PaginaCarrinho(props) {
+  return (
+    <Fragment>
+      {props.carrinho ? MostraProdutos(props.carrinho) : <SemProduto />}
+    </Fragment>
+  );
 }
 
-export default PaginaCarrinho;
+const mapStateToProps = (state) => ({ carrinho: state.carrinho });
+
+// const mapDispatchToProps = { addCart };
+
+export default connect(mapStateToProps, null)(PaginaCarrinho);

@@ -1,12 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import imgDefault from '../../assets/imgDefault.png';
+import React from "react";
+import { Link } from "react-router-dom";
+import imgDefault from "../../assets/imgDefault.png";
 
-import Carrinho from '../../util/Carrinho';
+import Carrinho from "../../util/Carrinho";
 
-import '../../css/components/MostrarProdutosCarrinho.css';
+import "../../css/components/MostrarProdutosCarrinho.css";
 
-import InitPath from '../../services/InitPath';
+import InitPath from "../../services/InitPath";
 
 const MostrarProdutos = (produtos, itens) => {
   const qntProdutosCarrinho = new Map();
@@ -53,21 +53,21 @@ const MostrarProdutos = (produtos, itens) => {
                 <span className="nome-produto-carrinho">
                   Quantidade: <br></br>
                   <span className="destaque">
-                      {qntProdutosCarrinho.get(produto.id)}
+                    {qntProdutosCarrinho.get(produto.id)}
                   </span>
                 </span>
                 <br></br>
                 <span className="nome-produto-carrinho">
                   Valor Total: <br></br>
                   <span className="destaque">
-                     R$ {
-                    (
+                    R${" "}
+                    {(
                       Math.round(
-                        qntProdutosCarrinho.get(produto.id)
-                          * produto.price
-                          * 100,
+                        qntProdutosCarrinho.get(produto.id) *
+                          produto.price *
+                          100
                       ) / 100
-                    ).toFixed(2) }
+                    ).toFixed(2)}
                   </span>
                 </span>
               </div>
