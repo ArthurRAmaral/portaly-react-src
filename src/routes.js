@@ -1,6 +1,6 @@
 // From dependencies
 import React from "react";
-import { Switch, Route, Router } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 // From componets
 import HomePage from "./pages/HomePage";
@@ -19,7 +19,6 @@ import InitPath from "./services/InitPath";
 import "./css/Global.css";
 
 const Routes = () => {
-
   return (
     <section id="homepage">
       <Switch>

@@ -1,5 +1,4 @@
 import React from "react";
-import PagSeguro from "../util/PagSeguro";
 
 export default (code) => {
   console.log(code);

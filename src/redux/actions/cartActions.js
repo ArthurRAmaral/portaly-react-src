@@ -22,7 +22,7 @@ export function addCart(produto, quantidade, variacao) {
 
 function produtoExiste(produto, state) {
   for (const produtoName in state.carrinho) {
-    if (produto.name == produtoName) return false;
+    if (produto.name === produtoName) return false;
   }
 
   return true;

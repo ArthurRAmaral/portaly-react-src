@@ -1,11 +1,8 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 
-import Carrinho from "../../util/Carrinho";
-import ApiProdutos from "../../services/ApiProdutos";
 
 import MostraProdutos from "./MostraProdutosCarrinho";
-import LineLoaging from "../loading/LineLoading";
 import SemProduto from "../semProdutos";
 
 function PaginaCarrinho(props) {

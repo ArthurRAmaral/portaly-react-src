@@ -67,7 +67,7 @@ function VerticalTabs(props) {
         {images.map((image, index) => (
           <Tab
             key={`imagem-pequena${image.id}`}
-            label={<img src={image.src} />}
+            label={<img alt="" src={image.src} />}
             className={classes.tab}
             {...a11yProps(index)}
           />

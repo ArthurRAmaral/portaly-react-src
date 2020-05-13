@@ -53,15 +53,6 @@ class Cadastro extends Component {
     this.handleDataValid();
   }
 
-  handleDataValid() {
-    for (const data in this.state) {
-      if (this.state.hasOwnProperty(data)) {
-        const element = this.state[data];
-        // console.log(element);
-      }
-    }
-  }
-
   handleValidator(e) {
     const v = Validation[e.target.name](e.target.value);
     this.setState({ validators: { [e.target.id]: v } });

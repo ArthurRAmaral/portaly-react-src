@@ -5,7 +5,6 @@ import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import SearchIcon from "@material-ui/icons/Search";
 import TextField from "@material-ui/core/TextField";
-import { withStyles } from "@material-ui/core/styles";
 
 import InitPath from "../../../services/InitPath";
 import colors from "../../../util/Colors";

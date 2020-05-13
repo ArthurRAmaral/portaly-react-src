@@ -1,14 +1,10 @@
 //From depedencies
 import React, { Component, Fragment } from "react";
-import { Link } from "react-router-dom";
 
 //From components
 import LineLoading from "../components/loading/LineLoading";
 import VerticalTab from "../components/ImagensTab/VerticalTab";
 import InformacoesProduto from "../components/informacoesProduto/informacoesProduto";
-
-//From assets
-import imgDefault from "../assets/imgDefault.png";
 
 //From services
 import ApiProdutos from "../services/ApiProdutos";
