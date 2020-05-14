@@ -47,6 +47,8 @@ TabPanel.propTypes = {
 
 function getProductByids(setProdutos) {
   ApiProdutos.getAllPublishedProducts().then((res) => {
+    console.log(res);
+
     setProdutos(res.data);
   });
 }
@@ -79,10 +81,6 @@ export default function FullWidthTabs() {
     setValue(index);
   };
 
-  const handlesetProdutos = (produtos) => {
-    setProdutos(produtos);
-  };
-
   return (
     <div className={classes.root} id="tabs">
       <AppBar position="static" className="category_tab" color="default">
@@ -112,9 +110,7 @@ export default function FullWidthTabs() {
           index={0}
           dir={theme.direction}
         >
-          {produtos
-            ? MostrarProdutos(produtos)
-            : getProductByids(handlesetProdutos)}
+          {produtos ? MostrarProdutos(produtos) : getProductByids(setProdutos)}
         </TabPanel>
         <TabPanel
           className="product_tab"

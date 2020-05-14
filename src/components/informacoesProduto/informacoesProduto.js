@@ -1,5 +1,7 @@
 //From depedencies
 import React, { Fragment } from "react";
+import { NavLink } from "react-router-dom";
+
 import { connect } from "react-redux";
 
 //From Material-ui
@@ -15,6 +17,9 @@ import Button from "@material-ui/core/Button";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+
+// From util
+import InitPath from "../../services/InitPath";
 
 //From redux
 import { addCart } from "../../redux/actions/cartActions";
@@ -86,7 +91,13 @@ function InformaçõesProduto(props) {
           <AddIcon onClick={addQuantidade} />
           <RemoveIcon onClick={removeQuantidade} />
         </Grid>
-        <Button variant="contained" color="primary" onClick={handleAddCart}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleAddCart}
+          component={NavLink}
+          to={`${InitPath}/meuCarrinho`}
+        >
           Adicionar ao carrinho
         </Button>
       </Grid>

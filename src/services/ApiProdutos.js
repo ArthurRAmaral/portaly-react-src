@@ -20,11 +20,11 @@ const ApiWooCommerceProdutos = {
         })
       ).data;
       qnt = atual.length;
-      prods.push(atual);
+      prods = prods.concat(atual);
       page++;
     } while (qnt >= per_page);
 
-    return prods;
+    return { data: prods };
   },
 
   getAllPublishPoductsByCategoriesIdLentgh: async (id) =>
