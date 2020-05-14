@@ -24,13 +24,25 @@ const calcTax = async (search) => {
     .then((result) => result.json())
     .then((data) => {
       binData = data;
-      console.log(binData);
       distance = calculaDistancia(
         binData.features[0].center[0],
         binData.features[0].center[1]
       );
     });
   return distance;
+};
+
+const calcPlace = async (search) => {
+  let place = null;
+
+  await fetch(
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?types=address&proximity=-43.996145,-19.832106&access_token=${token}`
+  )
+    .then((result) => result.json())
+    .then((data) => {
+      place = data.features[0].place_name;
+    });
+  return place;
 };
 
 const mapbox = {
@@ -44,6 +56,12 @@ const mapbox = {
     const shipping = (distance * tax).toFixed(2);
 
     return shipping;
+  },
+  getPlace: async (search) => {
+    let place = null;
+
+    await calcPlace(search).then((data) => (place = data));
+    return place;
   },
 };
 

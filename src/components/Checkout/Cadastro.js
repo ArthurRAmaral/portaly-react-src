@@ -88,14 +88,14 @@ class Cadastro extends Component {
         <TextField
           id="address_1"
           onChange={this.handleChange}
-          label="Endereço 1"
+          label="Número"
           value={this.state.address_1}
           variant="outlined"
         />
         <TextField
           id="address_2"
           onChange={this.handleChange}
-          label="Endereço 2"
+          label="Rua"
           value={this.state.address_2}
           variant="outlined"
         />

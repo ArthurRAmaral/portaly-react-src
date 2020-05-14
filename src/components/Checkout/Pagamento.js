@@ -1,6 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import mapBox from "../../services/mapBoxAndReact/MapBoxApi";
-// import ApiPedidos from "../../util/ApiPedidos.js";
+import { connect } from "react-redux";
+
+import { salvaFrete } from "../../redux/actions/freteActions";
+
+import MostraProdutosCarrinho from "./MostraProdutosCarrinhoResumido";
+import SemProduto from "../semProdutos";
 // import ApiProdutos from "../../util/ApiProdutos.js";
 
 // import Carrinho from "../../util/Carrinho.js";
@@ -14,6 +19,8 @@ class Pagamento extends Component {
 
     this.state = {
       tax: null,
+      place: null,
+      buyer: null,
     };
     // let dadosCadastro = JSON.parse(sessionStorage.getItem(varCadastro));
     // let dadosFrete = JSON.parse(sessionStorage.getItem(varFrete));
@@ -21,7 +28,9 @@ class Pagamento extends Component {
 
   async componentDidMount() {
     const varFrete = "dadosFrete";
+    const varCadastro = "dadosCadastro";
     const data = JSON.parse(sessionStorage.getItem(varFrete));
+    let dadosCadastro = JSON.parse(sessionStorage.getItem(varCadastro));
     let shipTo =
       data.address_2 +
       " " +
@@ -35,15 +44,54 @@ class Pagamento extends Component {
     shipTo = shipTo.split(" ").join("%20");
 
     let value;
+    let place;
+
     await mapBox.getTax(shipTo).then((tax) => {
       value = tax;
+      this.props.salvaFrete(value);
     });
+
+    await mapBox.getPlace(shipTo).then((place_name) => {
+      place = place_name;
+    });
+
     this.setState({ tax: value });
+    this.setState({ place: place });
+    this.setState({
+      buyer: dadosCadastro.first_name + " " + dadosCadastro.last_name,
+    });
   }
 
   render() {
-    return <div> {this.state.tax?this.state.tax:"Buscando Frete"} </div>;
+    return (
+      <div className="Entrega">
+        Entrega para:{" "}
+        <span>
+          {" "}
+          {this.state.buyer
+            ? this.state.buyer
+            : "Sem comprador identificado"}{" "}
+        </span>{" "}
+        <br></br>
+         <Fragment>
+      {this.props.carrinho ? MostraProdutosCarrinho(this.props.carrinho) : <SemProduto />}
+    </Fragment>
+        <br></br>
+        <span>
+          {" "}
+          {this.state.place ? this.state.place : "Sem local de entrega"}
+        </span>{" "}
+        <br></br>
+        <span>
+          {" "}
+          Valor: R${this.state.tax ? this.state.tax : "Buscando Frete"}
+        </span>
+      </div>
+    );
   }
 }
 
-export default Pagamento;
+const mapStateToProps = (state) => ({ frete: state.frete, carrinho: state.carrinho });
+const mapDispatchToProps = { salvaFrete };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Pagamento);

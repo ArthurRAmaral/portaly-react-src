@@ -32,6 +32,9 @@ import btnPagSeguro from "../../util/btnPagSeguro";
 import ApiProdutos from "../../services/ApiProdutos";
 import ApiPedidos from "../../services/ApiPedidos";
 
+//From redux
+import { salvaFrete } from "../../redux/actions/freteActions";
+
 function getSteps() {
   return ["Carrinho", "Cadastro", "Frete", "Pagamento"];
 }
@@ -40,7 +43,7 @@ function getOptionalSteps() {
   return [];
 }
 
-function getStepContent(step, validCode) {
+function getStepContent(props, step, validCode) {
   switch (step) {
     case 0:
       return <Carrinho />;
@@ -55,7 +58,7 @@ function getStepContent(step, validCode) {
         let dadosCadastro = JSON.parse(sessionStorage.getItem(varCadastro));
         let dadosFrete = JSON.parse(sessionStorage.getItem(varFrete));
         //Forma array de produtos
-        const dadosProdutos = await createPagseguroProducts();
+        const dadosProdutos = await createPagseguroProducts(props);
         //Froma json de comprador
         const dadosComprador = await createPagseguroBuyer(dadosCadastro);
         //Forma json de entrega
@@ -113,23 +116,41 @@ function btnHandler(quantidade) {
   return !quantidade;
 }
 
-const createPagseguroProducts = async () => {
+const createPagseguroProducts = async (props) => {
   const arrayItens = [];
-  for (const item of funcoesCarrinho.getItensCarrinho()) {
-    const responseItem = await ApiProdutos.getProductByid(item.product_id);
-    const itemToPush = {
-      id: item.product_id,
-      description: responseItem.data.name,
-      amount: responseItem.data.price.split(".")[1]
-        ? responseItem.data.price
-        : responseItem.data.price + ".00",
-      quantity: parseInt(item.quantity),
-      weight: parseFloat(responseItem.data.weight)
-        ? parseFloat(responseItem.data.weight)
-        : 1,
-    };
-    arrayItens.push(itemToPush);
+  const arrayIds = [];
+
+  console.log(props.carrinho);
+  for (const key in props.carrinho) {
+    let item = props.carrinho[key].produto;
+    const variacao = props.carrinho[key].variacao;
+    const quantidade = props.carrinho[key].quantidade;
+    if (item) {
+      item = item[0];
+      const itemToPush = {
+        id: item.id,
+        description: item.name + (variacao ? " (" + variacao + ")" : ""),
+        amount: item.price.split(".")[1] ? item.price : item.price + ".00",
+        quantity: parseInt(quantidade),
+        weight: parseFloat(item.weight) ? parseFloat(item.weight) : 1,
+      };
+      arrayIds.push(item.id);
+      arrayItens.push(itemToPush);
+    }
   }
+  let idFrete = 1;
+  while (arrayIds.includes(idFrete)) idFrete++;
+
+  const valorFrete = props.frete.join("");
+  console.log("valor = ", valorFrete);
+  const frete = {
+    id: idFrete,
+    description: "Frete",
+    amount: valorFrete.split(".")[1] ? valorFrete : valorFrete + ".00",
+    quantity: 1,
+    weight: 1,
+  };
+  arrayItens.push(frete);
   return arrayItens;
 };
 
@@ -186,13 +207,13 @@ let contador = 0;
 
 function HorizontalLinearStepper(props) {
   const classes = useStyles();
-  const [finalCcode, setCode] = React.useState(null);
+  const [finalCode, setCode] = React.useState(null);
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
 
   function validCode(code) {
-    if (!finalCcode) {
+    if (!finalCode) {
       setCode(code);
     }
   }
@@ -272,7 +293,7 @@ function HorizontalLinearStepper(props) {
           ) : (
             <div>
               <Card className={classes.instructions}>
-                {getStepContent(activeStep, validCode)}
+                {getStepContent(props, activeStep, validCode)}
               </Card>
               <div>
                 <Button
@@ -294,8 +315,8 @@ function HorizontalLinearStepper(props) {
                 )}
 
                 {activeStep === steps.length - 1 ? (
-                  finalCcode ? (
-                    btnPagSeguro(finalCcode)
+                  finalCode ? (
+                    btnPagSeguro(finalCode)
                   ) : (
                     <Button
                       focusVisibleClassName="btn"
@@ -314,7 +335,7 @@ function HorizontalLinearStepper(props) {
                     color="primary"
                     onClick={handleNext}
                     className={classes.button}
-                    disabled={btnHandler(props.quantidade)}
+                    disabled={btnHandler(props.carrinho.quantidade)}
                   >
                     Próximo
                   </Button>
@@ -328,6 +349,9 @@ function HorizontalLinearStepper(props) {
   );
 }
 
-const mapStateToProps = (state) => ({ carrinho: state.carrinho });
+const mapStateToProps = (state) => ({
+  carrinho: state.carrinho,
+  frete: state.frete,
+});
 
 export default connect(mapStateToProps, null)(HorizontalLinearStepper);

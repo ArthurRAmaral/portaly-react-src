@@ -9,7 +9,7 @@ const Paginador = (qnt, mudarPagina) => {
   return (
     <div className="paginador" style={{ cursor: "pointer" }}>
       {vet.map((e) => (
-        <div onClick={() => mudarPagina(e)}>
+        <div key={e} onClick={() => mudarPagina(e)}>
           <span>página {e}</span>
         </div>
       ))}

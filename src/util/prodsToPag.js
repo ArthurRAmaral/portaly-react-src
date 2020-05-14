@@ -12,9 +12,6 @@ export function paginar(produtos, quantidadePorPag) {
     }
   }
 
-  console.clear();
-  console.log(paginas);
-  console.log(produtos);
   setTimeout(100000, alert);
 
   return paginas;

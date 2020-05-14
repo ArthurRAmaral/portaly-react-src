@@ -17,7 +17,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middleware = applyMiddleware(createPromise(), thunk, createLogger());
+const middleware = applyMiddleware(createPromise(), thunk); //, createLogger()
 
 const store = createStore(persistedReducer, composeWithDevTools(middleware));
 

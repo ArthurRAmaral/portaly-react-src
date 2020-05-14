@@ -6,7 +6,6 @@ import ApiProdutos from "../../services/ApiProdutos";
 function salvaProdutosPorCategoria(id) {
   return function (dispatch) {
     ApiProdutos.getAllPublishPoductsByCategoriesId(id).then((res) => {
-      console.log(res);
       dispatch({
         type: SALVA_PRODUTO_POR_CATEGORIA_POR_ID,
         payload: res.data,

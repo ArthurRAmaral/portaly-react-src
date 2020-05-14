@@ -27,7 +27,6 @@ function Categorias(props) {
   if (Object.values(props.categorias).length === 0) {
     props.salvaCategorias();
   } else {
-    console.log(props.categorias);
     for (let cat of props.categorias) props.buscaProduto(cat.id);
   }
 
