@@ -50,7 +50,7 @@ class Cadastro extends Component {
 
   componentDidMount() {
     sessionStorage.setItem(varName, JSON.stringify(this.state));
-    this.handleDataValid();
+    // this.handleDataValid();
   }
 
   handleValidator(e) {

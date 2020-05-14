@@ -1,5 +1,8 @@
+//From depdencies
 import React from "react";
+import { connect } from "react-redux";
 
+//From Material-ui
 import { ThemeProvider } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -12,6 +15,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import PaymentIcon from "@material-ui/icons/Payment";
 
+//From checkout
 import clsx from "clsx";
 import Carrinho from "./Carrinho";
 import Cadastro from "./Cadastro";
@@ -22,6 +26,7 @@ import theme from "./styles/theme";
 import useStepIconStyles from "./styles/IconStyle";
 import funcoesCarrinho from "../../util/Carrinho";
 
+//From util
 import PagSeguro from "../../util/PagSeguro";
 import btnPagSeguro from "../../util/btnPagSeguro";
 import ApiProdutos from "../../services/ApiProdutos";
@@ -104,8 +109,8 @@ function StepIcon(props) {
   );
 }
 
-function btnHandler() {
-  return !funcoesCarrinho.getItensCarrinho().length;
+function btnHandler(quantidade) {
+  return !!quantidade;
 }
 
 const createPagseguroProducts = async () => {
@@ -177,33 +182,9 @@ const pagamento = (dadosCadastro, dadosFrete) => {
 
 let dados = null;
 
-// (async () => {
-//   //Cria Ordem
-//   pagamento();
-//   //Forma array de produtos
-//   const dadosProdutos = await createPagseguroProducts();
-//   //Froma json de comprador
-//   const dadosComprador = await createPagseguroBuyer();
-//   //Forma json de entrega
-//   const dadosEntrega = await createPagseguroShipping();
-
-//   dados = {
-//     dadosProdutos,
-//     dadosComprador,
-//     dadosEntrega,
-//   };
-
-//   PagSeguro.gerarPagamento(dados).then((codigo) => {
-//     // if (dados.dadosProdutos.length > 0) controle = true;
-//     console.log(codigo);
-//     code = codigo;
-//     // setBtnCode(code);
-//   });
-// })();
-
 let contador = 0;
 
-export default function HorizontalLinearStepper() {
+function HorizontalLinearStepper(props) {
   const classes = useStyles();
   const [finalCcode, setCode] = React.useState(null);
   const [activeStep, setActiveStep] = React.useState(0);
@@ -333,7 +314,7 @@ export default function HorizontalLinearStepper() {
                     color="primary"
                     onClick={handleNext}
                     className={classes.button}
-                    disabled={btnHandler()}
+                    disabled={btnHandler(props.quantidade)}
                   >
                     Próximo
                   </Button>
@@ -346,3 +327,7 @@ export default function HorizontalLinearStepper() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({ carrinho: state.carrinho });
+
+export default connect(mapStateToProps, null)(HorizontalLinearStepper);

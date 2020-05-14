@@ -68,7 +68,9 @@ function InformaçõesProduto(props) {
             }}
           >
             {produto.attributes[0].options.map((option) => (
-              <option value={option}>{option}</option>
+              <option value={option} key={`option${option}`}>
+                {option}
+              </option>
             ))}
           </Select>
         </FormControl>
