@@ -70,7 +70,7 @@ function getStepContent(props, step, validCode) {
           PagSeguro.gerarPagamento(dados).then((codigo) => {
             //Cria Ordem
 
-            pagamento(dadosCadastro, dadosFrete);
+            pagamento(props, dadosCadastro, dadosFrete);
             // if (dados.dadosProdutos.length > 0) controle = true;
             code = codigo;
             validCode(code);
@@ -175,15 +175,38 @@ const createPagseguroShipping = async (dadosFrete) => {
 
 let code;
 
-const pagamento = (dadosCadastro, dadosFrete) => {
+const pagamento = (props, dadosCadastro, dadosFrete) => {
+  const itensCarrinho = [];
+  for (const key in props.carrinho) {
+    if (props.carrinho.hasOwnProperty(key)) {
+      let element = props.carrinho[key].produto;
+      let quantity = props.carrinho[key].quantidade;
+      if (element) {
+        element = element[0];
+        itensCarrinho.push({
+          product_id: element.id,
+          quantity,
+        });
+      }
+    }
+  }
+  console.log("props.frete.join()=", props.frete.join(""));
+  alert();
   if (contador === 1) {
     ApiPedidos.createOrder({
-      payment_method: "delete",
+      payment_method: "PagSeguro",
       payment_method_title: "delete",
       set_paid: false,
       billing: dadosCadastro,
       shipping: dadosFrete,
-      line_items: funcoesCarrinho.getItensCarrinho(),
+      shipping_lines: [
+        {
+          method_id: "Padrão",
+          method_title: "Padrão",
+          total: (props.frete.join("")),
+        },
+      ],
+      line_items: itensCarrinho,
     })
       .then((response) => {
         console.log(response.data);
