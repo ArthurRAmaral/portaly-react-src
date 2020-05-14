@@ -8,7 +8,8 @@ function add(produto, quantidade, variacao) {
       name: produto.name,
       quantidade: quantidade,
       variacao: variacao,
-      valorTotal: calculaValorTotal(produto.price, getState()),
+      valorTotal: calculaValorTotal(produto.price, quantidade, getState()),
+      quantidadeTotal: addQuantidade(getState()),
     });
   };
 }
@@ -20,6 +21,15 @@ export function addCart(produto, quantidade, variacao) {
   };
 }
 
+export function removeCart(NAO_SEI_AINDA) {
+  return function (dispatch) {
+    dispatch({
+      type: REMOVE_CART,
+      payload: NAO_SEI_AINDA,
+    });
+  };
+}
+
 function produtoExiste(produto, state) {
   for (const produtoName in state.carrinho) {
     if (produto.name === produtoName) return false;
@@ -28,15 +38,10 @@ function produtoExiste(produto, state) {
   return true;
 }
 
-function calculaValorTotal(price, state) {
-  return state.carrinho.valorTotal + parseFloat(price);
+function calculaValorTotal(price, quantidade, state) {
+  return state.carrinho.valorTotal + parseFloat(price) * quantidade;
 }
 
-export function removeCart(NAO_SEI_AINDA) {
-  return function (dispatch) {
-    dispatch({
-      type: REMOVE_CART,
-      payload: NAO_SEI_AINDA,
-    });
-  };
+function addQuantidade(state) {
+  return state.carrinho.quantidade + 1;
 }
