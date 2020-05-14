@@ -73,7 +73,7 @@ const MostrarProdutos = (props) => {
           </li>
         </div>
       );
-    }
+    } else return null;
   });
 
   const handleRemove = (id) => {

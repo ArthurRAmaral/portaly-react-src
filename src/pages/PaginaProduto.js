@@ -25,7 +25,7 @@ class PaginaProduto extends Component {
 
     Object.values(this.props.produtos).forEach((prods) => {
       prods.forEach((prod) => {
-        if (prod.slug == slug) {
+        if (prod.slug === slug) {
           produto = prod;
         }
       });

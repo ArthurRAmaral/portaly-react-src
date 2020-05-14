@@ -29,11 +29,7 @@ import funcoesCarrinho from "../../util/Carrinho";
 //From util
 import PagSeguro from "../../util/PagSeguro";
 import btnPagSeguro from "../../util/btnPagSeguro";
-import ApiProdutos from "../../services/ApiProdutos";
 import ApiPedidos from "../../services/ApiPedidos";
-
-//From redux
-import { salvaFrete } from "../../redux/actions/freteActions";
 
 function getSteps() {
   return ["Carrinho", "Cadastro", "Frete", "Pagamento"];
@@ -76,7 +72,6 @@ function getStepContent(props, step, validCode) {
 
             pagamento(dadosCadastro, dadosFrete);
             // if (dados.dadosProdutos.length > 0) controle = true;
-            console.log(codigo);
             code = codigo;
             validCode(code);
             funcoesCarrinho.reset();
@@ -120,7 +115,6 @@ const createPagseguroProducts = async (props) => {
   const arrayItens = [];
   const arrayIds = [];
 
-  console.log(props.carrinho);
   for (const key in props.carrinho) {
     let item = props.carrinho[key].produto;
     const variacao = props.carrinho[key].variacao;
@@ -142,7 +136,6 @@ const createPagseguroProducts = async (props) => {
   while (arrayIds.includes(idFrete)) idFrete++;
 
   const valorFrete = props.frete.join("");
-  console.log("valor = ", valorFrete);
   const frete = {
     id: idFrete,
     description: "Frete",

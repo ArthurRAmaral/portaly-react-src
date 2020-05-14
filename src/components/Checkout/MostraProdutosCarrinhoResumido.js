@@ -1,51 +1,51 @@
 import React from "react";
-
-import Carrinho from "../../util/Carrinho";
+import imgDefault from "../../assets/imgDefault.png";
 
 import "../../css/components/MostrarProdutosCarrinho.css";
 
-const MostrarProdutos = (produtos) => {
-  const qntProdutosCarrinho = new Map();
-
-  const cards = produtos.map((produto) => {
-    return (
-      <div key={produto.id}>
-        <li className="produto-dados-carrinho">
-          <div className="valign-wrapper">
-            <div className="title-carrinho">
-              <span className="nome-produto-carrinho">{produto.name}</span>
-              <br></br>
-              <span>
-                Preço unitário: <br></br>
-                <span className="destaque">
-                  R$ {(Math.round(produto.price * 100) / 100).toFixed(2)}
+const MostrarProdutos = (props) => {
+  const cards = Object.values(props).map((produto) => {
+    if (produto.produto) {
+      return (
+        <li key={produto.produto[0].id} className="produto-dados-carrinho">
+          <div key={produto.produto[0].id}>
+            <div className="valign-wrapper">
+              <img
+                className="img-produto-carrinho"
+                key={produto.produto[0].id}
+                src={
+                  produto.produto[0].images.length > 0
+                    ? produto.produto[0].images[0].src
+                    : imgDefault
+                }
+                alt=""
+              />
+              <div className="title-carrinho">
+                <span className="nome-produto-carrinho">
+                  {produto.produto[0].name} x {produto.quantidade} unidades
                 </span>
-              </span>
-            </div>
-            <div className="title-carrinho">
-              <span className="nome-produto-carrinho">
-                Quantidade: <br></br>
-                <span className="destaque">
-                  {qntProdutosCarrinho.get(produto.id)}
+                <br></br>
+                <span>
+                  Preço unitário:
+                  <span className="destaque">
+                    R${" "}
+                    {(Math.round(produto.produto[0].price * 100) / 100).toFixed(
+                      2
+                    )}{" "}
+                    - Total: R$
+                    {(
+                      Math.round(
+                        produto.quantidade * produto.produto[0].price * 100
+                      ) / 100
+                    ).toFixed(2)}
+                  </span>
                 </span>
-              </span>
-              <br></br>
-              <span className="nome-produto-carrinho">
-                Valor Total: <br></br>
-                <span className="destaque">
-                  R${" "}
-                  {(
-                    Math.round(
-                      qntProdutosCarrinho.get(produto.id) * produto.price * 100
-                    ) / 100
-                  ).toFixed(2)}
-                </span>
-              </span>
+              </div>
             </div>
           </div>
         </li>
-      </div>
-    );
+      );
+    } else return null;
   });
 
   return (
