@@ -95,8 +95,8 @@ export default function FullWidthTabs() {
           aria-label="full width tabs example"
         >
           <Tab label="Mais Vendidos" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="Destaques" {...a11yProps(1)} />
+          <Tab label="Ofertas" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -118,7 +118,7 @@ export default function FullWidthTabs() {
           index={1}
           dir={theme.direction}
         >
-          Item Two
+
         </TabPanel>
         <TabPanel
           className="product_tab"
@@ -126,7 +126,7 @@ export default function FullWidthTabs() {
           index={2}
           dir={theme.direction}
         >
-          Item Three
+
         </TabPanel>
       </SwipeableViews>
     </div>

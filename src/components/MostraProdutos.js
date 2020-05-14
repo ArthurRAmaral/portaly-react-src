@@ -42,8 +42,8 @@ const MostrarProdutos = (produtos) => {
           );
         })
       ) : (
-        <div>Nenhum produto encontrado</div>
-      )}
+          <div>Nenhum produto encontrado</div>
+        )}
     </section>
   );
 };

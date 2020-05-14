@@ -56,7 +56,7 @@ class Busca extends Component {
             />
             <TextField
               label="Buscar"
-              variant="outlined"
+              InputProps={{ disableUnderline: true }}
               id="buscaInput"
               type="text"
               value={this.state.value}
