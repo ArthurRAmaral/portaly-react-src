@@ -1,5 +1,18 @@
 import { ADD_CART, REMOVE_CART } from "./actionsTypes";
 
+export function addCart(produto, quantidade, variacao) {
+  return function (dispatch, getState) {
+    if (produtoExiste(produto, getState()))
+      dispatch(add(produto, quantidade, variacao));
+  };
+}
+
+export function removeCart(produtoId) {
+  return function (dispatch, getState) {
+    if (quantidadeValida(getState())) dispatch(remove(produtoId));
+  };
+}
+
 function add(produto, quantidade, variacao) {
   return function (dispatch, getState) {
     dispatch({
@@ -8,26 +21,45 @@ function add(produto, quantidade, variacao) {
       name: produto.name,
       quantidade: quantidade,
       variacao: variacao,
-      valorTotal: calculaValorTotal(produto.price, quantidade, getState()),
+      valorTotal: calculaValorTotal(
+        produto.price,
+        quantidade,
+        getState().carrinho.valorTotal
+      ),
       quantidadeTotal: addQuantidade(getState()),
     });
   };
 }
 
-export function addCart(produto, quantidade, variacao) {
+function remove(produtoId) {
   return function (dispatch, getState) {
-    if (produtoExiste(produto, getState()))
-      dispatch(add(produto, quantidade, variacao));
+    dispatch({
+      type: REMOVE_CART,
+      novoState: novoCarrinho(produtoId, getState()),
+    });
   };
 }
 
-export function removeCart(NAO_SEI_AINDA) {
-  return function (dispatch) {
-    dispatch({
-      type: REMOVE_CART,
-      payload: NAO_SEI_AINDA,
-    });
+function novoCarrinho(produtoId, state) {
+  let carrinho = {
+    valorTotal: 0,
+    quantidade: 0,
   };
+  Object.values(state.carrinho).map((prod) => {
+    if (prod.produto && produtoId != prod.produto[0].id) {
+      carrinho = {
+        ...carrinho,
+        valorTotal: calculaValorTotal(prod.produto[0].price, prod.quantidade),
+        quantidade: diminuiQuantidade(state),
+        [prod.produto[0].slug]: prod,
+      };
+    }
+  });
+  return carrinho;
+}
+
+function quantidadeValida(state) {
+  return !!state.carrinho.quantidade;
 }
 
 function produtoExiste(produto, state) {
@@ -38,10 +70,14 @@ function produtoExiste(produto, state) {
   return true;
 }
 
-function calculaValorTotal(price, quantidade, state) {
-  return state.carrinho.valorTotal + parseFloat(price) * quantidade;
+function calculaValorTotal(price, quantidade, valorTotal = 0) {
+  return valorTotal + parseFloat(price) * quantidade;
 }
 
 function addQuantidade(state) {
   return state.carrinho.quantidade + 1;
+}
+
+function diminuiQuantidade(state) {
+  return state.carrinho.quantidade - 1;
 }

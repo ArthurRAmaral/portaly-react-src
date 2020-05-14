@@ -17,7 +17,7 @@ export default function setCarrinho(
         },
       };
     case REMOVE_CART:
-      return state;
+      return action.novoState;
     default:
       return state;
   }

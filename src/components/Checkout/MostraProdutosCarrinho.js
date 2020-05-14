@@ -1,25 +1,32 @@
+//From depedencies
 import React from "react";
 import { Link } from "react-router-dom";
+
+//From assets
 import imgDefault from "../../assets/imgDefault.png";
 
-import Carrinho from "../../util/Carrinho";
-
+//From css
 import "../../css/components/MostrarProdutosCarrinho.css";
 
+//From services
 import InitPath from "../../services/InitPath";
 
-const MostrarProdutos = (props) => {
+//From Material-ui
+import CloseIcon from "@material-ui/icons/Close";
+
+const MostrarProdutos = (props, removeCart) => {
+  const handleRemove = (event) => {
+    removeCart(event.currentTarget.id);
+  };
+
   const cards = Object.values(props).map((produto) => {
     if (produto.produto) {
       return (
         <div key={produto.produto[0].id}>
           <li className="produto-dados-carrinho">
-            <i
-              onClick={() => handleRemove(produto.produto[0].id)}
-              className="material-icons make-pointer"
-            >
+            <CloseIcon onClick={handleRemove} id={produto.produto[0].id}>
               close
-            </i>
+            </CloseIcon>
             <Link
               key={`link-to-${produto.produto[0].id}`}
               to={`${InitPath}/produto/${produto.produto[0].slug}`}
@@ -75,11 +82,6 @@ const MostrarProdutos = (props) => {
       );
     } else return null;
   });
-
-  const handleRemove = (id) => {
-    Carrinho.remove(id);
-    window.location.reload();
-  };
 
   return (
     <div className="container-carrinho container">
