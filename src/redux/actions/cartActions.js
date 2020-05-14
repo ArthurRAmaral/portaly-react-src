@@ -46,7 +46,7 @@ function novoCarrinho(produtoId, state) {
     quantidade: 0,
   };
   Object.values(state.carrinho).map((prod) => {
-    if (prod.produto && produtoId !== prod.produto[0].id) {
+    if (prod.produto && produtoId != prod.produto[0].id) {
       carrinho = {
         ...carrinho,
         valorTotal: calculaValorTotal(prod.produto[0].price, prod.quantidade),
