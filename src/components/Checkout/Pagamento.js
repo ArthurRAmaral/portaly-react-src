@@ -13,7 +13,7 @@ class Pagamento extends Component {
     super(props);
 
     this.state = {
-      tax: 60.0,
+      tax: null,
     };
     // let dadosCadastro = JSON.parse(sessionStorage.getItem(varCadastro));
     // let dadosFrete = JSON.parse(sessionStorage.getItem(varFrete));
@@ -42,7 +42,7 @@ class Pagamento extends Component {
   }
 
   render() {
-    return <div>Frete = R${this.state.tax}</div>;
+    return <div> {this.state.tax?this.state.tax:"Buscando Frete"} </div>;
   }
 }
 

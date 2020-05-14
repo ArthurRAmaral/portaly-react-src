@@ -110,7 +110,7 @@ function StepIcon(props) {
 }
 
 function btnHandler(quantidade) {
-  return !!quantidade;
+  return !quantidade;
 }
 
 const createPagseguroProducts = async () => {
