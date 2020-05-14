@@ -91,7 +91,11 @@ function InformaçõesProduto(props) {
       <Grid>
         <Grid>
           <Typography>{`Categorias: ${produto.categories[0].name}`}</Typography>
-          <Typography>{`Material: aasdasdsad`}</Typography>
+          <Typography>{`Descrição: ${
+            produto.description
+              ? produto.description.split(">")[1].split("<")[0]
+              : "Não possui descrição"
+          }`}</Typography>
         </Grid>
         <Grid>
           <FacebookIcon />
