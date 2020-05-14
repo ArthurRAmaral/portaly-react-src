@@ -105,6 +105,30 @@ const ApiWooCommerceProdutos = {
 
     return await api.post("products", data);
   },
+
+  getAllOnSaleProducts: async () => {
+    let per_page = 100;
+    let prods = [];
+    let qnt;
+    let atual;
+    let page = 1;
+
+    do {
+      atual = (
+        await api.get("products", {
+          status: "publish",
+          per_page,
+          page,
+          on_sale: true,
+        })
+      ).data;
+      qnt = atual.length;
+      prods = prods.concat(atual);
+      page++;
+    } while (qnt >= per_page);
+
+    return { data: prods };
+  },
 };
 
 export default ApiWooCommerceProdutos;

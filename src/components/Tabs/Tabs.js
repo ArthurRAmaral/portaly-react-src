@@ -45,11 +45,12 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function getProductByids(setProdutos) {
+function getProductByids(setProdutos, setProdutosOnSale) {
   ApiProdutos.getAllPublishedProducts().then((res) => {
-    console.log(res);
-
     setProdutos(res.data);
+  });
+  ApiProdutos.getAllOnSaleProducts().then((res) => {
+    setProdutosOnSale(res.data);
   });
 }
 
@@ -72,6 +73,7 @@ export default function FullWidthTabs() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const [produtos, setProdutos] = React.useState();
+  const [produtosOnSale, setProdutosOnSale] = React.useState();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -110,7 +112,9 @@ export default function FullWidthTabs() {
           index={0}
           dir={theme.direction}
         >
-          {produtos ? MostrarProdutos(produtos) : getProductByids(setProdutos)}
+          {produtos
+            ? MostrarProdutos(produtos)
+            : getProductByids(setProdutos, setProdutosOnSale)}
         </TabPanel>
         <TabPanel
           className="product_tab"
@@ -118,7 +122,9 @@ export default function FullWidthTabs() {
           index={1}
           dir={theme.direction}
         >
-
+          {produtos
+            ? MostrarProdutos(produtos)
+            : getProductByids(setProdutos, setProdutosOnSale)}
         </TabPanel>
         <TabPanel
           className="product_tab"
@@ -126,7 +132,9 @@ export default function FullWidthTabs() {
           index={2}
           dir={theme.direction}
         >
-
+          {produtosOnSale
+            ? MostrarProdutos(produtosOnSale)
+            : getProductByids(setProdutos, setProdutosOnSale)}
         </TabPanel>
       </SwipeableViews>
     </div>
