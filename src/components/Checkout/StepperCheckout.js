@@ -1,9 +1,9 @@
+//From depdencies
 import React from "react";
-import {
-  makeStyles,
-  ThemeProvider,
-  createMuiTheme,
-} from "@material-ui/core/styles";
+import { connect } from "react-redux";
+
+//From Material-ui
+import { ThemeProvider } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -15,6 +15,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import PaymentIcon from "@material-ui/icons/Payment";
 
+//From checkout
 import clsx from "clsx";
 import Carrinho from "./Carrinho";
 import Cadastro from "./Cadastro";
@@ -25,10 +26,10 @@ import theme from "./styles/theme";
 import useStepIconStyles from "./styles/IconStyle";
 import funcoesCarrinho from "../../util/Carrinho";
 
+//From util
 import PagSeguro from "../../util/PagSeguro";
 import btnPagSeguro from "../../util/btnPagSeguro";
-import ApiProdutos from "../../util/ApiProdutos";
-import ApiPedidos from "../../util/ApiPedidos";
+import ApiPedidos from "../../services/ApiPedidos";
 
 function getSteps() {
   return ["Carrinho", "Cadastro", "Frete", "Pagamento"];
@@ -38,7 +39,7 @@ function getOptionalSteps() {
   return [];
 }
 
-function getStepContent(step, validCode) {
+function getStepContent(props, step, validCode) {
   switch (step) {
     case 0:
       return <Carrinho />;
@@ -53,7 +54,7 @@ function getStepContent(step, validCode) {
         let dadosCadastro = JSON.parse(sessionStorage.getItem(varCadastro));
         let dadosFrete = JSON.parse(sessionStorage.getItem(varFrete));
         //Forma array de produtos
-        const dadosProdutos = await createPagseguroProducts();
+        const dadosProdutos = await createPagseguroProducts(props);
         //Froma json de comprador
         const dadosComprador = await createPagseguroBuyer(dadosCadastro);
         //Forma json de entrega
@@ -69,9 +70,8 @@ function getStepContent(step, validCode) {
           PagSeguro.gerarPagamento(dados).then((codigo) => {
             //Cria Ordem
 
-            pagamento(dadosCadastro, dadosFrete);
+            pagamento(props, dadosCadastro, dadosFrete);
             // if (dados.dadosProdutos.length > 0) controle = true;
-            console.log(codigo);
             code = codigo;
             validCode(code);
             funcoesCarrinho.reset();
@@ -107,27 +107,43 @@ function StepIcon(props) {
   );
 }
 
-function btnHandler() {
-  return !funcoesCarrinho.getItensCarrinho().length;
+function btnHandler(quantidade) {
+  return !quantidade;
 }
 
-const createPagseguroProducts = async () => {
+const createPagseguroProducts = async (props) => {
   const arrayItens = [];
-  for (const item of funcoesCarrinho.getItensCarrinho()) {
-    const responseItem = await ApiProdutos.getProduto(item.product_id);
-    const itemToPush = {
-      id: item.product_id,
-      description: responseItem.data.name,
-      amount: responseItem.data.price.split(".")[1]
-        ? responseItem.data.price
-        : responseItem.data.price + ".00",
-      quantity: parseInt(item.quantity),
-      weight: parseFloat(responseItem.data.weight)
-        ? parseFloat(responseItem.data.weight)
-        : 1,
-    };
-    arrayItens.push(itemToPush);
+  const arrayIds = [];
+
+  for (const key in props.carrinho) {
+    let item = props.carrinho[key].produto;
+    const variacao = props.carrinho[key].variacao;
+    const quantidade = props.carrinho[key].quantidade;
+    if (item) {
+      item = item[0];
+      const itemToPush = {
+        id: item.id,
+        description: item.name + (variacao ? " (" + variacao + ")" : ""),
+        amount: item.price.split(".")[1] ? item.price : item.price + ".00",
+        quantity: parseInt(quantidade),
+        weight: parseFloat(item.weight) ? parseFloat(item.weight) : 1,
+      };
+      arrayIds.push(item.id);
+      arrayItens.push(itemToPush);
+    }
   }
+  let idFrete = 1;
+  while (arrayIds.includes(idFrete)) idFrete++;
+
+  const valorFrete = props.frete.join("");
+  const frete = {
+    id: idFrete,
+    description: "Frete",
+    amount: valorFrete.split(".")[1] ? valorFrete : valorFrete + ".00",
+    quantity: 1,
+    weight: 1,
+  };
+  arrayItens.push(frete);
   return arrayItens;
 };
 
@@ -159,62 +175,61 @@ const createPagseguroShipping = async (dadosFrete) => {
 
 let code;
 
-const pagamento = (dadosCadastro, dadosFrete) => {
+const pagamento = (props, dadosCadastro, dadosFrete) => {
+  const itensCarrinho = [];
+  for (const key in props.carrinho) {
+    if (props.carrinho.hasOwnProperty(key)) {
+      let element = props.carrinho[key].produto;
+      let quantity = props.carrinho[key].quantidade;
+      if (element) {
+        element = element[0];
+        itensCarrinho.push({
+          product_id: element.id,
+          quantity,
+        });
+      }
+    }
+  }
+  console.log("props.frete.join()=", props.frete.join(""));
+  alert();
   if (contador === 1) {
     ApiPedidos.createOrder({
-      payment_method: "delete",
+      payment_method: "PagSeguro",
       payment_method_title: "delete",
       set_paid: false,
       billing: dadosCadastro,
       shipping: dadosFrete,
-      line_items: funcoesCarrinho.getItensCarrinho(),
+      shipping_lines: [
+        {
+          method_id: "Padrão",
+          method_title: "Padrão",
+          total: (props.frete.join("")),
+        },
+      ],
+      line_items: itensCarrinho,
     })
       .then((response) => {
         console.log(response.data);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        console.log(error);
       });
   }
 };
 
 let dados = null;
 
-// (async () => {
-//   //Cria Ordem
-//   pagamento();
-//   //Forma array de produtos
-//   const dadosProdutos = await createPagseguroProducts();
-//   //Froma json de comprador
-//   const dadosComprador = await createPagseguroBuyer();
-//   //Forma json de entrega
-//   const dadosEntrega = await createPagseguroShipping();
-
-//   dados = {
-//     dadosProdutos,
-//     dadosComprador,
-//     dadosEntrega,
-//   };
-
-//   PagSeguro.gerarPagamento(dados).then((codigo) => {
-//     // if (dados.dadosProdutos.length > 0) controle = true;
-//     console.log(codigo);
-//     code = codigo;
-//     // setBtnCode(code);
-//   });
-// })();
-
 let contador = 0;
 
-export default function HorizontalLinearStepper() {
+function HorizontalLinearStepper(props) {
   const classes = useStyles();
-  const [finalCcode, setCode] = React.useState(null);
+  const [finalCode, setCode] = React.useState(null);
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
 
   function validCode(code) {
-    if (!finalCcode) {
+    if (!finalCode) {
       setCode(code);
     }
   }
@@ -233,8 +248,6 @@ export default function HorizontalLinearStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
   };
-
-  const handleSubmit = async () => {};
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -296,7 +309,7 @@ export default function HorizontalLinearStepper() {
           ) : (
             <div>
               <Card className={classes.instructions}>
-                {getStepContent(activeStep, validCode)}
+                {getStepContent(props, activeStep, validCode)}
               </Card>
               <div>
                 <Button
@@ -318,8 +331,8 @@ export default function HorizontalLinearStepper() {
                 )}
 
                 {activeStep === steps.length - 1 ? (
-                  finalCcode ? (
-                    btnPagSeguro(finalCcode)
+                  finalCode ? (
+                    btnPagSeguro(finalCode)
                   ) : (
                     <Button
                       focusVisibleClassName="btn"
@@ -338,7 +351,7 @@ export default function HorizontalLinearStepper() {
                     color="primary"
                     onClick={handleNext}
                     className={classes.button}
-                    disabled={btnHandler()}
+                    disabled={btnHandler(props.carrinho.quantidade)}
                   >
                     Próximo
                   </Button>
@@ -351,3 +364,10 @@ export default function HorizontalLinearStepper() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  carrinho: state.carrinho,
+  frete: state.frete,
+});
+
+export default connect(mapStateToProps, null)(HorizontalLinearStepper);

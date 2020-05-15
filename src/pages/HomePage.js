@@ -1,44 +1,46 @@
-import React, { Component, Fragment } from "react";
-import ApiProdutos from "../util/ApiProdutos";
-import LineLoading from "../components/loading/LineLoading";
-import MostrarProdutos from "../components/MostraProdutos";
-import Slide from "../components/Slide";
+//From depedencies
+import React from "react";
 
-class HomePage extends Component {
-  constructor(props) {
-    super(props);
+//From components
+import Slide from "../components/Slide/Slide";
+import Tabs from "../components/Tabs/Tabs";
 
-    this.state = {
-      produtos: null,
-    };
-  }
+//From Material-ui
+import { Typography } from "@material-ui/core";
+import Divider from "@material-ui/core/Divider";
 
-  componentDidMount() {
-    ApiProdutos.getAllPublishedProducts().then((res) => {
-      this.setState({
-        produtos: res.data,
-      });
-    });
-  }
+//From css
+import "../css/HomePage.css";
 
-  render() {
-    return (
+const HomePage = () => {
+  return (
+    <div
+      style={{
+        width: "100%",
+        backgroundColor: "white",
+        display: "inline-table",
+      }}
+    >
+      <Slide />
       <div
         style={{
-          width: "100%",
-          backgroundColor: "#ebebeb",
-          display: "inline-table",
+          marginTop: "50px",
+          textAlign: "center",
         }}
       >
-        <Slide />
-        {this.state.produtos ? (
-          <MostrarProdutos produtos={this.state.produtos} />
-        ) : (
-          <LineLoading />
-        )}
+        <Typography className="font_title_section" variant="h3">
+          Ultimos Produtos
+        </Typography>
+        <Divider
+          className="line_title_section"
+          variant="middle"
+          orientation="horizontal"
+          flexItem
+        />
+        <Tabs />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default HomePage;

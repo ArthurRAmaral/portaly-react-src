@@ -1,88 +1,88 @@
 //From dependencies
-import React, { Component, Fragment } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
-
-//From utils
-import ApiCategorias from "../../../util/ApiCategorias";
-import colors from "../../../util/Colors";
+import { connect } from "react-redux";
 
 //From services
 import InitPath from "../../../services/InitPath";
 
 //Materail-ui
-import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import MenuList from "@material-ui/core/MenuList";
+import MenuItem from "@material-ui/core/MenuItem";
+import Typography from "@material-ui/core/Typography";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import Divider from "@material-ui/core/Divider";
 
-const ApiCategories = (categorias) => {
+//Stylesheet
+import useStyles from "./style";
+
+//From redux
+import { salvaCategorias } from "../../../redux/actions/categoriaActions";
+import { buscaProduto } from "../../../redux/actions/produtoActions";
+
+function Categorias(props) {
+  const classes = useStyles();
+
+  if (Object.values(props.categorias).length === 0) {
+    props.salvaCategorias();
+  } else {
+    for (let cat of props.categorias) props.buscaProduto(cat.id);
+  }
+
   return (
-    <Fragment>
-      <Grid>
-        <NavLink
-          exact
-          key={`Todos`}
-          to={`${InitPath}/`}
-          activeStyle={{ backgroundColor: colors.orangeLight }}
+    <div className={classes.second_header}>
+      <MenuList className={classes.menu}>
+        <div className={classes.div_link}>
+          <MenuItem
+            exact
+            key={`Todos`}
+            className={classes.link}
+            component={NavLink}
+            to={`${InitPath}/`}
+          >
+            <Typography>Home</Typography>
+          </MenuItem>
+        </div>
+        {!Object.values(props.categorias).length
+          ? ""
+          : props.categorias.map((cat) => (
+              <div className={classes.div_link} key={`div${cat.id}`}>
+                <Divider
+                  className={classes.Line}
+                  orientation="vertical"
+                  key={`divider${cat.id}`}
+                  flexItem
+                />
+                <MenuItem
+                  key={`categorias${cat.id}`}
+                  className={classes.link}
+                  component={NavLink}
+                  to={`${InitPath}/categoria/${cat.id}`}
+                >
+                  <Typography>{cat.name}</Typography>
+                </MenuItem>
+              </div>
+            ))}
+      </MenuList>
+      <div className={classes.botao}>
+        <Button
+          aria-controls="simple-menu"
+          aria-haspopup="true"
+          className={classes.button_link}
+          component={NavLink}
+          to="/montesuaporta"
         >
-          {`Todos`}
-        </NavLink>
-      </Grid>
-      {categorias.map((cat) => {
-        return (
-          <Grid key={cat.id}>
-            <NavLink
-              key={`categorias${cat.id}`}
-              to={`${InitPath}/categoria/${cat.id}`}
-              activeStyle={{ backgroundColor: colors.orangeLight }}
-            >
-              <div>{cat.name}</div>
-            </NavLink>
-          </Grid>
-        );
-      })}
-      <Grid>
-        <NavLink
-          key={`montesuaporta`}
-          to={`/montesuaporta`}
-          activeStyle={{ backgroundColor: colors.orangeLight }}
-        >
-          {`Monte Sua Porta`}
-        </NavLink>
-      </Grid>
-    </Fragment>
+          Monte a sua porta
+          <ArrowForwardIcon className={classes.arrow} fontSize="large" />
+        </Button>
+      </div>
+    </div>
   );
-};
-
-class Categorias extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      categories: [],
-    };
-  }
-
-  componentDidMount() {
-    ApiCategorias.getAllCategorias().then((res) => {
-      this.setState({ categories: [...this.state.categories, ...res.data] });
-    });
-  }
-
-  render() {
-    return (
-      <Grid
-        container
-        direction="row"
-        justify="space-around"
-        alignItems="center"
-        style={{
-          height: 60,
-        }}
-      >
-        {this.state.categories.length > 0
-          ? ApiCategories(this.state.categories)
-          : ""}
-      </Grid>
-    );
-  }
 }
 
-export default Categorias;
+const mapStateToProps = (state) => ({ categorias: state.categorias });
+
+const mapDispatchToProps = { salvaCategorias, buscaProduto };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Categorias);

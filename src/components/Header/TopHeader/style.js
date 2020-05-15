@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
-import colors from '../../../util/Colors'
+import colors from "../../../util/Colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,14 +18,19 @@ const useStyles = makeStyles((theme) => ({
     // marginBottom: 10,
     marginRight: 20,
   },
-  hover: {
-    display: 'flex',
-    alignItems: 'center',
-    height: '100%',
-    '&:hover': {
-      backgroundColor: colors.orangeDark
-    }
-  }
+  svg: {
+    paddingTop: 10,
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
+  // hover: {
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   height: '100%',
+  //   '&:hover': {
+  //     backgroundColor: colors.orangeDark
+  //   }
+  // }
 }));
 
 export default useStyles;
