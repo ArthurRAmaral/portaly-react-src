@@ -21,13 +21,10 @@ class EscolherItems extends Component {
       let vet = [];
       let qnt = 0;
       const prods = this.state.produtosSelecionados;
-      let size = 0;
-      for (const key in prods) {
-        size++;
-      }
+      let size = Object.values(prods).length;
 
       for (const key in prods) {
-        ApiProdutos.getProduto(prods[key]).then((res) => {
+        ApiProdutos.getProductByid(prods[key]).then((res) => {
           vet.push(res.data);
           qnt++;
           if (qnt === size) this.setState({ produtos: vet });

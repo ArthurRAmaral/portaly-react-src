@@ -1,14 +1,73 @@
 import api from "./api";
 
 const ApiWooCommerceProdutos = {
-  getAllPublishedProducts: () =>
-    api.get("products", { status: "publish", per_page: 40 }),
+  getAllPublishedProductsLentgh: async () =>
+    (await ApiWooCommerceProdutos.getAllPublishedProducts()).data.length,
+
+  getAllPublishedProducts: async () => {
+    let per_page = 100;
+    let prods = [];
+    let qnt;
+    let atual;
+    let page = 1;
+
+    do {
+      atual = (
+        await api.get("products", {
+          status: "publish",
+          per_page,
+          page,
+        })
+      ).data;
+      qnt = atual.length;
+      prods = prods.concat(atual);
+      page++;
+    } while (qnt >= per_page);
+
+    return { data: prods };
+  },
+
+  getAllPublishPoductsByCategoriesIdLentgh: async (id) =>
+    (await ApiWooCommerceProdutos.getAllPublishPoductsByCategoriesId(id)).data
+      .length,
+
+  getAllPublishPoductsByCategoriesId: async (id) => {
+    let per_page = 100;
+    let prods = [];
+    let qnt;
+    let atual;
+    let page = 1;
+
+    do {
+      atual = (
+        await api.get("products", {
+          category: id,
+          status: "publish",
+          per_page,
+          page,
+        })
+      ).data;
+      qnt = atual.length;
+      prods = prods.concat(atual);
+      page++;
+    } while (qnt >= per_page);
+
+    return { data: prods };
+  },
+
+  // getAllPublishPoductsByCategoriesSlug: async (slug) => {
+  //   console.log((await api.get("products/categories", { slug })).data);
+  //   return api.get("products", {
+  //     category: await (await api.get("products/categories", { slug })).data,
+  //     status: "publish",
+  //   });
+  // },
 
   getOnSale: () => api.get("products", { on_sale: true }),
 
-  getProductSlug: (slug) => api.get("products", { slug, status: "publish" }),
+  getProductBySlug: (slug) => api.get("products", { slug, status: "publish" }),
 
-  getProduto: (id) => api.get(`products/${id}`),
+  getProductByid: (id) => api.get(`products/${id}`),
 
   createKit: async (dados) => {
     let ids = [];
@@ -19,7 +78,7 @@ const ApiWooCommerceProdutos = {
       if (dados.hasOwnProperty(key)) {
         ids.push(dados[key]);
         prices.push(
-          (await ApiWooCommerceProdutos.getProduto(dados[key])).data.price
+          (await ApiWooCommerceProdutos.getProductByid(dados[key])).data.price
         );
       }
     }
@@ -45,6 +104,30 @@ const ApiWooCommerceProdutos = {
     };
 
     return await api.post("products", data);
+  },
+
+  getAllOnSaleProducts: async () => {
+    let per_page = 100;
+    let prods = [];
+    let qnt;
+    let atual;
+    let page = 1;
+
+    do {
+      atual = (
+        await api.get("products", {
+          status: "publish",
+          per_page,
+          page,
+          on_sale: true,
+        })
+      ).data;
+      qnt = atual.length;
+      prods = prods.concat(atual);
+      page++;
+    } while (qnt >= per_page);
+
+    return { data: prods };
   },
 };
 

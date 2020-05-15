@@ -1,4 +1,6 @@
+//From depedencies
 import React from "react";
+
 import { ThemeProvider } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -17,8 +19,6 @@ import ApiProdutos from "../../../services/ApiProdutos";
 
 import useStyles from "./style";
 import theme from "./theme";
-
-// const maoDeObraID = -1;
 
 function getSteps() {
   return [
@@ -88,7 +88,7 @@ function getStepContent(step, btnHandler) {
 export default function HorizontalLinearStepper() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [btnvalid, setBtnValid] = React.useState(1);
+  const [btnvalid, setBtnValid] = React.useState(true);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
 
@@ -108,13 +108,9 @@ export default function HorizontalLinearStepper() {
   };
 
   const handleSubmit = () => {
-    // let q = 0;
-
     ApiProdutos.createKit(Montador.getDados()).then((res) => {
       for (let i = 0; i < Montador.getQuantidade(); i++)
         Carrinho.addItem(res.data.id);
-
-      // window.location.reload();
     });
 
     let newSkipped = skipped;
@@ -130,21 +126,6 @@ export default function HorizontalLinearStepper() {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-
-  // const handleSkip = () => {
-  //   if (!isStepOptional(activeStep)) {
-  //     // You probably want to guard against something like this,
-  //     // it should never occur unless someone's actively trying to break something.
-  //     throw new Error("You can't skip a step that isn't optional.");
-  //   }
-
-  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  //   setSkipped((prevSkipped) => {
-  //     const newSkipped = new Set(prevSkipped.values());
-  //     newSkipped.add(activeStep);
-  //     return newSkipped;
-  //   });
-  // };
 
   const handleReset = () => {
     setActiveStep(0);
@@ -205,16 +186,6 @@ export default function HorizontalLinearStepper() {
                 >
                   Voltar
                 </Button>
-                {/* {isStepOptional(activeStep) && (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSkip}
-                    className={classes.button}
-                  >
-                    Pular
-                  </Button>
-                )} */}
                 {activeStep === steps.length - 1 ? (
                   <Button
                     focusVisibleClassName="btn"

@@ -28,7 +28,6 @@ pag.currency("BRL");
 export default {
   async gerarPagamento(dados) {
     const { dadosEntrega, dadosProdutos, dadosComprador } = dados;
-    console.log(dados);
     // {
     //   id: 1,
     //   description: "Descrição do primeiro produto",

@@ -39,7 +39,7 @@ function Banner(props) {
     const item = props.item.Items[i];
 
     const media = (
-      <Grid item xs={12 / totalItems} key={item.Name}>
+      <Grid item xs={12 / totalItems} key={`${item.Name}${i}`}>
         {/* <Link href={`/item/${item.Id}`} className="Link"> */}
         <CardMedia className="Media" image={item.Image} title={item.Name}>
           <Typography className="MediaCaption">{item.Name}</Typography>

@@ -8,7 +8,6 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 
 //from components
@@ -33,7 +32,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          <div>{children}</div>
         </Box>
       )}
     </div>
@@ -46,9 +45,12 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function getProdutos(setProdutos) {
+function getProductByids(setProdutos, setProdutosOnSale) {
   ApiProdutos.getAllPublishedProducts().then((res) => {
     setProdutos(res.data);
+  });
+  ApiProdutos.getAllOnSaleProducts().then((res) => {
+    setProdutosOnSale(res.data);
   });
 }
 
@@ -71,6 +73,7 @@ export default function FullWidthTabs() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const [produtos, setProdutos] = React.useState();
+  const [produtosOnSale, setProdutosOnSale] = React.useState();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -78,10 +81,6 @@ export default function FullWidthTabs() {
 
   const handleChangeIndex = (index) => {
     setValue(index);
-  };
-
-  const handlesetProdutos = (produtos) => {
-    setProdutos(produtos);
   };
 
   return (
@@ -98,8 +97,8 @@ export default function FullWidthTabs() {
           aria-label="full width tabs example"
         >
           <Tab label="Mais Vendidos" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="Destaques" {...a11yProps(1)} />
+          <Tab label="Ofertas" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -115,7 +114,7 @@ export default function FullWidthTabs() {
         >
           {produtos
             ? MostrarProdutos(produtos)
-            : getProdutos(handlesetProdutos)}
+            : getProductByids(setProdutos, setProdutosOnSale)}
         </TabPanel>
         <TabPanel
           className="product_tab"
@@ -123,7 +122,9 @@ export default function FullWidthTabs() {
           index={1}
           dir={theme.direction}
         >
-          Item Two
+          {produtos
+            ? MostrarProdutos(produtos)
+            : getProductByids(setProdutos, setProdutosOnSale)}
         </TabPanel>
         <TabPanel
           className="product_tab"
@@ -131,7 +132,9 @@ export default function FullWidthTabs() {
           index={2}
           dir={theme.direction}
         >
-          Item Three
+          {produtosOnSale
+            ? MostrarProdutos(produtosOnSale)
+            : getProductByids(setProdutos, setProdutosOnSale)}
         </TabPanel>
       </SwipeableViews>
     </div>

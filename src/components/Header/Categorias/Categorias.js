@@ -1,9 +1,7 @@
 //From dependencies
 import React from "react";
 import { NavLink } from "react-router-dom";
-
-//From utils
-import ApiCategorias from "../../../services/ApiCategorias";
+import { connect } from "react-redux";
 
 //From services
 import InitPath from "../../../services/InitPath";
@@ -19,16 +17,17 @@ import Divider from "@material-ui/core/Divider";
 //Stylesheet
 import useStyles from "./style";
 
-const getCategorias = (setCategorias) => {
-  ApiCategorias.getAllCategorias().then((res) => setCategorias([...res.data]));
-};
+//From redux
+import { salvaCategorias } from "../../../redux/actions/categoriaActions";
+import { buscaProduto } from "../../../redux/actions/produtoActions";
 
-const Categorias = () => {
+function Categorias(props) {
   const classes = useStyles();
-  const [categorias, setCategorias] = React.useState([]);
 
-  function setCat(categorias) {
-    setCategorias(categorias);
+  if (Object.values(props.categorias).length === 0) {
+    props.salvaCategorias();
+  } else {
+    for (let cat of props.categorias) props.buscaProduto(cat.id);
   }
 
   return (
@@ -45,13 +44,14 @@ const Categorias = () => {
             <Typography>Home</Typography>
           </MenuItem>
         </div>
-        {!categorias.length
-          ? getCategorias(setCat)
-          : categorias.map((cat) => (
-              <div className={classes.div_link}>
+        {!Object.values(props.categorias).length
+          ? ""
+          : props.categorias.map((cat) => (
+              <div className={classes.div_link} key={`div${cat.id}`}>
                 <Divider
                   className={classes.Line}
                   orientation="vertical"
+                  key={`divider${cat.id}`}
                   flexItem
                 />
                 <MenuItem
@@ -79,6 +79,10 @@ const Categorias = () => {
       </div>
     </div>
   );
-};
+}
 
-export default Categorias;
+const mapStateToProps = (state) => ({ categorias: state.categorias });
+
+const mapDispatchToProps = { salvaCategorias, buscaProduto };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Categorias);

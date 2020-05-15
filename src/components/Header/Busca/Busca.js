@@ -5,7 +5,6 @@ import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import SearchIcon from "@material-ui/icons/Search";
 import TextField from "@material-ui/core/TextField";
-import { withStyles } from "@material-ui/core/styles";
 
 import InitPath from "../../../services/InitPath";
 import colors from "../../../util/Colors";
@@ -57,7 +56,7 @@ class Busca extends Component {
             />
             <TextField
               label="Buscar"
-              variant="outlined"
+              InputProps={{ disableUnderline: true }}
               id="buscaInput"
               type="text"
               value={this.state.value}
