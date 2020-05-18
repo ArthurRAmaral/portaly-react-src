@@ -3,6 +3,7 @@ import mapBox from "../../services/mapBoxAndReact/MapBoxApi";
 import { connect } from "react-redux";
 
 import { salvaFrete } from "../../redux/actions/freteActions";
+import { salvaCupom } from "../../redux/actions/cupomActions";
 
 import TextField from "@material-ui/core/TextField";
 
@@ -24,15 +25,14 @@ class Pagamento extends Component {
       tax: null,
       place: null,
       buyer: null,
-      coupon: "",
+      coupon: "só quero testar ",
     };
-    // let dadosCadastro = JSON.parse(sessionStorage.getItem(varCadastro));
-    // let dadosFrete = JSON.parse(sessionStorage.getItem(varFrete));
   }
 
   handleChange = async (e) => {
     const newVal = await e.target.value;
     this.setState({ coupon: newVal });
+    this.props.salvaCupom(newVal);
   };
 
   async componentDidMount() {
@@ -113,7 +113,9 @@ class Pagamento extends Component {
 const mapStateToProps = (state) => ({
   frete: state.frete,
   carrinho: state.carrinho,
+  cupom: state.cupom,
 });
-const mapDispatchToProps = { salvaFrete };
+
+const mapDispatchToProps = { salvaFrete, salvaCupom };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pagamento);
