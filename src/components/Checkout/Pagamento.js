@@ -4,8 +4,11 @@ import { connect } from "react-redux";
 
 import { salvaFrete } from "../../redux/actions/freteActions";
 
+import TextField from "@material-ui/core/TextField";
+
 import MostraProdutosCarrinho from "./MostraProdutosCarrinhoResumido";
 import SemProduto from "../semProdutos";
+
 // import ApiProdutos from "../../util/ApiProdutos.js";
 
 // import Carrinho from "../../util/Carrinho.js";
@@ -21,10 +24,16 @@ class Pagamento extends Component {
       tax: null,
       place: null,
       buyer: null,
+      coupon: "",
     };
     // let dadosCadastro = JSON.parse(sessionStorage.getItem(varCadastro));
     // let dadosFrete = JSON.parse(sessionStorage.getItem(varFrete));
   }
+
+  handleChange = async (e) => {
+    const newVal = await e.target.value;
+    this.setState({ coupon: newVal });
+  };
 
   async componentDidMount() {
     const varFrete = "dadosFrete";
@@ -73,9 +82,19 @@ class Pagamento extends Component {
             : "Sem comprador identificado"}{" "}
         </span>{" "}
         <br></br>
-         <Fragment>
-      {this.props.carrinho ? MostraProdutosCarrinho(this.props.carrinho) : <SemProduto />}
-    </Fragment>
+        <Fragment>
+          {this.props.carrinho ? (
+            MostraProdutosCarrinho(this.props.carrinho)
+          ) : (
+            <SemProduto />
+          )}
+          <TextField
+            id="coupon"
+            onChange={this.handleChange}
+            label="Cupom"
+            variant="outlined"
+          />
+        </Fragment>
         <br></br>
         <span>
           {" "}
@@ -84,14 +103,17 @@ class Pagamento extends Component {
         <br></br>
         <span>
           {" "}
-          Valor: R${this.state.tax ? this.state.tax : "Buscando Frete"}
+          Valor de Frete: R${this.state.tax ? this.state.tax : "Buscando Frete"}
         </span>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({ frete: state.frete, carrinho: state.carrinho });
+const mapStateToProps = (state) => ({
+  frete: state.frete,
+  carrinho: state.carrinho,
+});
 const mapDispatchToProps = { salvaFrete };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pagamento);

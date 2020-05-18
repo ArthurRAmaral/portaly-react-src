@@ -191,7 +191,6 @@ const pagamento = (props, dadosCadastro, dadosFrete) => {
     }
   }
   console.log("props.frete.join()=", props.frete.join(""));
-  alert();
   if (contador === 1) {
     ApiPedidos.createOrder({
       payment_method: "PagSeguro",
@@ -203,7 +202,12 @@ const pagamento = (props, dadosCadastro, dadosFrete) => {
         {
           method_id: "Padrão",
           method_title: "Padrão",
-          total: (props.frete.join("")),
+          total: props.frete.join(""),
+        },
+      ],
+      coupon_lines: [
+        {
+          code: "testefixo",
         },
       ],
       line_items: itensCarrinho,
