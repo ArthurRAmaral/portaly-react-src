@@ -122,21 +122,24 @@ const calculaCupomAmount = (cupom, qnt, total) => {
   let value;
   if (cupom[0].discount_type == "percent") {
     value = (total / 100) * cupom[0].amount;
+    return (value / qnt).toFixed(2);
+  } else if (cupom[0].discount_type == "fixed_cart") {
+    return (cupom[0].amount / qnt).toFixed(2);
   }
-  return (value / qnt).toFixed(2);
 };
 
 const createPagseguroProducts = async (props) => {
   let cupom = props.cupom.join("");
+  let cupomAmount = 0;
   cupom = await ApiCupom.getCoupon(cupom);
-  //console.log(cupom);
-  const cupomAmount = await calculaCupomAmount(
-    cupom.data,
-    props.carrinho.quantidade,
-    props.carrinho.valorTotal
-  );
-  valorCupom = cupomAmount;
-  console.log("CupomAmount = ", cupomAmount);
+  if (cupom.data.length > 0) {
+    cupomAmount = await calculaCupomAmount(
+      cupom.data,
+      props.carrinho.quantidade,
+      props.carrinho.valorTotal
+    );
+    valorCupom = cupomAmount;
+  }
   const arrayItens = [];
   const arrayIds = [];
   for (const key in props.carrinho) {
