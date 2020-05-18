@@ -30,6 +30,7 @@ import funcoesCarrinho from "../../util/Carrinho";
 import PagSeguro from "../../util/PagSeguro";
 import btnPagSeguro from "../../util/btnPagSeguro";
 import ApiPedidos from "../../services/ApiPedidos";
+import ApiCupom from "../../services/ApiCupom";
 
 function getSteps() {
   return ["Carrinho", "Cadastro", "Frete", "Pagamento"];
@@ -107,14 +108,37 @@ function StepIcon(props) {
   );
 }
 
+let valorCupom = 0;
+
 function btnHandler(quantidade) {
   return !quantidade;
 }
 
+const calculaValorItem = (price, cupom) => {
+  return price.split(".")[1] ? price : price + ".00";
+};
+
+const calculaCupomAmount = (cupom, qnt, total) => {
+  let value;
+  if (cupom[0].discount_type == "percent") {
+    value = (total / 100) * cupom[0].amount;
+  }
+  return (value / qnt).toFixed(2);
+};
+
 const createPagseguroProducts = async (props) => {
+  let cupom = props.cupom.join("");
+  cupom = await ApiCupom.getCoupon(cupom);
+  //console.log(cupom);
+  const cupomAmount = await calculaCupomAmount(
+    cupom.data,
+    props.carrinho.quantidade,
+    props.carrinho.valorTotal
+  );
+  valorCupom = cupomAmount;
+  console.log("CupomAmount = ", cupomAmount);
   const arrayItens = [];
   const arrayIds = [];
-
   for (const key in props.carrinho) {
     let item = props.carrinho[key].produto;
     const variacao = props.carrinho[key].variacao;
@@ -124,7 +148,7 @@ const createPagseguroProducts = async (props) => {
       const itemToPush = {
         id: item.id,
         description: item.name + (variacao ? " (" + variacao + ")" : ""),
-        amount: item.price.split(".")[1] ? item.price : item.price + ".00",
+        amount: await calculaValorItem(item.price, cupomAmount),
         quantity: parseInt(quantidade),
         weight: parseFloat(item.weight) ? parseFloat(item.weight) : 1,
       };
@@ -176,6 +200,7 @@ const createPagseguroShipping = async (dadosFrete) => {
 let code;
 
 const pagamento = (props, dadosCadastro, dadosFrete) => {
+  const cupom = props.cupom.join("");
   const itensCarrinho = [];
   for (const key in props.carrinho) {
     if (props.carrinho.hasOwnProperty(key)) {
@@ -192,32 +217,32 @@ const pagamento = (props, dadosCadastro, dadosFrete) => {
   }
   console.log("props.frete.join()=", props.frete.join(""));
   if (contador === 1) {
-    ApiPedidos.createOrder({
-      payment_method: "PagSeguro",
-      payment_method_title: "delete",
-      set_paid: false,
-      billing: dadosCadastro,
-      shipping: dadosFrete,
-      shipping_lines: [
-        {
-          method_id: "Padrão",
-          method_title: "Padrão",
-          total: props.frete.join(""),
-        },
-      ],
-      coupon_lines: [
-        {
-          code: "testefixo",
-        },
-      ],
-      line_items: itensCarrinho,
-    })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    //   ApiPedidos.createOrder({
+    //     payment_method: "PagSeguro",
+    //     payment_method_title: "delete",
+    //     set_paid: false,
+    //     billing: dadosCadastro,
+    //     shipping: dadosFrete,
+    //     shipping_lines: [
+    //       {
+    //         method_id: "Padrão",
+    //         method_title: "Padrão",
+    //         total: props.frete.join(""),
+    //       },
+    //     ],
+    //     coupon_lines: [
+    //       {
+    //         code: cupom,
+    //       },
+    //     ],
+    //     line_items: itensCarrinho,
+    //   })
+    //     .then((response) => {
+    //       console.log(response.data);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
   }
 };
 
@@ -372,6 +397,7 @@ function HorizontalLinearStepper(props) {
 const mapStateToProps = (state) => ({
   carrinho: state.carrinho,
   frete: state.frete,
+  cupom: state.cupom,
 });
 
 export default connect(mapStateToProps, null)(HorizontalLinearStepper);

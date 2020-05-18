@@ -32,7 +32,11 @@ class Pagamento extends Component {
   handleChange = async (e) => {
     const newVal = await e.target.value;
     this.setState({ coupon: newVal });
-    this.props.salvaCupom(newVal);
+  };
+
+  handleClick = () => {
+    this.props.salvaCupom(this.state.coupon);
+    window.location.reload();
   };
 
   async componentDidMount() {
@@ -94,6 +98,7 @@ class Pagamento extends Component {
             label="Cupom"
             variant="outlined"
           />
+          <button onClick={this.handleClick}>Aplicar</button>
         </Fragment>
         <br></br>
         <span>
@@ -113,7 +118,6 @@ class Pagamento extends Component {
 const mapStateToProps = (state) => ({
   frete: state.frete,
   carrinho: state.carrinho,
-  cupom: state.cupom,
 });
 
 const mapDispatchToProps = { salvaFrete, salvaCupom };

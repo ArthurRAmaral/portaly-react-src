@@ -1,5 +1,5 @@
 //From depedencies
-import React, { Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 
 //From checkout
@@ -9,16 +9,26 @@ import SemProduto from "../semProdutos";
 //From redux
 import { removeCart } from "../../redux/actions/cartActions";
 
-function PaginaCarrinho(props) {
-  return (
-    <Fragment>
-      {props.carrinho.quantidade ? (
-        MostraProdutos(props.carrinho, props.removeCart)
-      ) : (
-        <SemProduto />
-      )}
-    </Fragment>
-  );
+class PaginaCarrinho extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      coupon: "só quero testar ",
+    };
+  }
+
+  render() {
+    return (
+      <Fragment>
+        {this.props.carrinho.quantidade ? (
+          MostraProdutos(this.props.carrinho, this.props.removeCart)
+        ) : (
+          <SemProduto />
+        )}
+      </Fragment>
+    );
+  }
 }
 
 const mapStateToProps = (state) => ({ carrinho: state.carrinho });
