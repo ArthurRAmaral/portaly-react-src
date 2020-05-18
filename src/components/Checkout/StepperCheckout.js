@@ -114,18 +114,52 @@ function btnHandler(quantidade) {
   return !quantidade;
 }
 
-const calculaValorItem = (price, cupom) => {
-  return price.split(".")[1] ? price : price + ".00";
+const calculaValorItem = (price, cupom, qnt) => {
+  console.log("+50");
+  valorCupom = Number.parseFloat(valorCupom);
+  cupom = Number.parseFloat(cupom);
+  const fixPrice = price;
+  if (valorCupom === 0) {
+    return price.split(".")[1] ? price : price + ".00";
+  } else if (valorCupom >= cupom) {
+    if (price <= cupom * qnt) {
+      price = 1;
+      valorCupom = valorCupom - (fixPrice - 1) * qnt;
+    } else {
+      price = price - valorCupom / qnt;
+      valorCupom = 0;
+    }
+  } else {
+    if (price <= valorCupom * qnt) {
+      price = 1;
+      valorCupom = valorCupom - (fixPrice - 1) * qnt;
+    } else {
+      price = price - cupom / qnt;
+      valorCupom = valorCupom - cupom * qnt;
+    }
+  }
+  return price.toString().split(".")[1] ? price : price + ".00";
 };
 
 const calculaCupomAmount = (cupom, qnt, total) => {
   let value;
+  valorCupom = cupom[0].amount;
   if (cupom[0].discount_type == "percent") {
-    value = (total / 100) * cupom[0].amount;
+    value = (total / 100) * valorCupom;
     return (value / qnt).toFixed(2);
   } else if (cupom[0].discount_type == "fixed_cart") {
-    return (cupom[0].amount / qnt).toFixed(2);
+    return (valorCupom / qnt).toFixed(2);
   }
+};
+
+const calculaQuantidade = (carrinho) => {
+  let qnt = 0;
+  for (const key in carrinho) {
+    if (carrinho[key].quantidade) {
+      qnt += carrinho[key].quantidade;
+    }
+  }
+  return qnt;
 };
 
 const createPagseguroProducts = async (props) => {
@@ -135,10 +169,10 @@ const createPagseguroProducts = async (props) => {
   if (cupom.data.length > 0) {
     cupomAmount = await calculaCupomAmount(
       cupom.data,
-      props.carrinho.quantidade,
+      calculaQuantidade(props.carrinho),
       props.carrinho.valorTotal
     );
-    valorCupom = cupomAmount;
+    console.log(cupomAmount);
   }
   const arrayItens = [];
   const arrayIds = [];
@@ -151,7 +185,11 @@ const createPagseguroProducts = async (props) => {
       const itemToPush = {
         id: item.id,
         description: item.name + (variacao ? " (" + variacao + ")" : ""),
-        amount: await calculaValorItem(item.price, cupomAmount),
+        amount: await calculaValorItem(
+          item.price,
+          cupomAmount,
+          parseInt(quantidade)
+        ),
         quantity: parseInt(quantidade),
         weight: parseFloat(item.weight) ? parseFloat(item.weight) : 1,
       };
