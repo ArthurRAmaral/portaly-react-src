@@ -201,14 +201,16 @@ const createPagseguroProducts = async (props) => {
   while (arrayIds.includes(idFrete)) idFrete++;
 
   const valorFrete = props.frete.join("");
-  const frete = {
-    id: idFrete,
-    description: "Frete",
-    amount: valorFrete.split(".")[1] ? valorFrete : valorFrete + ".00",
-    quantity: 1,
-    weight: 1,
-  };
-  arrayItens.push(frete);
+  if (valorFrete != 0) {
+    const frete = {
+      id: idFrete,
+      description: "Frete",
+      amount: valorFrete.split(".")[1] ? valorFrete : valorFrete + ".00",
+      quantity: 1,
+      weight: 1,
+    };
+    arrayItens.push(frete);
+  }
   return arrayItens;
 };
 

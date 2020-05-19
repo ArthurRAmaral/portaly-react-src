@@ -9,6 +9,7 @@ import TextField from "@material-ui/core/TextField";
 
 import MostraProdutosCarrinho from "./MostraProdutosCarrinhoResumido";
 import SemProduto from "../semProdutos";
+import ApiCupom from "../../services/ApiCupom";
 
 // import ApiProdutos from "../../util/ApiProdutos.js";
 
@@ -59,10 +60,20 @@ class Pagamento extends Component {
     let value;
     let place;
 
-    await mapBox.getTax(shipTo).then((tax) => {
-      value = tax;
+    let cupom = this.props.cupom.join("");
+
+    cupom = await ApiCupom.getCoupon(cupom);
+
+    if (cupom.data[0].free_shipping) {
+      value = "0";
       this.props.salvaFrete(value);
-    });
+      value = "Grátis";
+    } else {
+      await mapBox.getTax(shipTo).then((tax) => {
+        value = tax;
+        this.props.salvaFrete(value);
+      });
+    }
 
     await mapBox.getPlace(shipTo).then((place_name) => {
       place = place_name;
@@ -118,6 +129,7 @@ class Pagamento extends Component {
 const mapStateToProps = (state) => ({
   frete: state.frete,
   carrinho: state.carrinho,
+  cupom: state.cupom,
 });
 
 const mapDispatchToProps = { salvaFrete, salvaCupom };
