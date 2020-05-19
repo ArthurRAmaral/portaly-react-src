@@ -119,7 +119,6 @@ const calculaValorItem = (price, cupom, qnt, ids, conditional, id) => {
   if (conditional == "fixed_product" && ids.length > 0) {
     if (ids.indexOf(id) > -1) {
       price = price <= cupom ? 1 : price - cupom;
-      console.log("valor: ", price);
     }
   } else {
     valorCupom = Number.parseFloat(valorCupom);
@@ -214,6 +213,12 @@ const createPagseguroProducts = async (props) => {
     let item = props.carrinho[key].produto;
     const variacao = props.carrinho[key].variacao;
     const quantidade = props.carrinho[key].quantidade;
+    let product_ids = [],
+      discount_type = "";
+    if (cupom.data.length > 0) {
+      product_ids = cupom.data[0].product_ids;
+      discount_type = cupom.data[0].discount_type;
+    }
     if (item) {
       item = item[0];
       const itemToPush = {
@@ -223,8 +228,8 @@ const createPagseguroProducts = async (props) => {
           item.price,
           cupomAmount,
           parseInt(quantidade),
-          cupom.data[0].product_ids,
-          cupom.data[0].discount_type,
+          product_ids,
+          discount_type,
           item.id
         ),
         quantity: parseInt(quantidade),
@@ -238,6 +243,7 @@ const createPagseguroProducts = async (props) => {
   while (arrayIds.includes(idFrete)) idFrete++;
 
   const valorFrete = props.frete.join("");
+  console.log("Valor frete = ", valorFrete);
   if (valorFrete != 0) {
     const frete = {
       id: idFrete,

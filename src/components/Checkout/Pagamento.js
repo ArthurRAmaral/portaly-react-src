@@ -53,8 +53,9 @@ class Pagamento extends Component {
     let cupom = this.props.cupom.join("");
 
     cupom = await ApiCupom.getCoupon(cupom);
+    const couponExist = cupom.data.length > 0;
 
-    if (cupom.data[0].free_shipping) {
+    if (couponExist && cupom.data[0].free_shipping) {
       value = "0";
       this.props.salvaFrete(value);
       value = " Grátis";
@@ -77,8 +78,13 @@ class Pagamento extends Component {
       buyer: dadosCadastro.first_name + " " + dadosCadastro.last_name,
     });
 
-    const type = cupom.data[0].discount_type;
-    const amount = cupom.data[0].amount;
+    let type = "",
+      amount = 0;
+    if (couponExist) {
+      console.log("existe");
+      type = cupom.data[0].discount_type;
+      amount = cupom.data[0].amount;
+    }
 
     if (type === "fixed_product" && amount > 0) {
       this.setState({
@@ -96,7 +102,7 @@ class Pagamento extends Component {
       this.setState({ couponDesc: "Cupom inválido :(" });
     }
 
-    if (cupom.data[0].free_shipping) {
+    if (couponExist && cupom.data[0].free_shipping) {
       this.setState({
         couponDesc: this.state.couponDesc + " Cupom de frete grátis!",
       });
