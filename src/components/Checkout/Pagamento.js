@@ -108,6 +108,7 @@ class Pagamento extends Component {
             onChange={this.handleChange}
             label="Cupom"
             variant="outlined"
+            value={this.props.cupom.join("")}
           />
           <button onClick={this.handleClick}>Aplicar</button>
         </Fragment>
