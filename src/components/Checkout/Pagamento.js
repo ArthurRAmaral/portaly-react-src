@@ -3,7 +3,6 @@ import mapBox from "../../services/mapBoxAndReact/MapBoxApi";
 import { connect } from "react-redux";
 
 import { salvaFrete } from "../../redux/actions/freteActions";
-import { salvaCupom } from "../../redux/actions/cupomActions";
 
 import TextField from "@material-ui/core/TextField";
 
@@ -29,16 +28,6 @@ class Pagamento extends Component {
       coupon: "só quero testar ",
     };
   }
-
-  handleChange = async (e) => {
-    const newVal = await e.target.value;
-    this.setState({ coupon: newVal });
-  };
-
-  handleClick = () => {
-    this.props.salvaCupom(this.state.coupon);
-    window.location.reload();
-  };
 
   async componentDidMount() {
     const varFrete = "dadosFrete";
@@ -105,12 +94,10 @@ class Pagamento extends Component {
           )}
           <TextField
             id="coupon"
-            onChange={this.handleChange}
             label="Cupom"
-            variant="outlined"
             value={this.props.cupom.join("")}
+            variant="outlined"
           />
-          <button onClick={this.handleClick}>Aplicar</button>
         </Fragment>
         <br></br>
         <span>
@@ -133,6 +120,6 @@ const mapStateToProps = (state) => ({
   cupom: state.cupom,
 });
 
-const mapDispatchToProps = { salvaFrete, salvaCupom };
+const mapDispatchToProps = { salvaFrete };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pagamento);
