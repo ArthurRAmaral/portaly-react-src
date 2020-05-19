@@ -119,7 +119,7 @@ function btnHandler(quantidade) {
 }
 
 const calculaValorItem = (price, cupom, qnt, ids, conditional, id) => {
-  if (conditional == "fixed_product" && ids.length > 0) {
+  if (conditional === "fixed_product" && ids.length > 0) {
     if (ids.indexOf(id) > -1) {
       price = price <= cupom ? 1 : price - cupom;
     }
@@ -151,19 +151,19 @@ const calculaValorItem = (price, cupom, qnt, ids, conditional, id) => {
 };
 
 const calculaCupomAmount = (cupom, qnt) => {
-  if (qnt == 0) {
+  if (qnt === 0) {
     return 0;
   }
   let value;
   valorCupom = cupom[0].amount;
-  if (cupom[0].discount_type == "percent") {
+  if (cupom[0].discount_type === "percent") {
     value = (totalVal / 100) * valorCupom;
     valorCupom = value;
     var retorno = (value / qnt).toFixed(2);
     return retorno;
-  } else if (cupom[0].discount_type == "fixed_cart") {
+  } else if (cupom[0].discount_type === "fixed_cart") {
     return (valorCupom / qnt).toFixed(2);
-  } else if (cupom[0].discount_type == "fixed_product") {
+  } else if (cupom[0].discount_type === "fixed_product") {
     return valorCupom;
   }
 };
@@ -246,7 +246,7 @@ const createPagseguroProducts = async (props) => {
   while (arrayIds.includes(idFrete)) idFrete++;
 
   const valorFrete = props.frete.join("");
-  if (valorFrete != 0) {
+  if (valorFrete !== 0) {
     const frete = {
       id: idFrete,
       description: "Frete",
