@@ -32,6 +32,9 @@ import btnPagSeguro from "../../util/btnPagSeguro";
 import ApiPedidos from "../../services/ApiPedidos";
 import ApiCupom from "../../services/ApiCupom";
 
+//From redux
+import { salvaCupom } from "../../redux/actions/cupomActions";
+
 function getSteps() {
   return ["Carrinho", "Cadastro", "Frete", "Pagamento"];
 }
@@ -243,7 +246,6 @@ const createPagseguroProducts = async (props) => {
   while (arrayIds.includes(idFrete)) idFrete++;
 
   const valorFrete = props.frete.join("");
-  console.log("Valor frete = ", valorFrete);
   if (valorFrete != 0) {
     const frete = {
       id: idFrete,
@@ -301,35 +303,35 @@ const pagamento = (props, dadosCadastro, dadosFrete) => {
       }
     }
   }
-  console.log("props.frete.join()=", props.frete.join(""));
   if (contador === 1) {
-    //   ApiPedidos.createOrder({
-    //     payment_method: "PagSeguro",
-    //     payment_method_title: "delete",
-    //     set_paid: false,
-    //     billing: dadosCadastro,
-    //     shipping: dadosFrete,
-    //     shipping_lines: [
-    //       {
-    //         method_id: "Padrão",
-    //         method_title: "Padrão",
-    //         total: props.frete.join(""),
-    //       },
-    //     ],
-    //     coupon_lines: [
-    //       {
-    //         code: cupom,
-    //       },
-    //     ],
-    //     line_items: itensCarrinho,
-    //   })
-    //     .then((response) => {
-    //       console.log(response.data);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
+    ApiPedidos.createOrder({
+      payment_method: "PagSeguro",
+      payment_method_title: "delete",
+      set_paid: false,
+      billing: dadosCadastro,
+      shipping: dadosFrete,
+      shipping_lines: [
+        {
+          method_id: "Padrão",
+          method_title: "Padrão",
+          total: props.frete.join(""),
+        },
+      ],
+      coupon_lines: [
+        {
+          code: cupom,
+        },
+      ],
+      line_items: itensCarrinho,
+    })
+      .then((response) => {
+        //console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
+  props.salvaCupom("");
 };
 
 let dados = null;
@@ -486,4 +488,9 @@ const mapStateToProps = (state) => ({
   cupom: state.cupom,
 });
 
-export default connect(mapStateToProps, null)(HorizontalLinearStepper);
+const mapDispatchToProps = { salvaCupom };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HorizontalLinearStepper);
