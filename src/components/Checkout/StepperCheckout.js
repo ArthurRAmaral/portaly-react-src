@@ -115,7 +115,6 @@ function btnHandler(quantidade) {
 }
 
 const calculaValorItem = (price, cupom, qnt) => {
-  console.log("+50");
   valorCupom = Number.parseFloat(valorCupom);
   cupom = Number.parseFloat(cupom);
   const fixPrice = price;
@@ -146,7 +145,9 @@ const calculaCupomAmount = (cupom, qnt, total) => {
   valorCupom = cupom[0].amount;
   if (cupom[0].discount_type == "percent") {
     value = (total / 100) * valorCupom;
-    return (value / qnt).toFixed(2);
+    valorCupom = value;
+    var retorno = (value / qnt).toFixed(2);
+    return retorno;
   } else if (cupom[0].discount_type == "fixed_cart") {
     return (valorCupom / qnt).toFixed(2);
   }
@@ -172,7 +173,6 @@ const createPagseguroProducts = async (props) => {
       calculaQuantidade(props.carrinho),
       props.carrinho.valorTotal
     );
-    console.log(cupomAmount);
   }
   const arrayItens = [];
   const arrayIds = [];
