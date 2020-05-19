@@ -168,11 +168,16 @@ const createPagseguroProducts = async (props) => {
   let cupomAmount = 0;
   cupom = await ApiCupom.getCoupon(cupom);
   if (cupom.data.length > 0) {
-    cupomAmount = await calculaCupomAmount(
-      cupom.data,
-      calculaQuantidade(props.carrinho),
-      props.carrinho.valorTotal
-    );
+    if (
+      cupom.data[0].minimum_amount <= props.carrinho.valorTotal &&
+      cupom.data[0].maximum_amount >= props.carrinho.valorTotal
+    ) {
+      cupomAmount = await calculaCupomAmount(
+        cupom.data,
+        calculaQuantidade(props.carrinho),
+        props.carrinho.valorTotal
+      );
+    }
   }
   const arrayItens = [];
   const arrayIds = [];
