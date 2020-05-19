@@ -67,7 +67,7 @@ class Pagamento extends Component {
     if (cupom.data[0].free_shipping) {
       value = "0";
       this.props.salvaFrete(value);
-      value = "Grátis";
+      value = " Grátis";
     } else {
       await mapBox.getTax(shipTo).then((tax) => {
         value = tax;

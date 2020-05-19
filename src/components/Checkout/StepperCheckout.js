@@ -109,55 +109,84 @@ function StepIcon(props) {
 }
 
 let valorCupom = 0;
+let totalVal = 0;
 
 function btnHandler(quantidade) {
   return !quantidade;
 }
 
-const calculaValorItem = (price, cupom, qnt) => {
-  valorCupom = Number.parseFloat(valorCupom);
-  cupom = Number.parseFloat(cupom);
-  const fixPrice = price;
-  if (valorCupom === 0) {
-    return price.split(".")[1] ? price : price + ".00";
-  } else if (valorCupom >= cupom) {
-    if (price <= cupom * qnt) {
-      price = 1;
-      valorCupom = valorCupom - (fixPrice - 1) * qnt;
-    } else {
-      price = price - valorCupom / qnt;
-      valorCupom = 0;
+const calculaValorItem = (price, cupom, qnt, ids, conditional, id) => {
+  if (conditional == "fixed_product" && ids.length > 0) {
+    if (ids.indexOf(id) > -1) {
+      price = price <= cupom ? 1 : price - cupom;
+      console.log("valor: ", price);
     }
   } else {
-    if (price <= valorCupom * qnt) {
-      price = 1;
-      valorCupom = valorCupom - (fixPrice - 1) * qnt;
+    valorCupom = Number.parseFloat(valorCupom);
+    cupom = Number.parseFloat(cupom);
+    const fixPrice = price;
+    if (valorCupom === 0) {
+      return price.split(".")[1] ? price : price + ".00";
+    } else if (valorCupom >= cupom) {
+      if (price <= cupom * qnt) {
+        price = 1;
+        valorCupom = valorCupom - (fixPrice - 1) * qnt;
+      } else {
+        price = price - valorCupom / qnt;
+        valorCupom = 0;
+      }
     } else {
-      price = price - cupom / qnt;
-      valorCupom = valorCupom - cupom * qnt;
+      if (price <= valorCupom * qnt) {
+        price = 1;
+        valorCupom = valorCupom - (fixPrice - 1) * qnt;
+      } else {
+        price = price - cupom / qnt;
+        valorCupom = valorCupom - cupom * qnt;
+      }
     }
   }
   return price.toString().split(".")[1] ? price : price + ".00";
 };
 
-const calculaCupomAmount = (cupom, qnt, total) => {
+const calculaCupomAmount = (cupom, qnt) => {
+  if (qnt == 0) {
+    return 0;
+  }
   let value;
   valorCupom = cupom[0].amount;
   if (cupom[0].discount_type == "percent") {
-    value = (total / 100) * valorCupom;
+    value = (totalVal / 100) * valorCupom;
     valorCupom = value;
     var retorno = (value / qnt).toFixed(2);
     return retorno;
   } else if (cupom[0].discount_type == "fixed_cart") {
     return (valorCupom / qnt).toFixed(2);
+  } else if (cupom[0].discount_type == "fixed_product") {
+    return valorCupom;
   }
 };
 
-const calculaQuantidade = (carrinho) => {
+const calculaQuantidade = (carrinho, cupom) => {
+  //cupom.product_ids
+  //product_categories
+  //excluded_product_ids
+  //excluded_product_categories
+
+  //carrinho[key].produto.id
+  //carrinho[key].categories[x].name
+
   let qnt = 0;
   for (const key in carrinho) {
     if (carrinho[key].quantidade) {
-      qnt += carrinho[key].quantidade;
+      if (cupom.product_ids.length > 0) {
+        if (cupom.product_ids.indexOf(carrinho[key].produto[0].id) > -1) {
+          totalVal += parseFloat(carrinho[key].produto[0].price);
+          qnt += carrinho[key].quantidade;
+        }
+      } else {
+        totalVal = carrinho.valorTotal;
+        qnt += carrinho[key].quantidade;
+      }
     }
   }
   return qnt;
@@ -169,13 +198,13 @@ const createPagseguroProducts = async (props) => {
   cupom = await ApiCupom.getCoupon(cupom);
   if (cupom.data.length > 0) {
     if (
-      cupom.data[0].minimum_amount <= props.carrinho.valorTotal &&
-      cupom.data[0].maximum_amount >= props.carrinho.valorTotal
+      cupom.data[0].maximum_amount < 1 ||
+      (cupom.data[0].minimum_amount <= props.carrinho.valorTotal &&
+        cupom.data[0].maximum_amount >= props.carrinho.valorTotal)
     ) {
       cupomAmount = await calculaCupomAmount(
         cupom.data,
-        calculaQuantidade(props.carrinho),
-        props.carrinho.valorTotal
+        calculaQuantidade(props.carrinho, cupom.data[0])
       );
     }
   }
@@ -193,7 +222,10 @@ const createPagseguroProducts = async (props) => {
         amount: await calculaValorItem(
           item.price,
           cupomAmount,
-          parseInt(quantidade)
+          parseInt(quantidade),
+          cupom.data[0].product_ids,
+          cupom.data[0].discount_type,
+          item.id
         ),
         quantity: parseInt(quantidade),
         weight: parseFloat(item.weight) ? parseFloat(item.weight) : 1,
