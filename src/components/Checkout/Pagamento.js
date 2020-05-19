@@ -50,10 +50,11 @@ class Pagamento extends Component {
     let value;
     let place;
 
-    let cupom = this.props.cupom.join("");
+    const propCoupon = this.props.cupom.join("");
 
-    cupom = await ApiCupom.getCoupon(cupom);
-    const couponExist = cupom.data.length > 0;
+    const cupom = await ApiCupom.getCoupon(propCoupon);
+    const couponExist = cupom.data.length === 1;
+    console.log(cupom.data.length);
 
     if (couponExist && cupom.data[0].free_shipping) {
       value = "0";
@@ -98,7 +99,7 @@ class Pagamento extends Component {
       this.setState({
         couponDesc: `Cupom de ${cupom.data[0].amount}% de desconto no valor total!`,
       });
-    } else if (!type) {
+    } else if (!couponExist && propCoupon !== "") {
       this.setState({ couponDesc: "Cupom inválido :(" });
     }
 
