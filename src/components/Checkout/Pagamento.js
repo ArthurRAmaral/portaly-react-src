@@ -25,7 +25,8 @@ class Pagamento extends Component {
       tax: null,
       place: null,
       buyer: null,
-      coupon: "só quero testar ",
+      coupon: this.props.cupom.join(""),
+      couponDesc: "",
     };
   }
 
@@ -68,11 +69,38 @@ class Pagamento extends Component {
       place = place_name;
     });
 
+    console.log(cupom);
+
     this.setState({ tax: value });
     this.setState({ place: place });
     this.setState({
       buyer: dadosCadastro.first_name + " " + dadosCadastro.last_name,
     });
+
+    const type = cupom.data[0].discount_type;
+    const amount = cupom.data[0].amount;
+
+    if (type === "fixed_product" && amount > 0) {
+      this.setState({
+        couponDesc: `Cupom de até R$${cupom.data[0].amount} por produto para produtos específicos!`,
+      });
+    } else if (type === "fixed_cart" && amount > 0) {
+      this.setState({
+        couponDesc: `Cupom de até R$${cupom.data[0].amount} de desconto!`,
+      });
+    } else if (type === "percent" && amount > 0) {
+      this.setState({
+        couponDesc: `Cupom de ${cupom.data[0].amount}% de desconto no valor total!`,
+      });
+    } else if (!type) {
+      this.setState({ couponDesc: "Cupom inválido :(" });
+    }
+
+    if (cupom.data[0].free_shipping) {
+      this.setState({
+        couponDesc: this.state.couponDesc + " Cupom de frete grátis!",
+      });
+    }
   }
 
   render() {
@@ -95,10 +123,11 @@ class Pagamento extends Component {
           <TextField
             id="coupon"
             label="Cupom"
-            value={this.props.cupom.join("")}
+            value={this.state.coupon}
             variant="outlined"
           />
         </Fragment>
+        <span>{this.state.couponDesc}</span>
         <br></br>
         <span>
           {" "}

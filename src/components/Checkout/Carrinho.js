@@ -17,13 +17,9 @@ class PaginaCarrinho extends Component {
     super(props);
 
     this.state = {
-      coupon: null,
+      coupon: this.props.cupom.join(""),
     };
   }
-
-  componentDidMount = () => {
-    this.setState({ coupon: this.props.cupom.join("") });
-  };
 
   handleChange = async (e) => {
     this.state[e.target.id] = e.target.value;
