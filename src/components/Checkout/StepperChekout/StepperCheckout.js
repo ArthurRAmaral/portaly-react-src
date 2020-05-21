@@ -14,29 +14,106 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import PaymentIcon from "@material-ui/icons/Payment";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import StepConnector from "@material-ui/core/StepConnector";
+import clsx from "clsx";
 
 //From checkout
-import clsx from "clsx";
-import Carrinho from "./Carrinho";
-import Cadastro from "./Cadastro";
-import Frete from "./Frete";
-import Pagamento from "./Pagamento";
-import useStyles from "./styles/style";
-import theme from "./styles/theme";
-import useStepIconStyles from "./styles/IconStyle";
-import funcoesCarrinho from "../../util/Carrinho";
+import Carrinho from "../Carrinho";
+import Cadastro from "../Cadastro";
+import Frete from "../Frete";
+import Pagamento from "../Pagamento";
+import useStyles from "./style";
+import theme from "./theme";
+import funcoesCarrinho from "../../../util/Carrinho";
 
 //From util
-import PagSeguro from "../../util/PagSeguro";
-import btnPagSeguro from "../../util/btnPagSeguro";
-import ApiPedidos from "../../services/ApiPedidos";
-import ApiCupom from "../../services/ApiCupom";
+import PagSeguro from "../../../util/PagSeguro";
+import btnPagSeguro from "../../../util/btnPagSeguro";
+import ApiPedidos from "../../../services/ApiPedidos";
+import ApiCupom from "../../../services/ApiCupom";
 
 //From redux
-import { salvaCupom } from "../../redux/actions/cupomActions";
+import { salvaCupom } from "../../../redux/actions/cupomActions";
 
+////////////
+// STEPPER//
+////////////
+const ColorlibConnector = withStyles({
+  alternativeLabel: {
+    top: 22,
+  },
+  active: {
+    "& $line": {
+      backgroundImage:
+        "linear-gradient( 95deg,#F0CDB1 0%, #CA9D79 50%, #A9764E 100%)",
+    },
+  },
+  completed: {
+    "& $line": {
+      backgroundImage:
+        "linear-gradient( 95deg,#F0CDB1 0%, #CA9D79 50%, #A9764E 100%)",
+    },
+  },
+  line: {
+    height: 3,
+    border: 0,
+    backgroundColor: "#eaeaf0",
+    borderRadius: 1,
+  },
+})(StepConnector);
+
+const useStepIconStyles = makeStyles({
+  root: {
+    backgroundColor: "#ccc",
+    zIndex: 1,
+    color: "#fff",
+    width: 50,
+    height: 50,
+    display: "flex",
+    borderRadius: "50%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  active: {
+    backgroundImage:
+      "linear-gradient( 136deg, #F0CDB1 0%, #CA9D79 50%, #A9764E 100%)",
+    boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
+  },
+  completed: {
+    backgroundImage:
+      "linear-gradient( 136deg, #F0CDB1 0%, #CA9D79 50%, #A9764E 100%)",
+  },
+});
+
+function StepIcon(props) {
+  const classes = useStepIconStyles();
+  const { active, completed } = props;
+
+  const icons = {
+    1: <ShoppingCartIcon />,
+    2: <AssignmentIcon />,
+    3: <LocalShippingIcon />,
+    4: <PaymentIcon />,
+  };
+
+  return (
+    <div
+      className={clsx(classes.root, {
+        [classes.active]: active,
+        [classes.completed]: completed,
+      })}
+    >
+      {icons[String(props.icon)]}
+    </div>
+  );
+}
+
+////////////
+///Steps////
+////////////
 function getSteps() {
-  return ["Carrinho", "Cadastro", "Frete", "Pagamento"];
+  return ["MESA", "Cadastro", "Frete", "Pagamento"];
 }
 
 function getOptionalSteps() {
@@ -88,35 +165,11 @@ function getStepContent(props, step, validCode) {
   }
 }
 
-function StepIcon(props) {
-  const classes = useStepIconStyles();
-  const { active, completed } = props;
-
-  const icons = {
-    1: <ShoppingCartIcon />,
-    2: <AssignmentIcon />,
-    3: <LocalShippingIcon />,
-    4: <PaymentIcon />,
-  };
-
-  return (
-    <div
-      className={clsx(classes.root, {
-        [classes.active]: active,
-        [classes.completed]: completed,
-      })}
-    >
-      {icons[String(props.icon)]}
-    </div>
-  );
-}
-
+////////////
+///CUPOM////
+////////////
 let valorCupom = 0;
 let totalVal = 0;
-
-function btnHandler(quantidade) {
-  return !quantidade;
-}
 
 const calculaValorItem = (price, cupom, qnt, ids, conditional, id) => {
   if (conditional === "fixed_product" && ids.length > 0) {
@@ -169,14 +222,6 @@ const calculaCupomAmount = (cupom, qnt) => {
 };
 
 const calculaQuantidade = (carrinho, cupom) => {
-  //cupom.product_ids
-  //product_categories
-  //excluded_product_ids
-  //excluded_product_categories
-
-  //carrinho[key].produto.id
-  //carrinho[key].categories[x].name
-
   let qnt = 0;
   for (const key in carrinho) {
     if (carrinho[key].quantidade) {
@@ -194,6 +239,9 @@ const calculaQuantidade = (carrinho, cupom) => {
   return qnt;
 };
 
+////////////////
+///PAGSEGURO////
+////////////////
 const createPagseguroProducts = async (props) => {
   let cupom = props.cupom.join("");
   let cupomAmount = 0;
@@ -334,10 +382,18 @@ const pagamento = (props, dadosCadastro, dadosFrete) => {
   props.salvaCupom("");
 };
 
+////////////
+///OTHERS///
+////////////
+function btnHandler(quantidade) {
+  return !quantidade;
+}
 let dados = null;
-
 let contador = 0;
 
+////////////////////
+///MAIN_FUNCTION////
+////////////////////
 function HorizontalLinearStepper(props) {
   const classes = useStyles();
   const [finalCode, setCode] = React.useState(null);
@@ -392,7 +448,7 @@ function HorizontalLinearStepper(props) {
   return (
     <div className={classes.root}>
       <ThemeProvider theme={theme}>
-        <Stepper activeStep={activeStep}>
+        <Stepper activeStep={activeStep} connector={<ColorlibConnector />}>
           {steps.map((label, index) => {
             const stepProps = {};
             const labelProps = {};
@@ -406,9 +462,7 @@ function HorizontalLinearStepper(props) {
             }
             return (
               <Step key={label} {...stepProps}>
-                <StepLabel StepIconComponent={StepIcon} {...labelProps}>
-                  {label}
-                </StepLabel>
+                <StepLabel StepIconComponent={StepIcon} {...labelProps} />
               </Step>
             );
           })}
@@ -482,6 +536,9 @@ function HorizontalLinearStepper(props) {
   );
 }
 
+////////////
+///REDUX////
+////////////
 const mapStateToProps = (state) => ({
   carrinho: state.carrinho,
   frete: state.frete,

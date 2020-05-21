@@ -1,18 +1,8 @@
 import React, { Component } from "react";
-import Stepper from "../components/Checkout/StepperCheckout";
+import Stepper from "../components/Checkout/StepperChekout/StepperCheckout";
 
-class PaginaCarrinho extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      produtos: [],
-    };
-  }
-
-  render() {
-    return <Stepper />;
-  }
+function PaginaCarrinho() {
+  return <Stepper />;
 }
 
 export default PaginaCarrinho;
