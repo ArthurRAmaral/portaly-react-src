@@ -4,8 +4,12 @@ import { connect } from "react-redux";
 
 import { salvaFrete } from "../../redux/actions/freteActions";
 
+import TextField from "@material-ui/core/TextField";
+
 import MostraProdutosCarrinho from "./MostraProdutosCarrinhoResumido";
 import SemProduto from "../semProdutos";
+import ApiCupom from "../../services/ApiCupom";
+
 // import ApiProdutos from "../../util/ApiProdutos.js";
 
 // import Carrinho from "../../util/Carrinho.js";
@@ -21,9 +25,9 @@ class Pagamento extends Component {
       tax: null,
       place: null,
       buyer: null,
+      coupon: this.props.cupom.join(""),
+      couponDesc: "",
     };
-    // let dadosCadastro = JSON.parse(sessionStorage.getItem(varCadastro));
-    // let dadosFrete = JSON.parse(sessionStorage.getItem(varFrete));
   }
 
   async componentDidMount() {
@@ -46,20 +50,64 @@ class Pagamento extends Component {
     let value;
     let place;
 
-    await mapBox.getTax(shipTo).then((tax) => {
-      value = tax;
+    const propCoupon = this.props.cupom.join("");
+
+    const cupom = await ApiCupom.getCoupon(propCoupon);
+    const couponExist = cupom.data.length === 1;
+    console.log(cupom.data.length);
+
+    if (couponExist && cupom.data[0].free_shipping) {
+      value = "0";
       this.props.salvaFrete(value);
-    });
+      value = " Grátis";
+    } else {
+      await mapBox.getTax(shipTo).then((tax) => {
+        value = tax;
+        this.props.salvaFrete(value);
+      });
+    }
 
     await mapBox.getPlace(shipTo).then((place_name) => {
       place = place_name;
     });
+
+    console.log(cupom);
 
     this.setState({ tax: value });
     this.setState({ place: place });
     this.setState({
       buyer: dadosCadastro.first_name + " " + dadosCadastro.last_name,
     });
+
+    let type = "",
+      amount = 0;
+    if (couponExist) {
+      console.log("existe");
+      type = cupom.data[0].discount_type;
+      amount = cupom.data[0].amount;
+    }
+
+    if (type === "fixed_product" && amount > 0) {
+      this.setState({
+        couponDesc: `Cupom de até R$${cupom.data[0].amount} por produto para produtos específicos!`,
+      });
+    } else if (type === "fixed_cart" && amount > 0) {
+      this.setState({
+        couponDesc: `Cupom de até R$${cupom.data[0].amount} de desconto!`,
+      });
+    } else if (type === "percent" && amount > 0) {
+      this.setState({
+        couponDesc: `Cupom de ${cupom.data[0].amount}% de desconto no valor total!`,
+      });
+    } else if (!couponExist && propCoupon !== "") {
+      this.setState({ couponDesc: "Cupom inválido :(" });
+    }
+
+    if (couponExist && cupom.data[0].free_shipping) {
+      this.setState({
+        couponDesc: this.state.couponDesc + " Cupom de frete grátis!",
+      });
+    }
   }
 
   render() {
@@ -73,9 +121,20 @@ class Pagamento extends Component {
             : "Sem comprador identificado"}{" "}
         </span>{" "}
         <br></br>
-         <Fragment>
-      {this.props.carrinho ? MostraProdutosCarrinho(this.props.carrinho) : <SemProduto />}
-    </Fragment>
+        <Fragment>
+          {this.props.carrinho ? (
+            MostraProdutosCarrinho(this.props.carrinho)
+          ) : (
+            <SemProduto />
+          )}
+          <TextField
+            id="coupon"
+            label="Cupom"
+            value={this.state.coupon}
+            variant="outlined"
+          />
+        </Fragment>
+        <span>{this.state.couponDesc}</span>
         <br></br>
         <span>
           {" "}
@@ -84,14 +143,19 @@ class Pagamento extends Component {
         <br></br>
         <span>
           {" "}
-          Valor: R${this.state.tax ? this.state.tax : "Buscando Frete"}
+          Valor de Frete: R${this.state.tax ? this.state.tax : "Buscando Frete"}
         </span>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({ frete: state.frete, carrinho: state.carrinho });
+const mapStateToProps = (state) => ({
+  frete: state.frete,
+  carrinho: state.carrinho,
+  cupom: state.cupom,
+});
+
 const mapDispatchToProps = { salvaFrete };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pagamento);

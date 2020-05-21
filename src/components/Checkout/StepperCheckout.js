@@ -30,6 +30,10 @@ import funcoesCarrinho from "../../util/Carrinho";
 import PagSeguro from "../../util/PagSeguro";
 import btnPagSeguro from "../../util/btnPagSeguro";
 import ApiPedidos from "../../services/ApiPedidos";
+import ApiCupom from "../../services/ApiCupom";
+
+//From redux
+import { salvaCupom } from "../../redux/actions/cupomActions";
 
 function getSteps() {
   return ["Carrinho", "Cadastro", "Frete", "Pagamento"];
@@ -107,24 +111,130 @@ function StepIcon(props) {
   );
 }
 
+let valorCupom = 0;
+let totalVal = 0;
+
 function btnHandler(quantidade) {
   return !quantidade;
 }
 
+const calculaValorItem = (price, cupom, qnt, ids, conditional, id) => {
+  if (conditional === "fixed_product" && ids.length > 0) {
+    if (ids.indexOf(id) > -1) {
+      price = price <= cupom ? 1 : price - cupom;
+    }
+  } else {
+    valorCupom = Number.parseFloat(valorCupom);
+    cupom = Number.parseFloat(cupom);
+    const fixPrice = price;
+    if (valorCupom === 0) {
+      return price.split(".")[1] ? price : price + ".00";
+    } else if (valorCupom >= cupom) {
+      if (price <= cupom * qnt) {
+        price = 1;
+        valorCupom = valorCupom - (fixPrice - 1) * qnt;
+      } else {
+        price = price - valorCupom / qnt;
+        valorCupom = 0;
+      }
+    } else {
+      if (price <= valorCupom * qnt) {
+        price = 1;
+        valorCupom = valorCupom - (fixPrice - 1) * qnt;
+      } else {
+        price = price - cupom / qnt;
+        valorCupom = valorCupom - cupom * qnt;
+      }
+    }
+  }
+  return price.toString().split(".")[1] ? price : price + ".00";
+};
+
+const calculaCupomAmount = (cupom, qnt) => {
+  if (qnt === 0) {
+    return 0;
+  }
+  let value;
+  valorCupom = cupom[0].amount;
+  if (cupom[0].discount_type === "percent") {
+    value = (totalVal / 100) * valorCupom;
+    valorCupom = value;
+    var retorno = (value / qnt).toFixed(2);
+    return retorno;
+  } else if (cupom[0].discount_type === "fixed_cart") {
+    return (valorCupom / qnt).toFixed(2);
+  } else if (cupom[0].discount_type === "fixed_product") {
+    return valorCupom;
+  }
+};
+
+const calculaQuantidade = (carrinho, cupom) => {
+  //cupom.product_ids
+  //product_categories
+  //excluded_product_ids
+  //excluded_product_categories
+
+  //carrinho[key].produto.id
+  //carrinho[key].categories[x].name
+
+  let qnt = 0;
+  for (const key in carrinho) {
+    if (carrinho[key].quantidade) {
+      if (cupom.product_ids.length > 0) {
+        if (cupom.product_ids.indexOf(carrinho[key].produto[0].id) > -1) {
+          totalVal += parseFloat(carrinho[key].produto[0].price);
+          qnt += carrinho[key].quantidade;
+        }
+      } else {
+        totalVal = carrinho.valorTotal;
+        qnt += carrinho[key].quantidade;
+      }
+    }
+  }
+  return qnt;
+};
+
 const createPagseguroProducts = async (props) => {
+  let cupom = props.cupom.join("");
+  let cupomAmount = 0;
+  cupom = await ApiCupom.getCoupon(cupom);
+  if (cupom.data.length > 0) {
+    if (
+      cupom.data[0].maximum_amount < 1 ||
+      (cupom.data[0].minimum_amount <= props.carrinho.valorTotal &&
+        cupom.data[0].maximum_amount >= props.carrinho.valorTotal)
+    ) {
+      cupomAmount = await calculaCupomAmount(
+        cupom.data,
+        calculaQuantidade(props.carrinho, cupom.data[0])
+      );
+    }
+  }
   const arrayItens = [];
   const arrayIds = [];
-
   for (const key in props.carrinho) {
     let item = props.carrinho[key].produto;
     const variacao = props.carrinho[key].variacao;
     const quantidade = props.carrinho[key].quantidade;
+    let product_ids = [],
+      discount_type = "";
+    if (cupom.data.length > 0) {
+      product_ids = cupom.data[0].product_ids;
+      discount_type = cupom.data[0].discount_type;
+    }
     if (item) {
       item = item[0];
       const itemToPush = {
         id: item.id,
         description: item.name + (variacao ? " (" + variacao + ")" : ""),
-        amount: item.price.split(".")[1] ? item.price : item.price + ".00",
+        amount: await calculaValorItem(
+          item.price,
+          cupomAmount,
+          parseInt(quantidade),
+          product_ids,
+          discount_type,
+          item.id
+        ),
         quantity: parseInt(quantidade),
         weight: parseFloat(item.weight) ? parseFloat(item.weight) : 1,
       };
@@ -136,14 +246,16 @@ const createPagseguroProducts = async (props) => {
   while (arrayIds.includes(idFrete)) idFrete++;
 
   const valorFrete = props.frete.join("");
-  const frete = {
-    id: idFrete,
-    description: "Frete",
-    amount: valorFrete.split(".")[1] ? valorFrete : valorFrete + ".00",
-    quantity: 1,
-    weight: 1,
-  };
-  arrayItens.push(frete);
+  if (valorFrete !== 0) {
+    const frete = {
+      id: idFrete,
+      description: "Frete",
+      amount: valorFrete.split(".")[1] ? valorFrete : valorFrete + ".00",
+      quantity: 1,
+      weight: 1,
+    };
+    arrayItens.push(frete);
+  }
   return arrayItens;
 };
 
@@ -176,6 +288,7 @@ const createPagseguroShipping = async (dadosFrete) => {
 let code;
 
 const pagamento = (props, dadosCadastro, dadosFrete) => {
+  const cupom = props.cupom.join("");
   const itensCarrinho = [];
   for (const key in props.carrinho) {
     if (props.carrinho.hasOwnProperty(key)) {
@@ -190,8 +303,6 @@ const pagamento = (props, dadosCadastro, dadosFrete) => {
       }
     }
   }
-  console.log("props.frete.join()=", props.frete.join(""));
-  alert();
   if (contador === 1) {
     ApiPedidos.createOrder({
       payment_method: "PagSeguro",
@@ -203,18 +314,24 @@ const pagamento = (props, dadosCadastro, dadosFrete) => {
         {
           method_id: "Padrão",
           method_title: "Padrão",
-          total: (props.frete.join("")),
+          total: props.frete.join(""),
+        },
+      ],
+      coupon_lines: [
+        {
+          code: cupom,
         },
       ],
       line_items: itensCarrinho,
     })
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }
+  props.salvaCupom("");
 };
 
 let dados = null;
@@ -368,6 +485,12 @@ function HorizontalLinearStepper(props) {
 const mapStateToProps = (state) => ({
   carrinho: state.carrinho,
   frete: state.frete,
+  cupom: state.cupom,
 });
 
-export default connect(mapStateToProps, null)(HorizontalLinearStepper);
+const mapDispatchToProps = { salvaCupom };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HorizontalLinearStepper);
