@@ -19,7 +19,7 @@ import StepConnector from "@material-ui/core/StepConnector";
 import clsx from "clsx";
 
 //From checkout
-import Carrinho from "../Carrinho";
+import Carrinho from "../Carrinho/Carrinho";
 import Cadastro from "../Cadastro";
 import Frete from "../Frete";
 import Pagamento from "../Pagamento";
@@ -479,9 +479,7 @@ function HorizontalLinearStepper(props) {
             </div>
           ) : (
             <div>
-              <Card className={classes.instructions}>
-                {getStepContent(props, activeStep, validCode)}
-              </Card>
+              {getStepContent(props, activeStep, validCode)}
               <div>
                 <Button
                   disabled={activeStep === 0}
