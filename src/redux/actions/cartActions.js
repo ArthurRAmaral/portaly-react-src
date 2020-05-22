@@ -23,19 +23,20 @@ export function updateQuantidade(produtoId, flag) {
 
 function mudaquantidade(state, produtoId, flag) {
   let carrinho = state.carrinho;
-  let novaQuantidade, newCart, novoProduto;
+  let novaQuantidade, newCart;
 
   newCart = novoCarrinho(produtoId, state);
 
   newCart.quantidade =
     flag == "aumenta" ? addQuantidade(state) : diminuiQuantidade(state);
 
-  if (newCart.quantidade == 0) return carrinho;
+  if (newCart.quantidade < 1) return carrinho;
 
   Object.values(carrinho).map((prod) => {
     if (prod.produto && prod.produto[0].id == produtoId) {
       novaQuantidade = novaQuant(flag, prod);
-      if (novaQuantidade == 0) return carrinho;
+
+      if (novaQuantidade < 1) return carrinho;
 
       newCart.valorTotal = valorTotalUpadate(
         carrinho.valorTotal,
@@ -50,6 +51,8 @@ function mudaquantidade(state, produtoId, flag) {
     }
   });
 
+  if (novaQuantidade < 1) return carrinho;
+
   return newCart;
 }
 
@@ -61,7 +64,7 @@ function novaQuant(flag, produto) {
 function valorTotalUpadate(valorTotal, produto, novaQuantidade) {
   return (valorTotal =
     valorTotal -
-    produto.produto[0].price +
+    produto.quantidade * produto.produto[0].price +
     novaQuantidade * produto.produto[0].price);
 }
 
