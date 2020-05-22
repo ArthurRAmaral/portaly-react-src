@@ -16,4 +16,7 @@ export default {
   orange: "#CA9D79", //Main
   orangeDark: "#A9764E",
   orangeDarkDark: "#8A572D",
+
+  //Destaque
+  orangeDestaque: "#FF9D4D",
 };

@@ -10,7 +10,7 @@ const theme = createMuiTheme({
     },
     secondary: {
       light: colors.orangeLight,
-      main: colors.orange,
+      main: colors.orangeDestaque,
       contrastText: colors.white,
     },
     contrastThreshold: 3,
