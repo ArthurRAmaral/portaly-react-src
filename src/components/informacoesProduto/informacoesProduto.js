@@ -143,10 +143,10 @@ function InformaçõesProduto(props) {
               : "Não possui descrição"
           }`}</Typography>
         </Grid>
-        <Grid>
-          <FacebookIcon />
-          <InstagramIcon />
-          <TwitterIcon />
+        <Grid container direction="row" alignItems="center" justify="flex-end">
+          <FacebookIcon className={classes.icon} />
+          <InstagramIcon className={classes.icon} />
+          <TwitterIcon className={classes.icon} />
         </Grid>
       </Grid>
     </Fragment>
