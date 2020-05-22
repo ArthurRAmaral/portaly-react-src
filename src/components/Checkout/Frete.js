@@ -53,8 +53,6 @@ class Cadastro extends Component {
 
     let value = e.target.value;
 
-    console.log(id);
-
     if (id === "postcode") {
       const unMasked = unMask(value);
       value = mask(unMasked, ["99.999-999"]);

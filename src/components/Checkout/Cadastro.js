@@ -63,8 +63,6 @@ class Cadastro extends Component {
 
     let value = e.target.value;
 
-    console.log(id);
-
     if (id === inputsIds.cpf) {
       const unMasked = unMask(value);
       value = mask(unMasked, ["999.999.999-99", "99.999.999/9999-99"]);
