@@ -27,10 +27,10 @@ function mudaquantidade(state, produtoId, flag) {
 
   newCart = novoCarrinho(produtoId, state);
 
-  newCart.quantidade =
+  newCart.quantidadeTotal =
     flag === "aumenta" ? addQuantidade(state) : diminuiQuantidade(state);
 
-  if (newCart.quantidade < 1) return carrinho;
+  if (newCart.quantidadeTotal < 1) return carrinho;
 
   Object.values(carrinho).map((prod) => {
     if (prod.produto && prod.produto[0].id == produtoId) {
@@ -98,7 +98,7 @@ function remove(produtoId) {
 
 function novoCarrinho(produtoId, state) {
   let carrinho = {
-    quantidade: 0,
+    quantidadeTotal: 0,
     valorTotal: 0,
   };
   Object.values(state.carrinho).map((prod) => {
@@ -106,7 +106,7 @@ function novoCarrinho(produtoId, state) {
       //NÃO MUDE PARA !==, pois quebra a função
       carrinho = {
         ...carrinho,
-        quantidade: diminuiQuantidade(state),
+        quantidadeTotal: diminuiQuantidade(state),
         valorTotal: calculaValorTotal(prod.produto[0].price, prod.quantidade),
         [prod.produto[0].slug]: prod,
       };
@@ -132,9 +132,9 @@ function calculaValorTotal(price, quantidade, valorTotal = 0) {
 }
 
 function addQuantidade(state) {
-  return state.carrinho.quantidade + 1;
+  return state.carrinho.quantidadeTotal + 1;
 }
 
 function diminuiQuantidade(state) {
-  return state.carrinho.quantidade - 1;
+  return state.carrinho.quantidadeTotal - 1;
 }

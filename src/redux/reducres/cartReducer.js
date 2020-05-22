@@ -5,14 +5,14 @@ import {
 } from "../actions/actionsTypes";
 
 export default function setCarrinho(
-  state = { quantidade: 0, valorTotal: 0 },
+  state = { quantidadeTotal: 0, valorTotal: 0 },
   action
 ) {
   switch (action.type) {
     case ADD_CART:
       return {
         ...state,
-        quantidade: action.quantidadeTotal,
+        quantidadeTotal: action.quantidadeTotal,
         valorTotal: action.valorTotal,
         [action.name]: {
           produto: [action.payload],

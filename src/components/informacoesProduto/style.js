@@ -3,60 +3,45 @@ import { makeStyles } from "@material-ui/core/styles";
 import colors from "../../util/Colors";
 
 const useStyles = makeStyles((theme) => ({
-  second_header: {
-    width: "100%",
-    height: 53,
-    display: "inline-flex",
+  caminho: {
+    color: colors.orange,
+    marginBottom: 10,
+    fontSize: 15,
   },
-  menu: {
-    width: "84%",
-    padding: 0,
-    display: "inline-flex",
-    justifyContent: "space-around",
-    alignItems: "center",
+  title: {
+    color: colors.orange,
+    fontWeight: "bold",
+    marginBottom: 10,
+    fontSize: 30,
   },
-  first_div_link: {
-    borderLeft: "0px solid",
+  texto: {
+    color: colors.orange,
+    marginBottom: 10,
+    fontSize: 20,
   },
-  div_link: {
-    width: "14%",
-    height: "100%",
-    borderCollapse: "collapse",
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
+  divider: {
+    marginBottom: 10,
+    marginTop: 10,
   },
-  link: {
-    fontFamily: "Poppins",
-    fontWeight: 500,
-    fontSize: 16,
-    height: "100%",
-    width: "100%",
-    color: colors.orangeDarkDark,
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
+  price: {
+    color: colors.orange,
+    fontWeight: "bold",
+    marginBottom: 10,
+    fontSize: 20,
   },
-  Line: {
-    height: "65%",
-    alignSelf: "center",
-    color: colors.orangeLight,
-    width: "1.5px",
+  icon: {
+    color: colors.orange,
+    marginRight: 5,
   },
-  botao: {
-    width: "16%",
-    background: colors.orangeLight,
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
+  quantidade: {
+    color: colors.orange,
+    fontSize: 20,
   },
-  button_link: {
-    height: "100%",
-    width: "100%",
-    color: colors.orangeDarkDark,
-  },
-  arrow: {
-    marginLeft: "20px",
+  button: {
+    backgroundColor: colors.orangeDark,
+    "&:hover": {
+      backgroundColor: colors.orange,
+    },
   },
 }));
 

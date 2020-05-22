@@ -61,7 +61,7 @@ class PaginaCarrinho extends Component {
             </Typography>
           </Box>
 
-          {this.props.carrinho.quantidade ? (
+          {this.props.carrinho.quantidadeTotal ? (
             <MostraProdutosCarrinho
               carrinho={this.props.carrinho}
               removeCart={this.props.removeCart}

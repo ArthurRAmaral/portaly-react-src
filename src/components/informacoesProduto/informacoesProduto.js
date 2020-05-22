@@ -17,6 +17,7 @@ import Button from "@material-ui/core/Button";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import Box from "@material-ui/core/Box";
 
 // From util
 import InitPath from "../../services/InitPath";
@@ -24,7 +25,14 @@ import InitPath from "../../services/InitPath";
 //From redux
 import { addCart } from "../../redux/actions/cartActions";
 
+//From util
+import colors from "../../util/Colors";
+
+//From hear
+import useStyles from "./style";
+
 function InformaçõesProduto(props) {
+  const classes = useStyles();
   const [quantidade, setQuantidade] = React.useState(1);
   const { produto, addCart } = props;
   const [option, setOption] = React.useState(() =>
@@ -51,60 +59,85 @@ function InformaçõesProduto(props) {
   return (
     <Fragment>
       <Grid>
-        <Typography>{`Home/${produto.categories[0].name}/${produto.name}`}</Typography>
+        <Typography
+          className={classes.caminho}
+        >{`Home/${produto.categories[0].name}/${produto.name}`}</Typography>
       </Grid>
       <Grid>
-        <Typography variant="h5">{`${produto.name}`}</Typography>
+        <Typography
+          variant="h5"
+          className={classes.title}
+        >{`${produto.name}`}</Typography>
       </Grid>
-      <Grid>
-        <Typography>{`Codigo do item: ${produto.id}`}</Typography>
+      <Grid container justify="flex-end">
+        <Typography
+          className={classes.caminho}
+        >{`Codigo do item: ${produto.id}`}</Typography>
       </Grid>
-      <Divider orientation="horizontal" />
-      {produto.attributes.length ? (
-        <FormControl>
-          <InputLabel htmlFor="age-native-simple">Variações</InputLabel>
-          <Select
-            native
-            value={option}
-            onChange={handleOption}
-            inputProps={{
-              name: "age",
-              id: "age-native-simple",
-            }}
-          >
-            {produto.attributes[0].options.map((option) => (
-              <option value={option} key={`option${option}`}>
-                {option}
-              </option>
-            ))}
-          </Select>
-        </FormControl>
-      ) : (
-        ""
-      )}
-      <Grid>
-        <Typography>{`R$ ${produto.price}`}</Typography>
-      </Grid>
-      <Grid>
-        <Typography>{quantidade}</Typography>
+      <Divider orientation="horizontal" className={classes.divider} />
+      <Grid
+        container
+        direction="row"
+        alignItems="center"
+        justify="space-evenly"
+      >
+        {produto.attributes.length ? (
+          <FormControl>
+            <InputLabel htmlFor="age-native-simple">Variações</InputLabel>
+            <Select
+              native
+              value={option}
+              onChange={handleOption}
+              inputProps={{
+                name: "age",
+                id: "age-native-simple",
+              }}
+              className={classes.caminho}
+            >
+              {produto.attributes[0].options.map((option) => (
+                <option value={option} key={`option${option}`}>
+                  {option}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+        ) : (
+          ""
+        )}
         <Grid>
-          <AddIcon onClick={addQuantidade} />
-          <RemoveIcon onClick={removeQuantidade} />
+          <Box border={1} borderColor={colors.orangeDark}>
+            <Typography align="center" className={classes.quantidade}>
+              {quantidade}
+            </Typography>
+          </Box>
+          <Grid>
+            <AddIcon onClick={addQuantidade} className={classes.icon} />
+            <RemoveIcon onClick={removeQuantidade} className={classes.icon} />
+          </Grid>
         </Grid>
+      </Grid>
+      <Grid container direction="column" alignItems="center" justify="center">
+        <Typography
+          className={classes.price}
+        >{`R$ ${produto.price}`}</Typography>
         <Button
           variant="contained"
           color="primary"
           onClick={handleAddCart}
           component={NavLink}
           to={`${InitPath}/meuCarrinho`}
+          className={classes.button}
         >
           Adicionar ao carrinho
         </Button>
       </Grid>
+      <Divider orientation="horizontal" className={classes.divider} />
       <Grid>
         <Grid>
-          <Typography>{`Categorias: ${produto.categories[0].name}`}</Typography>
-          <Typography>{`Descrição: ${
+          <Typography
+            className={classes.caminho}
+          >{`Categorias: ${produto.categories[0].name}`}</Typography>
+          <Typography className={classes.caminho}>{`Descrição: ${
             produto.description
               ? produto.description.split(">")[1].split("<")[0]
               : "Não possui descrição"
