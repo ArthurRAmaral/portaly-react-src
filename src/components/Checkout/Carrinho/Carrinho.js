@@ -13,7 +13,10 @@ import MostraProdutosCarrinho from "./MostraProdutosCarrinho";
 import SemProduto from "../../semProdutos";
 
 //From redux
-import { removeCart } from "../../../redux/actions/cartActions";
+import {
+  removeCart,
+  updateQuantidade,
+} from "../../../redux/actions/cartActions";
 import { salvaCupom } from "../../../redux/actions/cupomActions";
 
 //From util
@@ -42,10 +45,18 @@ class PaginaCarrinho extends Component {
         <Grid container direction="column" alignItems="center" justify="center">
           <Box
             borderBottom={2}
-            borderColor={colors.orangeDark}
             marginBottom={10}
+            style={{
+              borderColor: colors.orangeDark,
+            }}
           >
-            <Typography className="" variant="h3" color="#A9764E">
+            <Typography
+              className=""
+              variant="h3"
+              style={{
+                color: colors.orangeDark,
+              }}
+            >
               Carrinho
             </Typography>
           </Box>
@@ -56,6 +67,7 @@ class PaginaCarrinho extends Component {
               removeCart={this.props.removeCart}
               handleChange={this.handleChange}
               handleClick={this.handleClick}
+              handleUpdateQuant={this.props.updateQuantidade}
               coupon={this.state.coupon}
             />
           ) : (
@@ -72,6 +84,6 @@ const mapStateToProps = (state) => ({
   cupom: state.cupom,
 });
 
-const mapDispatchToProps = { removeCart, salvaCupom };
+const mapDispatchToProps = { removeCart, salvaCupom, updateQuantidade };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaginaCarrinho);

@@ -10,6 +10,8 @@ import InitPath from "../../../services/InitPath";
 
 //From Material-ui
 import CloseIcon from "@material-ui/icons/Close";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Table from "@material-ui/core/Table";
@@ -30,10 +32,21 @@ import { Typography } from "@material-ui/core";
 
 const MostrarProdutos = (props) => {
   const classes = useStyles();
-  const { carrinho, removeCart, handleClick, handleChange, coupon } = props;
+  const {
+    carrinho,
+    removeCart,
+    handleClick,
+    handleChange,
+    coupon,
+    handleUpdateQuant,
+  } = props;
 
   const handleRemove = (event) => {
     removeCart(event.currentTarget.id);
+  };
+
+  const handleQuantidade = (event) => {
+    handleUpdateQuant(event.currentTarget.id, event.currentTarget.slot);
   };
 
   const getProdutosCarrinho = (carrinho) => {
@@ -59,7 +72,7 @@ const MostrarProdutos = (props) => {
                 <TableCell align="right" className={classes.textColor}>
                   Preço
                 </TableCell>
-                <TableCell align="right" className={classes.textColor}>
+                <TableCell align="center" className={classes.textColor}>
                   Quantidade
                 </TableCell>
               </TableRow>
@@ -96,7 +109,33 @@ const MostrarProdutos = (props) => {
                         {produto.produto[0].price}
                       </TableCell>
                       <TableCell align="right" className={classes.textColor}>
-                        {produto.quantidade}
+                        <Grid container alignItems="center" justify="center">
+                          <Box
+                            border={1}
+                            marginRight={2}
+                            padding={2}
+                            alignItems="center"
+                            justifyContent="center"
+                          >
+                            <Typography>{produto.quantidade}</Typography>
+                          </Box>
+                          <Grid>
+                            <Grid container direction="column">
+                              <AddIcon
+                                className={classes.icon}
+                                id={produto.produto[0].id}
+                                slot="aumenta"
+                                onClick={handleQuantidade}
+                              />
+                              <RemoveIcon
+                                className={classes.icon}
+                                id={produto.produto[0].id}
+                                slot="diminui"
+                                onClick={handleQuantidade}
+                              />
+                            </Grid>
+                          </Grid>
+                        </Grid>
                       </TableCell>
                     </TableRow>
                   );

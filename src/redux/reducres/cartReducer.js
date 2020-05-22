@@ -1,15 +1,19 @@
-import { ADD_CART, REMOVE_CART } from "../actions/actionsTypes";
+import {
+  ADD_CART,
+  REMOVE_CART,
+  UPDATE_QUANTIDADE,
+} from "../actions/actionsTypes";
 
 export default function setCarrinho(
-  state = { valorTotal: 0, quantidade: 0 },
+  state = { quantidade: 0, valorTotal: 0 },
   action
 ) {
   switch (action.type) {
     case ADD_CART:
       return {
         ...state,
-        valorTotal: action.valorTotal,
         quantidade: action.quantidadeTotal,
+        valorTotal: action.valorTotal,
         [action.name]: {
           produto: [action.payload],
           quantidade: action.quantidade,
@@ -18,6 +22,8 @@ export default function setCarrinho(
       };
     case REMOVE_CART:
       return action.novoState;
+    case UPDATE_QUANTIDADE:
+      return action.novoCarrinho;
     default:
       return state;
   }

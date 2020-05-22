@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: colors.orange,
     },
   },
+  icon: {
+    marginBottom: 3,
+    cursor: "pointer",
+  },
 }));
 
 export default useStyles;

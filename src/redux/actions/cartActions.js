@@ -1,4 +1,4 @@
-import { ADD_CART, REMOVE_CART } from "./actionsTypes";
+import { ADD_CART, REMOVE_CART, UPDATE_QUANTIDADE } from "./actionsTypes";
 
 export function addCart(produto, quantidade, variacao) {
   return function (dispatch, getState) {
@@ -11,6 +11,58 @@ export function removeCart(produtoId) {
   return function (dispatch, getState) {
     if (quantidadeValida(getState())) dispatch(remove(produtoId));
   };
+}
+export function updateQuantidade(produtoId, flag) {
+  return function (dispatch, getState) {
+    dispatch({
+      type: UPDATE_QUANTIDADE,
+      novoCarrinho: mudaquantidade(getState(), produtoId, flag),
+    });
+  };
+}
+
+function mudaquantidade(state, produtoId, flag) {
+  let carrinho = state.carrinho;
+  let novaQuantidade, newCart, novoProduto;
+
+  newCart = novoCarrinho(produtoId, state);
+
+  newCart.quantidade =
+    flag == "aumenta" ? addQuantidade(state) : diminuiQuantidade(state);
+
+  if (newCart.quantidade == 0) return carrinho;
+
+  Object.values(carrinho).map((prod) => {
+    if (prod.produto && prod.produto[0].id == produtoId) {
+      novaQuantidade = novaQuant(flag, prod);
+      if (novaQuantidade == 0) return carrinho;
+
+      newCart.valorTotal = valorTotalUpadate(
+        carrinho.valorTotal,
+        prod,
+        novaQuantidade
+      );
+      prod.quantidade = novaQuantidade;
+      newCart = {
+        ...newCart,
+        [prod.produto[0].slug]: prod,
+      };
+    }
+  });
+
+  return newCart;
+}
+
+function novaQuant(flag, produto) {
+  if (flag == "aumenta") return produto.quantidade + 1;
+  if (flag == "diminui") return produto.quantidade - 1;
+}
+
+function valorTotalUpadate(valorTotal, produto, novaQuantidade) {
+  return (valorTotal =
+    valorTotal -
+    produto.produto[0].price +
+    novaQuantidade * produto.produto[0].price);
 }
 
 function add(produto, quantidade, variacao) {
@@ -42,15 +94,15 @@ function remove(produtoId) {
 
 function novoCarrinho(produtoId, state) {
   let carrinho = {
-    valorTotal: 0,
     quantidade: 0,
+    valorTotal: 0,
   };
   Object.values(state.carrinho).map((prod) => {
     if (prod.produto && produtoId != prod.produto[0].id) {
       carrinho = {
         ...carrinho,
-        valorTotal: calculaValorTotal(prod.produto[0].price, prod.quantidade),
         quantidade: diminuiQuantidade(state),
+        valorTotal: calculaValorTotal(prod.produto[0].price, prod.quantidade),
         [prod.produto[0].slug]: prod,
       };
     }
