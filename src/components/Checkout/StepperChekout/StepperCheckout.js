@@ -27,6 +27,9 @@ import useStyles from "./style";
 import theme from "./theme";
 import funcoesCarrinho from "../../../util/Carrinho";
 
+//From components
+import CircleLoading from "../../loading/CircleLoading";
+
 //From util
 import PagSeguro from "../../../util/PagSeguro";
 import btnPagSeguro from "../../../util/btnPagSeguro";
@@ -120,13 +123,28 @@ function getOptionalSteps() {
   return [];
 }
 
-function getStepContent(props, step, validCode) {
+function getStepContent(props, step, validCode, setCode) {
   switch (step) {
     case 0:
+      if (contador === 1) {
+        contador = 0;
+        code = null;
+        setCode(code);
+      }
       return <Carrinho />;
     case 1:
+      if (contador === 1) {
+        contador = 0;
+        code = null;
+        setCode(code);
+      }
       return <Cadastro />;
     case 2:
+      if (contador === 1) {
+        contador = 0;
+        code = null;
+        setCode(code);
+      }
       return <Frete />;
     case 3:
       (async () => {
@@ -134,6 +152,7 @@ function getStepContent(props, step, validCode) {
         const varFrete = "dadosFrete";
         let dadosCadastro = JSON.parse(sessionStorage.getItem(varCadastro));
         let dadosFrete = JSON.parse(sessionStorage.getItem(varFrete));
+        dados = null;
         //Forma array de produtos
         const dadosProdutos = await createPagseguroProducts(props);
         //Froma json de comprador
@@ -146,6 +165,7 @@ function getStepContent(props, step, validCode) {
           dadosComprador,
           dadosEntrega,
         };
+        console.log(dados);
         if (dadosProdutos.length > 0 && contador === 0) {
           contador++;
           PagSeguro.gerarPagamento(dados).then((codigo) => {
@@ -305,6 +325,8 @@ const createPagseguroProducts = async (props) => {
     };
     arrayItens.push(frete);
   }
+  console.log("ArrayItens", arrayItens);
+
   return arrayItens;
 };
 
@@ -352,34 +374,34 @@ const pagamento = (props, dadosCadastro, dadosFrete) => {
       }
     }
   }
-  if (contador === 1) {
-    ApiPedidos.createOrder({
-      payment_method: "PagSeguro",
-      payment_method_title: "delete",
-      set_paid: false,
-      billing: dadosCadastro,
-      shipping: dadosFrete,
-      shipping_lines: [
-        {
-          method_id: "Padrão",
-          method_title: "Padrão",
-          total: props.frete.join(""),
-        },
-      ],
-      coupon_lines: [
-        {
-          code: cupom,
-        },
-      ],
-      line_items: itensCarrinho,
-    })
-      .then((response) => {
-        //console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  // if (contador === 1) {
+  //   ApiPedidos.createOrder({
+  //     payment_method: "PagSeguro",
+  //     payment_method_title: "delete",
+  //     set_paid: false,
+  //     billing: dadosCadastro,
+  //     shipping: dadosFrete,
+  //     shipping_lines: [
+  //       {
+  //         method_id: "Padrão",
+  //         method_title: "Padrão",
+  //         total: props.frete.join(""),
+  //       },
+  //     ],
+  //     coupon_lines: [
+  //       {
+  //         code: cupom,
+  //       },
+  //     ],
+  //     line_items: itensCarrinho,
+  //   })
+  //     .then((response) => {
+  //       //console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
   props.salvaCupom("");
 };
 
@@ -480,7 +502,9 @@ function HorizontalLinearStepper(props) {
             </div>
           ) : (
             <Grid>
-              <Grid>{getStepContent(props, activeStep, validCode)}</Grid>
+              <Grid>
+                {getStepContent(props, activeStep, validCode, setCode)}
+              </Grid>
               <Grid
                 container
                 direction="row"
@@ -510,15 +534,7 @@ function HorizontalLinearStepper(props) {
                     finalCode ? (
                       btnPagSeguro(finalCode)
                     ) : (
-                      <Button
-                        focusVisibleClassName="btn"
-                        variant="contained"
-                        color="primary"
-                        disabled
-                        className={classes.button}
-                      >
-                        Finalizar pedido
-                      </Button>
+                      <CircleLoading />
                     )
                   ) : (
                     <Button

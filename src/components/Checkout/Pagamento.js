@@ -70,8 +70,6 @@ class Pagamento extends Component {
       place = place_name;
     });
 
-    console.log(cupom);
-
     this.setState({ tax: value });
     this.setState({ place: place });
     this.setState({
