@@ -187,6 +187,19 @@ const MostrarProdutos = (props) => {
                     return (
                       <Typography
                         className={classes.textColor}
+                        key={`name${produto.produto[0].id}`}
+                      >
+                        {`${produto.produto[0].name}`}
+                      </Typography>
+                    );
+                  })}
+                  <Typography className={classes.textColor}>Total</Typography>
+                </TableCell>
+                <TableCell align="right">
+                  {produtosCarrinho.map((produto) => {
+                    return (
+                      <Typography
+                        className={classes.textColor}
                         key={`sob-total${produto.produto[0].id}`}
                       >
                         {`${produto.quantidade}x ${
@@ -207,6 +220,7 @@ const MostrarProdutos = (props) => {
                 <TableCell align="center">
                   <Typography className={classes.textTotal}>Total</Typography>
                 </TableCell>
+                <TableCell />
                 <TableCell align="right">
                   <Typography className={classes.textTotal}>
                     {carrinho.valorTotal}
