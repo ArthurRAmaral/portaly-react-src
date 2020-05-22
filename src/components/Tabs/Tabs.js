@@ -9,6 +9,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
+import { ThemeProvider } from "@material-ui/core/styles";
 
 //from components
 import MostrarProdutos from "../MostraProdutos";
@@ -16,8 +17,8 @@ import MostrarProdutos from "../MostraProdutos";
 //From utils
 import ApiProdutos from "../../services/ApiProdutos";
 
-//Stylesheet
-import "./Tabs.css";
+//From here
+import useStyles from "./style";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -54,20 +55,6 @@ function getProductByids(setProdutos, setProdutosOnSale) {
   });
 }
 
-function a11yProps(index) {
-  return {
-    id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`,
-  };
-}
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-    width: 500,
-  },
-}));
-
 export default function FullWidthTabs() {
   const classes = useStyles();
   const theme = useTheme();
@@ -85,20 +72,16 @@ export default function FullWidthTabs() {
 
   return (
     <div className={classes.root} id="tabs">
-      <AppBar position="static" className="category_tab" color="default">
+      <AppBar position="static" color="primary">
         <Tabs
-          className="tab"
           value={value}
           onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
           variant="fullWidth"
           centered
-          aria-label="full width tabs example"
         >
-          <Tab label="Mais Vendidos" {...a11yProps(0)} />
-          <Tab label="Destaques" {...a11yProps(1)} />
-          <Tab label="Ofertas" {...a11yProps(2)} />
+          <Tab label="Mais Vendidos" />
+          <Tab label="Destaques" />
+          <Tab label="Ofertas" />
         </Tabs>
       </AppBar>
       <SwipeableViews
