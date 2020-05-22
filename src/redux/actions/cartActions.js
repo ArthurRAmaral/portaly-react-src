@@ -28,12 +28,13 @@ function mudaquantidade(state, produtoId, flag) {
   newCart = novoCarrinho(produtoId, state);
 
   newCart.quantidade =
-    flag == "aumenta" ? addQuantidade(state) : diminuiQuantidade(state);
+    flag === "aumenta" ? addQuantidade(state) : diminuiQuantidade(state);
 
   if (newCart.quantidade < 1) return carrinho;
 
   Object.values(carrinho).map((prod) => {
     if (prod.produto && prod.produto[0].id == produtoId) {
+      //NÃO MUDE PARA ===
       novaQuantidade = novaQuant(flag, prod);
 
       if (novaQuantidade < 1) return carrinho;
@@ -57,8 +58,8 @@ function mudaquantidade(state, produtoId, flag) {
 }
 
 function novaQuant(flag, produto) {
-  if (flag == "aumenta") return produto.quantidade + 1;
-  if (flag == "diminui") return produto.quantidade - 1;
+  if (flag === "aumenta") return produto.quantidade + 1;
+  if (flag === "diminui") return produto.quantidade - 1;
 }
 
 function valorTotalUpadate(valorTotal, produto, novaQuantidade) {
@@ -102,6 +103,7 @@ function novoCarrinho(produtoId, state) {
   };
   Object.values(state.carrinho).map((prod) => {
     if (prod.produto && produtoId != prod.produto[0].id) {
+      //NÃO MUDE PARA !==, pois quebra a função
       carrinho = {
         ...carrinho,
         quantidade: diminuiQuantidade(state),
