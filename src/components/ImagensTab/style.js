@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   tabPanel: {
     maxHeight: 600,
     "& img": {
+      minHeight: 500,
       maxHeight: 500,
     },
   },
