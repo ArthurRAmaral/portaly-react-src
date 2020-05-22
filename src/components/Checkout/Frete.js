@@ -1,8 +1,18 @@
 import React, { Component, Fragment } from "react";
+import { mask, unMask } from "remask";
 import TextField from "@material-ui/core/TextField";
 
 const varCadastro = "dadosCadastro";
 const varFrete = "dadosFrete";
+
+const inputsIds = {
+  address_1: "address_1",
+  address_2: "address_2",
+  city: "city",
+  state: "state",
+  postcode: "postcode",
+  country: "country",
+};
 
 class Cadastro extends Component {
   constructor(props) {
@@ -38,10 +48,19 @@ class Cadastro extends Component {
   }
 
   handleChange(e) {
-    this.state[e.target.id] = e.target.value;
-    this.setState({ [e.target.id]: e.target.value });
-    console.log(this.state);
-    sessionStorage.setItem(varFrete, JSON.stringify(this.state));
+    const toSave = this.state;
+    const id = e.target.id;
+
+    let value = e.target.value;
+
+    if (id === "postcode") {
+      const unMasked = unMask(value);
+      value = mask(unMasked, ["99.999-999"]);
+    }
+
+    toSave[id] = value;
+    sessionStorage.setItem(varFrete, JSON.stringify(toSave));
+    this.setState({ [id]: value });
   }
 
   componentDidMount() {
@@ -53,42 +72,42 @@ class Cadastro extends Component {
       <Fragment>
         {" "}
         <TextField
-          id="address_1"
+          id={inputsIds.address_1}
           onChange={this.handleChange}
-          label="Número"
+          label="Rua"
           value={this.state.address_1}
           variant="outlined"
         />
         <TextField
-          id="address_2"
+          id={inputsIds.address_2}
           onChange={this.handleChange}
-          label="Rua"
+          label="Número"
           value={this.state.address_2}
           variant="outlined"
         />
         <TextField
-          id="city"
+          id={inputsIds.city}
           onChange={this.handleChange}
           label="Cidade"
           value={this.state.city}
           variant="outlined"
         />
         <TextField
-          id="state"
+          id={inputsIds.state}
           onChange={this.handleChange}
           label="Estado"
           value={this.state.state}
           variant="outlined"
         />
         <TextField
-          id="postcode"
+          id={inputsIds.postcode}
           onChange={this.handleChange}
           label="CEP"
           value={this.state.postcode}
           variant="outlined"
         />
         <TextField
-          id="country"
+          id={inputsIds.country}
           onChange={this.handleChange}
           label="País"
           value={this.state.country}
