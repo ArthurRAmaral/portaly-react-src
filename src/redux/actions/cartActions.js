@@ -116,7 +116,7 @@ function novoCarrinho(produtoId, state) {
 }
 
 function quantidadeValida(state) {
-  return !!state.carrinho.quantidade;
+  return !!state.carrinho.quantidadeTotal;
 }
 
 function produtoExiste(produto, state) {
