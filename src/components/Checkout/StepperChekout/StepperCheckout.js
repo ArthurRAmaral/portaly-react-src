@@ -1,5 +1,5 @@
 //From depdencies
-import React from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 
 //From Material-ui
@@ -9,7 +9,7 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Card from "@material-ui/core/Card";
+import Grid from "@material-ui/core/Grid";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
@@ -385,8 +385,8 @@ const pagamento = (props, dadosCadastro, dadosFrete) => {
 ////////////
 ///OTHERS///
 ////////////
-function btnHandler(quantidade) {
-  return !quantidade;
+function btnHandler(quantidadeTotal) {
+  return !quantidadeTotal;
 }
 let dados = null;
 let contador = 0;
@@ -478,55 +478,62 @@ function HorizontalLinearStepper(props) {
               </Button>
             </div>
           ) : (
-            <div>
-              {getStepContent(props, activeStep, validCode)}
-              <div>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  className={classes.button}
-                >
-                  Voltar
-                </Button>
-                {isStepOptional(activeStep) && (
+            <Grid>
+              <Grid>{getStepContent(props, activeStep, validCode)}</Grid>
+              <Grid
+                container
+                direction="row"
+                alignItems="center"
+                justify="center"
+              >
+                <Grid className={classes.divButtons}>
                   <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSkip}
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
                     className={classes.button}
                   >
-                    Pular
+                    Voltar
                   </Button>
-                )}
+                  {isStepOptional(activeStep) && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleSkip}
+                      className={classes.button}
+                    >
+                      Pular
+                    </Button>
+                  )}
 
-                {activeStep === steps.length - 1 ? (
-                  finalCode ? (
-                    btnPagSeguro(finalCode)
+                  {activeStep === steps.length - 1 ? (
+                    finalCode ? (
+                      btnPagSeguro(finalCode)
+                    ) : (
+                      <Button
+                        focusVisibleClassName="btn"
+                        variant="contained"
+                        color="primary"
+                        disabled
+                        className={classes.button}
+                      >
+                        Finalizar pedido
+                      </Button>
+                    )
                   ) : (
                     <Button
                       focusVisibleClassName="btn"
                       variant="contained"
                       color="primary"
-                      disabled
+                      onClick={handleNext}
                       className={classes.button}
+                      disabled={btnHandler(props.carrinho.quantidadeTotal)}
                     >
-                      Finalizar pedido
+                      Próximo
                     </Button>
-                  )
-                ) : (
-                  <Button
-                    focusVisibleClassName="btn"
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                    disabled={btnHandler(props.carrinho.quantidade)}
-                  >
-                    Próximo
-                  </Button>
-                )}
-              </div>
-            </div>
+                  )}
+                </Grid>
+              </Grid>
+            </Grid>
           )}
         </div>
       </ThemeProvider>
