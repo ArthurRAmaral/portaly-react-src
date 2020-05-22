@@ -1,6 +1,7 @@
 //From depedencies
 import React from "react";
 
+//From Material-ui
 import { ThemeProvider } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -9,16 +10,18 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 
-import EscolherItems from "../EscolherItem";
-
+//From util
 import Montador from "../../../util/MontadorPorta";
 import Carrinho from "../../../util/Carrinho";
 
-import FecharMontagem from "../FecharMontagem";
-import ApiProdutos from "../../../services/ApiProdutos";
-
+//From here
 import useStyles from "./style";
 import theme from "./theme";
+
+import EscolherItems from "../EscolherItem";
+import FecharMontagem from "../FecharMontagem";
+
+import ApiProdutos from "../../../services/ApiProdutos";
 
 function getSteps() {
   return [
@@ -29,10 +32,6 @@ function getSteps() {
     "Porta",
     "Concluir",
   ];
-}
-
-function getOptionalSteps() {
-  return [];
 }
 
 function getStepContent(step, btnHandler) {
@@ -92,8 +91,6 @@ export default function HorizontalLinearStepper() {
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
 
-  const isStepOptional = (step) => getOptionalSteps().includes(step);
-
   const isStepSkipped = (step) => skipped.has(step);
 
   const handleNext = () => {
@@ -144,21 +141,16 @@ export default function HorizontalLinearStepper() {
   return (
     <div className={classes.root}>
       <ThemeProvider theme={theme}>
-        <Stepper activeStep={activeStep}>
+        <Stepper alternativeLabel activeStep={activeStep}>
           {steps.map((label, index) => {
             const stepProps = {};
-            const labelProps = {};
-            if (isStepOptional(index)) {
-              labelProps.optional = (
-                <Typography variant="caption">Optional</Typography>
-              );
-            }
+
             if (isStepSkipped(index)) {
               stepProps.completed = false;
             }
             return (
-              <Step key={label} {...stepProps}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
               </Step>
             );
           })}

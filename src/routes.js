@@ -3,7 +3,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 // From componets
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/HomePage/HomePage";
 import PaginaCategoria from "./pages/PaginaCategoria";
 import PaginaProduto from "./pages/PaginaProduto";
 import MonteSuaPorta from "./pages/MonteSuaPorta";
@@ -16,7 +16,7 @@ import TestPage from "./pages/TestPage";
 import InitPath from "./services/InitPath";
 
 // From css
-import "./css/Global.css";
+import "./Global.css";
 
 const Routes = () => {
   return (

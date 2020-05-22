@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
+  stepAtual: {
+    fontWeight: "bold",
+  },
 }));
 
 export default useStyles;

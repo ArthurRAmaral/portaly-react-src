@@ -12,9 +12,6 @@ import Wpp from "./components/WppBtn/WppBtn";
 import Carrinho from "./util/Carrinho";
 import { PersistGate } from "redux-persist/integration/react";
 
-// From css
-import "./css/Global.css";
-
 // From Cors
 import "cors";
 
