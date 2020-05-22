@@ -243,7 +243,7 @@ const calculaQuantidade = (carrinho, cupom) => {
 ///PAGSEGURO////
 ////////////////
 const createPagseguroProducts = async (props) => {
-  let cupom = props.cupom.join("");
+  let cupom = props.cupom.length > 0 ? props.cupom.join("") : "";
   let cupomAmount = 0;
   cupom = await ApiCupom.getCoupon(cupom);
   if (cupom.data.length > 0) {
@@ -294,7 +294,8 @@ const createPagseguroProducts = async (props) => {
   while (arrayIds.includes(idFrete)) idFrete++;
 
   const valorFrete = props.frete.join("");
-  if (valorFrete !== 0) {
+
+  if (valorFrete !== "0") {
     const frete = {
       id: idFrete,
       description: "Frete",
@@ -336,7 +337,7 @@ const createPagseguroShipping = async (dadosFrete) => {
 let code;
 
 const pagamento = (props, dadosCadastro, dadosFrete) => {
-  const cupom = props.cupom.join("");
+  const cupom = props.cupom.length > 0 ? props.cupom.join("") : "";
   const itensCarrinho = [];
   for (const key in props.carrinho) {
     if (props.carrinho.hasOwnProperty(key)) {

@@ -25,7 +25,7 @@ class Pagamento extends Component {
       tax: null,
       place: null,
       buyer: null,
-      coupon: this.props.cupom.join(""),
+      coupon: this.props.cupom.length > 0 ? this.props.cupom.join("") : "",
       couponDesc: "",
     };
   }
@@ -36,7 +36,7 @@ class Pagamento extends Component {
     const data = JSON.parse(sessionStorage.getItem(varFrete));
     let dadosCadastro = JSON.parse(sessionStorage.getItem(varCadastro));
     let shipTo =
-      data.address_2 +
+      data.address_1 +
       " " +
       data.postcode +
       " " +
@@ -50,15 +50,14 @@ class Pagamento extends Component {
     let value;
     let place;
 
-    const propCoupon = this.props.cupom.join("");
+    const propCoupon = this.state.coupon;
 
     const cupom = await ApiCupom.getCoupon(propCoupon);
     const couponExist = cupom.data.length === 1;
     console.log(cupom.data.length);
 
     if (couponExist && cupom.data[0].free_shipping) {
-      value = "0";
-      this.props.salvaFrete(value);
+      this.props.salvaFrete("0");
       value = " Grátis";
     } else {
       await mapBox.getTax(shipTo).then((tax) => {
@@ -127,12 +126,16 @@ class Pagamento extends Component {
           ) : (
             <SemProduto />
           )}
-          <TextField
-            id="coupon"
-            label="Cupom"
-            value={this.state.coupon}
-            variant="outlined"
-          />
+          {this.state.coupon !== "" ? (
+            <TextField
+              id="coupon"
+              label="Cupom"
+              value={this.state.coupon}
+              variant="outlined"
+            />
+          ) : (
+            ""
+          )}
         </Fragment>
         <span>{this.state.couponDesc}</span>
         <br></br>
