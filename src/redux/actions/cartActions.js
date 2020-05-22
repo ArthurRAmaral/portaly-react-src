@@ -82,7 +82,7 @@ function add(produto, quantidade, variacao) {
         quantidade,
         getState().carrinho.valorTotal
       ),
-      quantidadeTotal: addQuantidade(getState()),
+      quantidadeTotal: addQuantidadeComParametro(getState(), quantidade),
     });
   };
 }
@@ -129,6 +129,10 @@ function produtoExiste(produto, state) {
 
 function calculaValorTotal(price, quantidade, valorTotal = 0) {
   return valorTotal + parseFloat(price) * quantidade;
+}
+
+function addQuantidadeComParametro(state, quantidade) {
+  return state.carrinho.quantidadeTotal + quantidade;
 }
 
 function addQuantidade(state) {
