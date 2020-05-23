@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import TextField from "@material-ui/core/TextField";
-import Validation from "../../util/Validation";
 import { mask, unMask } from "remask";
 
 const varName = "dadosCadastro";
@@ -38,23 +37,9 @@ class Cadastro extends Component {
           country: "",
           email: "",
           phone: "",
-          validators: {
-            first_name: false,
-            last_name: false,
-            cpf: "",
-            address_1: "",
-            address_2: "",
-            city: "",
-            state: "",
-            postcode: "",
-            country: "",
-            email: "",
-            phone: "",
-          },
         };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleValidator = this.handleValidator.bind(this);
   }
 
   handleChange(e) {
@@ -86,11 +71,6 @@ class Cadastro extends Component {
   componentDidMount() {
     sessionStorage.setItem(varName, JSON.stringify(this.state));
     // this.handleDataValid();
-  }
-
-  handleValidator(e) {
-    const v = Validation[e.target.name](e.target.value);
-    this.setState({ validators: { [e.target.id]: v } });
   }
 
   render() {
