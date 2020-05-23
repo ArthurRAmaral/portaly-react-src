@@ -1,5 +1,9 @@
 //From dependencies
 import React from "react";
+import { NavLink } from "react-router-dom";
+
+//From services
+import InitPath from "../../../services/InitPath";
 
 //From Material-ui
 import Grid from "@material-ui/core/Grid";
@@ -38,6 +42,16 @@ const TopHeader = () => {
           18p.m
         </Typography>
       </Grid>
+      <Divider orientation="vertical" flexItem className={classes.divider} />
+      <Typography variant="body1" component="span" className={classes.span}>
+        <NavLink
+          key={`sobreNos`}
+          to={`${InitPath}/sobre`}
+          className={classes.link}
+        >
+          Sobre Nós
+        </NavLink>
+      </Typography>
       <Divider orientation="vertical" flexItem className={classes.divider} />
     </Grid>
   );

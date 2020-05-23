@@ -22,6 +22,16 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 4,
     paddingRight: 4,
   },
+  link: {
+    marginBottom: -6,
+    marginRight: 20,
+    marginLeft: 20,
+    color: colors.white,
+    fontWeight: "bold",
+    "&:hover": {
+      fontSize: "1.2em",
+    },
+  },
 }));
 
 export default useStyles;
