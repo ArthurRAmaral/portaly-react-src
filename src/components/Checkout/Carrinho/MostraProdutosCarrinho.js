@@ -43,6 +43,7 @@ const MostrarProdutos = (props) => {
     handleClick,
     handleChange,
     coupon,
+    couponExist,
     handleUpdateQuant,
   } = props;
 
@@ -81,6 +82,9 @@ const MostrarProdutos = (props) => {
   };
 
   const createMessage = async () => {
+    setSeverity("info");
+    setMsg("Estamos procurando seu cupom, aguarde...");
+    setOpen(true);
     if (props.coupon === "") {
       setSeverity("warning");
       setMsg("Nenhum cupom informado");
@@ -89,7 +93,7 @@ const MostrarProdutos = (props) => {
       const response = await ApiCupom.getCoupon(props.coupon);
       if (response.data.length > 0) {
         setSeverity("success");
-        setMsg("Cupom válido! Veja seu benéfico na tela final de pagamento");
+        setMsg("Cupom válido! Veja seu benefício na tela final de pagamento");
       } else {
         setSeverity("error");
         setMsg("Cupom inválido!");

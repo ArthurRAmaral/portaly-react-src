@@ -31,6 +31,10 @@ class PaginaCarrinho extends Component {
     };
   }
 
+  componentDidMount = () => {
+    this.props.salvaCupom("");
+  };
+
   handleChange = async (e) => {
     this.setState({ coupon: e.target.value });
   };
