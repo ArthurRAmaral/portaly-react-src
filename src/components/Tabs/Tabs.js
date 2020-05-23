@@ -4,12 +4,11 @@ import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 
 //From Material-ui
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
-import { ThemeProvider } from "@material-ui/core/styles";
 
 //from components
 import MostrarProdutos from "../MostraProdutos";

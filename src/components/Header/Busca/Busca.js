@@ -6,7 +6,10 @@ import Grid from "@material-ui/core/Grid";
 import SearchIcon from "@material-ui/icons/Search";
 import TextField from "@material-ui/core/TextField";
 
+//From service
 import InitPath from "../../../services/InitPath";
+
+//From util
 import colors from "../../../util/Colors";
 
 class Busca extends Component {

@@ -9,7 +9,6 @@ export function salvaCategorias() {
   return function (dispatch) {
     ApiCategorias.getAllCategorias().then((res) => {
       res.data.map((categoria) => buscaProduto(categoria.id));
-
       dispatch({
         type: SALVA_CATEGORIAS,
         payload: res.data,

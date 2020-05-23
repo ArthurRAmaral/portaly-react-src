@@ -35,7 +35,6 @@ function Categorias(props) {
       <MenuList className={classes.menu}>
         <div className={classes.div_link}>
           <MenuItem
-            exact
             key={`Todos`}
             className={classes.link}
             component={NavLink}
@@ -67,8 +66,6 @@ function Categorias(props) {
       </MenuList>
       <div className={classes.botao}>
         <Button
-          aria-controls="simple-menu"
-          aria-haspopup="true"
           className={classes.button_link}
           component={NavLink}
           to="/montesuaporta"
