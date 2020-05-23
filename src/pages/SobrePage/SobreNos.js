@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 
 import useStyles from "./style";
 
+import Map from "../../services/mapBoxAndReact/Map";
+
 function SobreNos() {
   const classes = useStyles();
 
@@ -32,6 +34,10 @@ function SobreNos() {
           funcionários satisfeitos e orgulhosos de fazer parte da organização.
         </Typography>
         <Typography className={classes.title}>Onde estamos?</Typography>
+        <Typography className={classes.texto}>
+          Av. Francisco Negrão de Lima, 860 - Céu Azul, Belo Horizonte
+        </Typography>
+        <Map className={classes.map}></Map>
       </Container>
     </Fragment>
   );

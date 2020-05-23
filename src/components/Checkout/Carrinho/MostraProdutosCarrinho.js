@@ -43,7 +43,6 @@ const MostrarProdutos = (props) => {
     handleClick,
     handleChange,
     coupon,
-    couponExist,
     handleUpdateQuant,
   } = props;
 
