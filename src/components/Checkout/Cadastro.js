@@ -82,7 +82,7 @@ class Cadastro extends Component {
           label="Nome"
           value={this.state.first_name}
           variant="outlined"
-          error={this.state.validators.first_name}
+          //error={this.state.validators.first_name}
           onBlur={this.handleValidator}
           name="isWord"
         />

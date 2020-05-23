@@ -67,6 +67,8 @@ const MostrarProdutos = (props) => {
   const produtosCarrinho = getProdutosCarrinho(carrinho);
 
   const [open, setOpen] = React.useState(false);
+  const [msg, setMsg] = React.useState("");
+  const [severity, setSeverity] = React.useState("success");
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -75,12 +77,22 @@ const MostrarProdutos = (props) => {
     setOpen(false);
   };
 
+  const createMessage = () => {
+    setOpen(true);
+    if (props.coupon === "") {
+      setSeverity("warning");
+      setMsg("Nenhum cupom informado");
+    }
+    //setSeverity("success");
+    //setSeverity("error");
+  };
+
   return (
     <Grid>
       <Box border={2} borderColor={colors.orangeDark}>
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="success">
-            Sucesso!
+          <Alert onClose={handleClose} severity={severity}>
+            {msg}
           </Alert>
         </Snackbar>
         <TableContainer className={classes.table}>
@@ -177,7 +189,7 @@ const MostrarProdutos = (props) => {
                   <Button
                     onClick={() => {
                       handleClick();
-                      setOpen(true);
+                      createMessage();
                     }}
                     className={classes.button}
                     variant="contained"
