@@ -22,6 +22,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import { Alert } from "@material-ui/lab";
 
 //From checkout
 import useStyles from "./style";
@@ -29,6 +31,9 @@ import useStyles from "./style";
 //From util
 import colors from "../../../util/Colors";
 import { Typography } from "@material-ui/core";
+
+//From API
+import ApiCupom from "../../../services/ApiCupom";
 
 const MostrarProdutos = (props) => {
   const classes = useStyles();
@@ -45,6 +50,10 @@ const MostrarProdutos = (props) => {
     removeCart(event.currentTarget.id);
   };
 
+  // const handleClick = () => {
+  //   this.props.salvaCupom(this.state.coupon);
+  // };
+
   const handleQuantidade = (event) => {
     handleUpdateQuant(event.currentTarget.id, event.currentTarget.slot);
   };
@@ -52,7 +61,7 @@ const MostrarProdutos = (props) => {
   const getProdutosCarrinho = (carrinho) => {
     let produtosCarrinho = [];
     for (const produto in carrinho)
-      if (produto != "quantidadeTotal" && produto != "valorTotal")
+      if (produto !== "quantidadeTotal" && produto !== "valorTotal")
         produtosCarrinho.push(carrinho[produto]);
 
     return produtosCarrinho;
@@ -60,9 +69,46 @@ const MostrarProdutos = (props) => {
 
   const produtosCarrinho = getProdutosCarrinho(carrinho);
 
+  const [open, setOpen] = React.useState(false);
+  const [msg, setMsg] = React.useState("");
+  const [severity, setSeverity] = React.useState("success");
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const createMessage = async () => {
+    setSeverity("info");
+    setMsg("Estamos procurando seu cupom, aguarde...");
+    setOpen(true);
+    if (props.coupon === "") {
+      setSeverity("warning");
+      setMsg("Nenhum cupom informado");
+    } else {
+      console.log(coupon);
+      const response = await ApiCupom.getCoupon(props.coupon);
+      if (response.data.length > 0) {
+        setSeverity("success");
+        setMsg("Cupom válido! Veja seu benefício na tela final de pagamento");
+      } else {
+        setSeverity("error");
+        setMsg("Cupom inválido!");
+      }
+    }
+    setOpen(true);
+  };
+
   return (
     <Grid>
       <Box border={2} borderColor={colors.orangeDark}>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity={severity}>
+            {msg}
+          </Alert>
+        </Snackbar>
         <TableContainer className={classes.table}>
           <Table aria-label="simple table">
             <TableHead>
@@ -155,7 +201,10 @@ const MostrarProdutos = (props) => {
                 </TableCell>
                 <TableCell align="right">
                   <Button
-                    onClick={handleClick}
+                    onClick={() => {
+                      handleClick();
+                      createMessage();
+                    }}
                     className={classes.button}
                     variant="contained"
                   >
@@ -202,15 +251,15 @@ const MostrarProdutos = (props) => {
                         className={classes.textColor}
                         key={`sob-total${produto.produto[0].id}`}
                       >
-                        {`${produto.quantidade}x ${
+                        {`${produto.quantidade}x ${(
                           produto.produto[0].price * produto.quantidade
-                        }`}
+                        ).toFixed(2)}`}
                       </Typography>
                     );
                   })}
 
                   <Typography className={classes.textColor}>
-                    {carrinho.valorTotal}
+                    {carrinho.valorTotal.toFixed(2)}
                   </Typography>
                 </TableCell>
               </TableRow>
@@ -223,7 +272,7 @@ const MostrarProdutos = (props) => {
                 <TableCell />
                 <TableCell align="right">
                   <Typography className={classes.textTotal}>
-                    {carrinho.valorTotal}
+                    {carrinho.valorTotal.toFixed(2)}
                   </Typography>
                 </TableCell>
               </TableRow>

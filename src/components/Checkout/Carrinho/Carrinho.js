@@ -3,7 +3,6 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 
 //From Material-ui
-import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -30,6 +29,10 @@ class PaginaCarrinho extends Component {
       coupon: "",
     };
   }
+
+  componentDidMount = () => {
+    this.props.salvaCupom("");
+  };
 
   handleChange = async (e) => {
     this.setState({ coupon: e.target.value });
