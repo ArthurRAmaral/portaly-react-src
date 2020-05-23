@@ -202,15 +202,15 @@ const MostrarProdutos = (props) => {
                         className={classes.textColor}
                         key={`sob-total${produto.produto[0].id}`}
                       >
-                        {`${produto.quantidade}x ${
+                        {`${produto.quantidade}x ${(
                           produto.produto[0].price * produto.quantidade
-                        }`}
+                        ).toFixed(2)}`}
                       </Typography>
                     );
                   })}
 
                   <Typography className={classes.textColor}>
-                    {carrinho.valorTotal}
+                    {carrinho.valorTotal.toFixed(2)}
                   </Typography>
                 </TableCell>
               </TableRow>
@@ -223,7 +223,7 @@ const MostrarProdutos = (props) => {
                 <TableCell />
                 <TableCell align="right">
                   <Typography className={classes.textTotal}>
-                    {carrinho.valorTotal}
+                    {carrinho.valorTotal.toFixed(2)}
                   </Typography>
                 </TableCell>
               </TableRow>
