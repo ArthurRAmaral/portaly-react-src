@@ -11,7 +11,7 @@ import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 
 //from components
-import MostrarProdutos from "../MostraProdutos";
+import MostrarProdutos from "../MostraProdutos/MostraProdutos";
 
 //From utils
 import ApiProdutos from "../../services/ApiProdutos";

@@ -3,7 +3,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 
 //From components
-import MostraProdutos from "../components/MostraProdutos";
+import MostraProdutos from "../components/MostraProdutos/MostraProdutos";
 import LineLoaging from "../components/loading/LineLoading";
 import Paginador from "../components/paginador/Paginador";
 

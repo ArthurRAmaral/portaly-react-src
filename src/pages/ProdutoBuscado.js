@@ -6,7 +6,7 @@ import ApiProdutos from "../services/ApiProdutos";
 
 //From components
 import LineLoading from "../components/loading/LineLoading";
-import MostrarProdutos from "../components/MostraProdutos";
+import MostrarProdutos from "../components/MostraProdutos/MostraProdutos";
 import SemProdutos from "../components/semProdutos";
 
 //From Material-ui
