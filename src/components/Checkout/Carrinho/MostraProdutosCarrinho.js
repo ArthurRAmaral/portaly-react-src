@@ -132,6 +132,7 @@ const MostrarProdutos = (props) => {
                         <CloseIcon
                           onClick={handleRemove}
                           id={produto.produto[0].id}
+                          className={classes.icon}
                         />
                         <Link
                           to={`${InitPath}/produto/${produto.produto[0].slug}`}
@@ -205,8 +206,9 @@ const MostrarProdutos = (props) => {
                       handleClick();
                       createMessage();
                     }}
-                    className={classes.button}
+                    focusVisibleClassName="btn"
                     variant="contained"
+                    color="primary"
                   >
                     Aplicar
                   </Button>
