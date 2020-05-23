@@ -22,6 +22,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import { Alert } from "@material-ui/lab";
 
 //From checkout
 import useStyles from "./style";
@@ -45,6 +47,10 @@ const MostrarProdutos = (props) => {
     removeCart(event.currentTarget.id);
   };
 
+  // const handleClick = () => {
+  //   this.props.salvaCupom(this.state.coupon);
+  // };
+
   const handleQuantidade = (event) => {
     handleUpdateQuant(event.currentTarget.id, event.currentTarget.slot);
   };
@@ -52,7 +58,7 @@ const MostrarProdutos = (props) => {
   const getProdutosCarrinho = (carrinho) => {
     let produtosCarrinho = [];
     for (const produto in carrinho)
-      if (produto != "quantidadeTotal" && produto != "valorTotal")
+      if (produto !== "quantidadeTotal" && produto !== "valorTotal")
         produtosCarrinho.push(carrinho[produto]);
 
     return produtosCarrinho;
@@ -60,9 +66,23 @@ const MostrarProdutos = (props) => {
 
   const produtosCarrinho = getProdutosCarrinho(carrinho);
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   return (
     <Grid>
       <Box border={2} borderColor={colors.orangeDark}>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success">
+            Sucesso!
+          </Alert>
+        </Snackbar>
         <TableContainer className={classes.table}>
           <Table aria-label="simple table">
             <TableHead>
@@ -155,7 +175,10 @@ const MostrarProdutos = (props) => {
                 </TableCell>
                 <TableCell align="right">
                   <Button
-                    onClick={handleClick}
+                    onClick={() => {
+                      handleClick();
+                      setOpen(true);
+                    }}
                     className={classes.button}
                     variant="contained"
                   >
