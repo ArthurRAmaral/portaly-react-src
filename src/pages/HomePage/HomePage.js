@@ -13,7 +13,7 @@ import Divider from "@material-ui/core/Divider";
 import { ThemeProvider } from "@material-ui/core/styles";
 
 //From here
-import theme from "./theme";
+import theme from "../theme";
 import useStyles from "./style";
 
 //From util

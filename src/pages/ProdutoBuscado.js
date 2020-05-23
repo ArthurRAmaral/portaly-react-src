@@ -1,8 +1,19 @@
+//From depedencies
 import React, { Component, Fragment } from "react";
+
+//From services
 import ApiProdutos from "../services/ApiProdutos";
+
+//From components
 import LineLoading from "../components/loading/LineLoading";
 import MostrarProdutos from "../components/MostraProdutos";
 import SemProdutos from "../components/semProdutos";
+
+//From Material-ui
+import { ThemeProvider } from "@material-ui/core/styles";
+
+//From here
+import theme from "./theme";
 
 class ProdutosBuscado extends Component {
   constructor(props) {
@@ -31,15 +42,17 @@ class ProdutosBuscado extends Component {
     const { produtos } = this.state;
     return (
       <Fragment>
-        {this.state.produtos !== null || undefined ? (
-          this.state.produtos.length > 0 ? (
-            MostrarProdutos(produtos)
+        <ThemeProvider theme={theme}>
+          {this.state.produtos !== null || undefined ? (
+            this.state.produtos.length > 0 ? (
+              MostrarProdutos(produtos)
+            ) : (
+              <SemProdutos />
+            )
           ) : (
-            <SemProdutos />
-          )
-        ) : (
-          <LineLoading />
-        )}
+            <LineLoading />
+          )}
+        </ThemeProvider>
       </Fragment>
     );
   }

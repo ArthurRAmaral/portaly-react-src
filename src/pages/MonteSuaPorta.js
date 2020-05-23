@@ -4,8 +4,14 @@ import React, { Component } from "react";
 //From componensts
 import Setepper from "../components/MonteSuaPorta/Stepper/Stepper.js";
 
+//From Material-ui
+import { ThemeProvider } from "@material-ui/core/styles";
+
 //From util
 import Montador from "../util/MontadorPorta";
+
+//From here
+import theme from "./theme";
 
 //Stylesheet
 import "../css/MonteSuaPorta.css";
@@ -25,7 +31,9 @@ class MonteSuaPorta extends Component {
   render() {
     return (
       <section className="montagem-porta-container">
-        <Setepper />
+        <ThemeProvider theme={theme}>
+          <Setepper />
+        </ThemeProvider>
       </section>
     );
   }

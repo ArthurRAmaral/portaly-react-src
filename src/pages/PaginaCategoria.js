@@ -7,6 +7,12 @@ import MostraProdutos from "../components/MostraProdutos";
 import LineLoaging from "../components/loading/LineLoading";
 import Paginador from "../components/paginador/Paginador";
 
+//From Material-ui
+import { ThemeProvider } from "@material-ui/core/styles";
+
+//From here
+import theme from "./theme";
+
 //From redux
 import { buscaProduto } from "../redux/actions/produtoActions";
 
@@ -59,14 +65,16 @@ class PaginaCategorias extends Component {
 
     return (
       <Fragment>
-        {prods && paginaId === this.props.match.params.id ? (
-          <Fragment>
-            {MostraProdutos(paginas[this.state.page - 1])}
-            {Paginador(paginas.length, this.mudarPagina)}
-          </Fragment>
-        ) : (
-          <LineLoaging />
-        )}
+        <ThemeProvider theme={theme}>
+          {prods && paginaId === this.props.match.params.id ? (
+            <Fragment>
+              {MostraProdutos(paginas[this.state.page - 1])}
+              {Paginador(paginas.length, this.mudarPagina)}
+            </Fragment>
+          ) : (
+            <LineLoaging />
+          )}
+        </ThemeProvider>
       </Fragment>
     );
   }

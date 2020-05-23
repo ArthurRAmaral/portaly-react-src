@@ -28,6 +28,7 @@ function CarrinhoCompras(props) {
           width: "100%",
           height: "100%",
           borderRadius: 5,
+          padding: 5,
         }}
       >
         <ShoppingCartIcon size="large" />

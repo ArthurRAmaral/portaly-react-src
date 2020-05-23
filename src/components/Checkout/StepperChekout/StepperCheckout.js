@@ -24,7 +24,6 @@ import Cadastro from "../Cadastro";
 import Frete from "../Frete";
 import Pagamento from "../Pagamento";
 import useStyles from "./style";
-import theme from "./theme";
 import funcoesCarrinho from "../../../util/Carrinho";
 
 //From components
@@ -470,90 +469,86 @@ function HorizontalLinearStepper(props) {
 
   return (
     <div className={classes.root}>
-      <ThemeProvider theme={theme}>
-        <Stepper activeStep={activeStep} connector={<ColorlibConnector />}>
-          {steps.map((label, index) => {
-            const stepProps = {};
-            const labelProps = {};
-            if (isStepOptional(index)) {
-              labelProps.optional = (
-                <Typography variant="caption">Optional</Typography>
-              );
-            }
-            if (isStepSkipped(index)) {
-              stepProps.completed = false;
-            }
-            return (
-              <Step key={label} {...stepProps}>
-                <StepLabel StepIconComponent={StepIcon} {...labelProps} />
-              </Step>
+      <Stepper activeStep={activeStep} connector={<ColorlibConnector />}>
+        {steps.map((label, index) => {
+          const stepProps = {};
+          const labelProps = {};
+          if (isStepOptional(index)) {
+            labelProps.optional = (
+              <Typography variant="caption">Optional</Typography>
             );
-          })}
-        </Stepper>
-        <div>
-          {activeStep === steps.length ? (
-            <div>
-              <Typography className={classes.instructions}>
-                Produtos adicionados ao carrinho!
-              </Typography>
-              <Button onClick={handleReset} className={classes.button}>
-                Montar outra
-              </Button>
-            </div>
-          ) : (
-            <Grid>
-              <Grid>
-                {getStepContent(props, activeStep, validCode, setCode)}
-              </Grid>
-              <Grid
-                container
-                direction="row"
-                alignItems="center"
-                justify="center"
-              >
-                <Grid className={classes.divButtons}>
+          }
+          if (isStepSkipped(index)) {
+            stepProps.completed = false;
+          }
+          return (
+            <Step key={label} {...stepProps}>
+              <StepLabel StepIconComponent={StepIcon} {...labelProps} />
+            </Step>
+          );
+        })}
+      </Stepper>
+      <div>
+        {activeStep === steps.length ? (
+          <div>
+            <Typography className={classes.instructions}>
+              Produtos adicionados ao carrinho!
+            </Typography>
+            <Button onClick={handleReset} className={classes.button}>
+              Montar outra
+            </Button>
+          </div>
+        ) : (
+          <Grid>
+            <Grid>{getStepContent(props, activeStep, validCode, setCode)}</Grid>
+            <Grid
+              container
+              direction="row"
+              alignItems="center"
+              justify="center"
+            >
+              <Grid className={classes.divButtons}>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  className={classes.button}
+                >
+                  Voltar
+                </Button>
+                {isStepOptional(activeStep) && (
                   <Button
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSkip}
                     className={classes.button}
                   >
-                    Voltar
+                    Pular
                   </Button>
-                  {isStepOptional(activeStep) && (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleSkip}
-                      className={classes.button}
-                    >
-                      Pular
-                    </Button>
-                  )}
+                )}
 
-                  {activeStep === steps.length - 1 ? (
-                    finalCode ? (
-                      btnPagSeguro(finalCode)
-                    ) : (
-                      <CircleLoading />
-                    )
+                {activeStep === steps.length - 1 ? (
+                  finalCode ? (
+                    btnPagSeguro(finalCode)
                   ) : (
-                    <Button
-                      focusVisibleClassName="btn"
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      className={classes.button}
-                      disabled={btnHandler(props.carrinho.quantidadeTotal)}
-                    >
-                      Próximo
-                    </Button>
-                  )}
-                </Grid>
+                    <CircleLoading />
+                  )
+                ) : (
+                  <Button
+                    focusVisibleClassName="btn"
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                    disabled={btnHandler(props.carrinho.quantidadeTotal)}
+                  >
+                    Próximo
+                  </Button>
+                )}
               </Grid>
             </Grid>
-          )}
-        </div>
-      </ThemeProvider>
+          </Grid>
+        )}
+      </div>
     </div>
   );
 }

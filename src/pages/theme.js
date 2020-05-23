@@ -1,7 +1,7 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
 //From util
-import colors from "../../util/Colors";
+import colors from "../util/Colors";
 
 const theme = createMuiTheme({
   palette: {
@@ -15,6 +15,10 @@ const theme = createMuiTheme({
     },
     contrastThreshold: 3,
     tonalOffset: 0.2,
+    action: {
+      active: colors.orangeDark,
+      hover: colors.orange,
+    },
   },
   typography: {
     fontFamily: '"Segoe UI", "Tahoma", "Geneva", "Verdana", "sans-serif"',
