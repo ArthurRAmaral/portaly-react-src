@@ -11,7 +11,7 @@ import ProdutoBuscado from "./pages/ProdutoBuscado";
 import Carrinho from "./pages/PaginaCheckout";
 import DefaultPage from "./pages/DefaultPage";
 import TestPage from "./pages/TestPage";
-import SobreNos from "./pages/SobreNos";
+import SobreNos from "./pages/SobrePage/SobreNos";
 
 // From util
 import InitPath from "./services/InitPath";
