@@ -11,6 +11,7 @@ import ProdutoBuscado from "./pages/ProdutoBuscado";
 import Carrinho from "./pages/PaginaCheckout";
 import DefaultPage from "./pages/DefaultPage";
 import TestPage from "./pages/TestPage";
+import SobreNos from "./pages/SobreNos";
 
 // From util
 import InitPath from "./services/InitPath";
@@ -29,6 +30,7 @@ const Routes = () => {
         <Route path={`${InitPath}/busca/:value`} component={ProdutoBuscado} />
         <Route path={`${InitPath}/meuCarrinho`} component={Carrinho} />
         <Route path={`${InitPath}/teste`} component={TestPage} />
+        <Route path={`${InitPath}/sobre`} component={SobreNos} />
         <Route path={`${InitPath}/`} component={DefaultPage} />
       </Switch>
     </section>
