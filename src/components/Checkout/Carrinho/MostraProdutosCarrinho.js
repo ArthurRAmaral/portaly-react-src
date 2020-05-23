@@ -32,6 +32,9 @@ import useStyles from "./style";
 import colors from "../../../util/Colors";
 import { Typography } from "@material-ui/core";
 
+//From API
+import ApiCupom from "../../../services/ApiCupom";
+
 const MostrarProdutos = (props) => {
   const classes = useStyles();
   const {
@@ -77,14 +80,22 @@ const MostrarProdutos = (props) => {
     setOpen(false);
   };
 
-  const createMessage = () => {
-    setOpen(true);
+  const createMessage = async () => {
     if (props.coupon === "") {
       setSeverity("warning");
       setMsg("Nenhum cupom informado");
+    } else {
+      console.log(coupon);
+      const response = await ApiCupom.getCoupon(props.coupon);
+      if (response.data.length > 0) {
+        setSeverity("success");
+        setMsg("Cupom válido! Veja seu benéfico na tela final de pagamento");
+      } else {
+        setSeverity("error");
+        setMsg("Cupom inválido!");
+      }
     }
-    //setSeverity("success");
-    //setSeverity("error");
+    setOpen(true);
   };
 
   return (
