@@ -2,10 +2,11 @@ import {
   ADD_CART,
   REMOVE_CART,
   UPDATE_QUANTIDADE,
+  SALVA_KIT,
 } from "../actions/actionsTypes";
 
 export default function setCarrinho(
-  state = { quantidadeTotal: 0, valorTotal: 0 },
+  state = { quantidadeTotal: 0, valorTotal: 0, kits: { quantidadeKits: 0 } },
   action
 ) {
   switch (action.type) {
@@ -24,6 +25,15 @@ export default function setCarrinho(
       return action.novoState;
     case UPDATE_QUANTIDADE:
       return action.novoCarrinho;
+    case SALVA_KIT:
+      return {
+        ...state,
+        kits: {
+          ...state.kits,
+          quantidadeKits: state.kits.quantidadeKits + 1,
+          ...action.payload,
+        },
+      };
     default:
       return state;
   }

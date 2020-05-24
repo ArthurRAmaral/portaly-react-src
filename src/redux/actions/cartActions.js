@@ -1,4 +1,9 @@
-import { ADD_CART, REMOVE_CART, UPDATE_QUANTIDADE } from "./actionsTypes";
+import {
+  ADD_CART,
+  REMOVE_CART,
+  UPDATE_QUANTIDADE,
+  SALVA_KIT,
+} from "./actionsTypes";
 
 export function addCart(produto, quantidade, variacao) {
   return function (dispatch, getState) {
@@ -19,6 +24,44 @@ export function updateQuantidade(produtoId, flag) {
       novoCarrinho: mudaquantidade(getState(), produtoId, flag),
     });
   };
+}
+
+export function addKit(kit) {
+  const idKit = criaIdKit(kit.produtos);
+  const kitTratado = trataKit(kit);
+  return function (dispatch) {
+    dispatch({
+      type: SALVA_KIT,
+      payload: { [idKit]: kitTratado },
+    });
+  };
+}
+
+function trataKit(kit) {
+  let kitTratado = {};
+  let produtos = {};
+  Object.values(kit.produtos).map((produto) => {
+    produtos = {
+      ...produtos,
+      [produto.slug]: [produto],
+    };
+  });
+
+  kitTratado = {
+    produtos: produtos,
+    valorKit: kit.valorKit,
+    quantidade: kit.quantidade,
+  };
+
+  return kitTratado;
+}
+
+function criaIdKit(produtos) {
+  let id = "";
+  Object.values(produtos).map((produto) => {
+    id += produto.id;
+  });
+  return id;
 }
 
 function mudaquantidade(state, produtoId, flag) {

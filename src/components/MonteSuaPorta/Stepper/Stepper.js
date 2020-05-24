@@ -1,5 +1,6 @@
 //From depedencies
 import React from "react";
+import { connect } from "react-redux";
 
 //From Material-ui
 import Stepper from "@material-ui/core/Stepper";
@@ -16,7 +17,6 @@ import Check from "@material-ui/icons/Check";
 
 //From util
 import Montador from "../../../util/MontadorPorta";
-import Carrinho from "../../../util/Carrinho";
 import colors from "../../../util/Colors";
 
 //From here
@@ -24,7 +24,10 @@ import useStyles, { useQontoStepIconStyles, QontoConnector } from "./style";
 import EscolherItems from "../EscolherItem";
 import FecharMontagem from "../FecharMontagem";
 
-import ApiProdutos from "../../../services/ApiProdutos";
+//From redux
+import { addKit } from "../../../redux/actions/cartActions";
+
+//From redux
 
 function getSteps() {
   return [
@@ -117,7 +120,7 @@ QontoStepIcon.propTypes = {
   completed: PropTypes.bool,
 };
 
-export default function HorizontalLinearStepper() {
+function HorizontalLinearStepper(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [btnvalid, setBtnValid] = React.useState(true);
@@ -138,19 +141,8 @@ export default function HorizontalLinearStepper() {
   };
 
   const handleSubmit = () => {
-    ApiProdutos.createKit(Montador.getDados()).then((res) => {
-      for (let i = 0; i < Montador.getQuantidade(); i++)
-        Carrinho.addItem(res.data.id);
-    });
-
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+    const kit = Montador.getMontador();
+    props.addKit(kit);
   };
 
   const handleBack = () => {
@@ -256,3 +248,7 @@ export default function HorizontalLinearStepper() {
     </Grid>
   );
 }
+
+const mapDispatchToProps = { addKit };
+
+export default connect(null, mapDispatchToProps)(HorizontalLinearStepper);

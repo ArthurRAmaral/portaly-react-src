@@ -5,6 +5,9 @@ import { connect } from "react-redux";
 //From components
 import CircleLoading from "../loading/CircleLoading";
 
+//From utils
+import Montador from "../../util/MontadorPorta";
+
 import imgDefault from "../../assets/imgDefault.png";
 
 import "../../css/components/MonteSuaPorta/MostrarProdutos.css";
@@ -18,7 +21,6 @@ class EscolherItems extends Component {
       produtos: this.props.produtos,
       disabledButton: this.props.disabled,
       produtosAtuais: null,
-      kit: [],
     };
   }
 
@@ -31,8 +33,21 @@ class EscolherItems extends Component {
     });
   }
 
+  montaKitHandle(id) {
+    const { produtosAtuais, categoriaSlug, disabledButton } = this.state;
+
+    let produto;
+    produtosAtuais.forEach((prod) => {
+      if (prod.id == id) produto = prod;
+    });
+
+    Montador.setItem(categoriaSlug, produto);
+
+    disabledButton(false);
+  }
+
   render() {
-    const { produtosAtuais, disabledButton } = this.state;
+    const { produtosAtuais } = this.state;
 
     return (
       <Fragment>
@@ -42,7 +57,7 @@ class EscolherItems extends Component {
               return (
                 <div
                   className="produto-montagem selecionado"
-                  onClick={() => disabledButton(false)}
+                  onClick={() => this.montaKitHandle(produto.id)}
                   id={produto.id}
                   key={`intem-${produto.id}`}
                 >
@@ -72,7 +87,5 @@ class EscolherItems extends Component {
 }
 
 const mapStateToProps = (state) => ({ produtos: state.produtos });
-
-// const mapDispatchToProps = { salvaCategorias, buscaProduto };
 
 export default connect(mapStateToProps, null)(EscolherItems);
