@@ -1,9 +1,8 @@
 //From depdencies
-import React, { Fragment } from "react";
+import React from "react";
 import { connect } from "react-redux";
 
 //From Material-ui
-import { ThemeProvider } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -32,7 +31,6 @@ import CircleLoading from "../../loading/CircleLoading";
 //From util
 import PagSeguro from "../../../util/PagSeguro";
 import btnPagSeguro from "../../../util/btnPagSeguro";
-import ApiPedidos from "../../../services/ApiPedidos";
 import ApiCupom from "../../../services/ApiCupom";
 
 //From redux
@@ -358,7 +356,6 @@ const createPagseguroShipping = async (dadosFrete) => {
 let code;
 
 const pagamento = (props, dadosCadastro, dadosFrete) => {
-  const cupom = props.cupom.length > 0 ? props.cupom.join("") : "";
   const itensCarrinho = [];
   for (const key in props.carrinho) {
     if (props.carrinho.hasOwnProperty(key)) {
@@ -373,34 +370,34 @@ const pagamento = (props, dadosCadastro, dadosFrete) => {
       }
     }
   }
-  // if (contador === 1) {
-  //   ApiPedidos.createOrder({
-  //     payment_method: "PagSeguro",
-  //     payment_method_title: "delete",
-  //     set_paid: false,
-  //     billing: dadosCadastro,
-  //     shipping: dadosFrete,
-  //     shipping_lines: [
-  //       {
-  //         method_id: "Padrão",
-  //         method_title: "Padrão",
-  //         total: props.frete.join(""),
-  //       },
-  //     ],
-  //     coupon_lines: [
-  //       {
-  //         code: cupom,
-  //       },
-  //     ],
-  //     line_items: itensCarrinho,
-  //   })
-  //     .then((response) => {
-  //       //console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
+  if (contador === 1) {
+    ApiPedidos.createOrder({
+      payment_method: "PagSeguro",
+      payment_method_title: "delete",
+      set_paid: false,
+      billing: dadosCadastro,
+      shipping: dadosFrete,
+      shipping_lines: [
+        {
+          method_id: "Padrão",
+          method_title: "Padrão",
+          total: props.frete.join(""),
+        },
+      ],
+      coupon_lines: [
+        {
+          code: cupom,
+        },
+      ],
+      line_items: itensCarrinho,
+    })
+      .then((response) => {
+        //console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   props.salvaCupom("");
 };
 

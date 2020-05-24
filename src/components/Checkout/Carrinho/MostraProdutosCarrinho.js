@@ -2,9 +2,6 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
-//From assets
-import imgDefault from "../../../assets/imgDefault.png";
-
 //From services
 import InitPath from "../../../services/InitPath";
 
