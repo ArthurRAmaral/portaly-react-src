@@ -13,9 +13,6 @@ import Montador from "../util/MontadorPorta";
 //From here
 import theme from "./theme";
 
-//Stylesheet
-import "../css/MonteSuaPorta.css";
-
 class MonteSuaPorta extends Component {
   constructor(props) {
     Montador.resetMontador();
@@ -30,11 +27,9 @@ class MonteSuaPorta extends Component {
 
   render() {
     return (
-      <section className="montagem-porta-container">
-        <ThemeProvider theme={theme}>
-          <Setepper />
-        </ThemeProvider>
-      </section>
+      <ThemeProvider theme={theme}>
+        <Setepper />
+      </ThemeProvider>
     );
   }
 }

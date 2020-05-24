@@ -2,22 +2,25 @@
 import React from "react";
 
 //From Material-ui
-import { ThemeProvider } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import PropTypes from "prop-types";
+import clsx from "clsx";
+import Check from "@material-ui/icons/Check";
 
 //From util
 import Montador from "../../../util/MontadorPorta";
 import Carrinho from "../../../util/Carrinho";
+import colors from "../../../util/Colors";
 
 //From here
-import useStyles from "./style";
-import theme from "./theme";
-
+import useStyles, { useQontoStepIconStyles, QontoConnector } from "./style";
 import EscolherItems from "../EscolherItem";
 import FecharMontagem from "../FecharMontagem";
 
@@ -84,6 +87,36 @@ function getStepContent(step, btnHandler) {
   }
 }
 
+function QontoStepIcon(props) {
+  const classes = useQontoStepIconStyles();
+  const { active, completed } = props;
+
+  return (
+    <div
+      className={clsx(classes.root, {
+        [classes.active]: active,
+      })}
+    >
+      {completed ? (
+        <Check className={classes.completed} />
+      ) : (
+        <div className={classes.circle} />
+      )}
+    </div>
+  );
+}
+
+QontoStepIcon.propTypes = {
+  /**
+   * Whether this step is active.
+   */
+  active: PropTypes.bool,
+  /**
+   * Mark the step as completed. Is passed to child components.
+   */
+  completed: PropTypes.bool,
+};
+
 export default function HorizontalLinearStepper() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -139,72 +172,87 @@ export default function HorizontalLinearStepper() {
   };
 
   return (
-    <div className={classes.root}>
-      <ThemeProvider theme={theme}>
-        <Stepper alternativeLabel activeStep={activeStep}>
+    <Grid>
+      <Grid container direction="row" alignItems="center" justify="center">
+        <Box
+          borderBottom={2}
+          marginBottom={10}
+          marginTop={5}
+          style={{ borderColor: colors.orangeDark }}
+        >
+          <Typography variant="h3" className={classes.title}>
+            Monte sua porta
+          </Typography>
+        </Box>
+      </Grid>
+      <Box border={1} borderColor={colors.orangeDark}>
+        <Stepper
+          alternativeLabel
+          activeStep={activeStep}
+          connector={<QontoConnector />}
+        >
           {steps.map((label, index) => {
             const stepProps = {};
-
             if (isStepSkipped(index)) {
               stepProps.completed = false;
             }
             return (
               <Step key={label}>
-                <StepLabel>{label}</StepLabel>
+                <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
               </Step>
             );
           })}
         </Stepper>
-        <div>
-          {activeStep === steps.length ? (
+      </Box>
+      <Box border={1} borderColor={colors.orangeDark}>
+        {activeStep === steps.length ? (
+          <div>
+            <Typography className={classes.instructions}>
+              Produtos adicionados ao carrinho!
+            </Typography>
+            <Button onClick={handleReset} className={classes.button}>
+              Montar outra
+            </Button>
+          </div>
+        ) : (
+          <div>
+            <Card className={classes.instructions}>
+              {getStepContent(activeStep, btnHandler)}
+            </Card>
             <div>
-              <Typography className={classes.instructions}>
-                Produtos adicionados ao carrinho!
-              </Typography>
-              <Button onClick={handleReset} className={classes.button}>
-                Montar outra
+              <Button
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                className={classes.button}
+              >
+                Voltar
               </Button>
-            </div>
-          ) : (
-            <div>
-              <Card className={classes.instructions}>
-                {getStepContent(activeStep, btnHandler)}
-              </Card>
-              <div>
+              {activeStep === steps.length - 1 ? (
                 <Button
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
+                  focusVisibleClassName="btn"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit}
                   className={classes.button}
                 >
-                  Voltar
+                  Adicionar ao Carrinho
                 </Button>
-                {activeStep === steps.length - 1 ? (
-                  <Button
-                    focusVisibleClassName="btn"
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSubmit}
-                    className={classes.button}
-                  >
-                    Adicionar ao Carrinho
-                  </Button>
-                ) : (
-                  <Button
-                    focusVisibleClassName="btn"
-                    variant="contained"
-                    color="primary"
-                    onClick={twoFunctionsHandler}
-                    className={classes.button}
-                    disabled={btnvalid}
-                  >
-                    Próximo
-                  </Button>
-                )}
-              </div>
+              ) : (
+                <Button
+                  focusVisibleClassName="btn"
+                  variant="contained"
+                  color="primary"
+                  onClick={twoFunctionsHandler}
+                  className={classes.button}
+                  disabled={btnvalid}
+                >
+                  Próximo
+                </Button>
+              )}
             </div>
-          )}
-        </div>
-      </ThemeProvider>
-    </div>
+          </div>
+        )}
+      </Box>
+    </Grid>
   );
 }

@@ -1,13 +1,13 @@
 //From depedencies
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
 
 //From components
-import MostraProdutos from "./MostraProdutosMontagem";
 import CircleLoading from "../loading/CircleLoading";
 
-//From services
-import ApiCategorias from "../../services/ApiCategorias";
-import ApiProdutos from "../../services/ApiProdutos";
+import imgDefault from "../../assets/imgDefault.png";
+
+import "../../css/components/MonteSuaPorta/MostrarProdutos.css";
 
 class EscolherItems extends Component {
   constructor(props) {
@@ -15,52 +15,54 @@ class EscolherItems extends Component {
 
     this.state = {
       categoriaSlug: this.props.categoriaSlug,
-      produtos: null,
+      produtos: this.props.produtos,
+      disabledButton: this.props.disabled,
+      produtosAtuais: null,
+      kit: [],
     };
   }
 
   componentDidMount() {
-    const categoriaSlug = this.props.categoriaSlug;
-    ApiCategorias.getAllCategorias().then((res) => {
-      res.data.forEach((cat) => {
-        if (cat.slug === categoriaSlug) {
-          this.chamaApiParaReceberProdutos(cat.id);
-          return;
-        }
-      });
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const categoriaSlug = nextProps.categoriaSlug;
-    ApiCategorias.getAllCategorias().then((res) => {
-      res.data.forEach((cat) => {
-        if (cat.slug === categoriaSlug) {
-          this.chamaApiParaReceberProdutos(cat.id);
-          return;
-        }
-      });
-    });
-  }
-
-  chamaApiParaReceberProdutos(categoriaID) {
-    ApiProdutos.getAllPublishPoductsByCategoriesId(categoriaID).then((res) => {
-      this.setState({ produtos: res.data, categoriaID: categoriaID });
-      this.forceUpdate();
+    const { produtos, categoriaSlug } = this.state;
+    Object.values(produtos).map((prods) => {
+      if (prods[0].categories[0].slug === categoriaSlug) {
+        this.setState({ produtosAtuais: prods });
+      }
     });
   }
 
   render() {
+    const { produtosAtuais, disabledButton } = this.state;
+
     return (
       <Fragment>
-        {this.state.produtos &&
-        this.state.paginaId === this.props.categoriaID ? (
-          <MostraProdutos
-            categoriaSlug={this.state.categoriaSlug}
-            key={this.state.categoriaSlug}
-            produtos={this.state.produtos}
-            disabled={this.props.disabled}
-          />
+        {produtosAtuais ? (
+          <section className="center-align produtos-list">
+            {produtosAtuais.map((produto) => {
+              return (
+                <div
+                  className="produto-montagem selecionado"
+                  onClick={() => disabledButton(false)}
+                  id={produto.id}
+                  key={`intem-${produto.id}`}
+                >
+                  <img
+                    key={produto.id}
+                    src={
+                      produto.images.length > 0
+                        ? produto.images[0].src
+                        : imgDefault
+                    }
+                    alt=""
+                  />
+                  <div className="produto-dados-montagem">
+                    <p className="nome">{produto.name}</p>
+                    <p className="preco">R$: {produto.price}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </section>
         ) : (
           <CircleLoading />
         )}
@@ -69,4 +71,8 @@ class EscolherItems extends Component {
   }
 }
 
-export default EscolherItems;
+const mapStateToProps = (state) => ({ produtos: state.produtos });
+
+// const mapDispatchToProps = { salvaCategorias, buscaProduto };
+
+export default connect(mapStateToProps, null)(EscolherItems);
