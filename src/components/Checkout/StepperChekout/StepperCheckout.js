@@ -31,6 +31,7 @@ import CircleLoading from "../../loading/CircleLoading";
 //From util
 import PagSeguro from "../../../util/PagSeguro";
 import btnPagSeguro from "../../../util/btnPagSeguro";
+import ApiPedidos from "../../../services/ApiPedidos";
 import ApiCupom from "../../../services/ApiCupom";
 
 //From redux
@@ -356,6 +357,7 @@ const createPagseguroShipping = async (dadosFrete) => {
 let code;
 
 const pagamento = (props, dadosCadastro, dadosFrete) => {
+  const cupom = props.cupom.length > 0 ? props.cupom.join("") : "";
   const itensCarrinho = [];
   for (const key in props.carrinho) {
     if (props.carrinho.hasOwnProperty(key)) {
