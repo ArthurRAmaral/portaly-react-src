@@ -1,5 +1,6 @@
 //From depedencies
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
 
 //From services
 import ApiProdutos from "../services/ApiProdutos";
@@ -26,15 +27,20 @@ class ProdutosBuscado extends Component {
 
   componentDidMount() {
     const { value } = this.props.match.params;
+    const products = this.props.products;
+    let productsMatch = [];
 
-    ApiProdutos.getAllPublishedProducts().then((res) => {
-      const produtos = res.data.filter((produto) =>
-        produto.name.toString().toUpperCase().includes(value.toUpperCase())
+    for (const category in products) {
+      const categoryArray = products[category];
+      const categoryMatch = categoryArray.filter((item) =>
+        item.name.toString().toUpperCase().includes(value.toUpperCase())
       );
-
-      this.setState({
-        produtos: [...produtos],
-      });
+      if (categoryMatch.length > 0) {
+        productsMatch.push(...categoryMatch);
+      }
+    }
+    this.setState({
+      produtos: [...productsMatch],
     });
   }
 
@@ -58,4 +64,8 @@ class ProdutosBuscado extends Component {
   }
 }
 
-export default ProdutosBuscado;
+const mapStateToProps = (state) => ({
+  products: state.produtos,
+});
+
+export default connect(mapStateToProps, null)(ProdutosBuscado);

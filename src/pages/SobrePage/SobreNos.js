@@ -26,7 +26,7 @@ function SobreNos() {
         <Typography className={classes.title}>Sustentabilidade</Typography>
         <Typography className={classes.texto}>
           A Portaly, como uma grande empresa moderna, possui princípios de
-          Sustentabilidade proteger o meio ambiente, objetivando a qualidade de
+          sustentabilidade para proteger o meio ambiente, objetivando a qualidade de
           vida de gerações futuras, utilizando de práticas como a reciclagem do
           lixo sólido, reutilização de sobras de matéria-prima além de respeito
           total as leis ambientais do país. Assumimos um compromisso social para
