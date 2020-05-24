@@ -61,7 +61,11 @@ const MostrarProdutos = (props) => {
   const getProdutosCarrinho = (carrinho) => {
     let produtosCarrinho = [];
     for (const produto in carrinho)
-      if (produto !== "quantidadeTotal" && produto !== "valorTotal")
+      if (
+        produto !== "quantidadeTotal" &&
+        produto !== "valorTotal" &&
+        produto !== "kits"
+      )
         produtosCarrinho.push(carrinho[produto]);
 
     return produtosCarrinho;
