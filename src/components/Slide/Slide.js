@@ -16,7 +16,6 @@ import {
 } from "@material-ui/core";
 
 function Banner(props) {
-  if (props.newProp) console.log(props.newProp);
   const contentPosition = props.contentPosition
     ? props.contentPosition
     : "left";
@@ -42,8 +41,6 @@ function Banner(props) {
 
   for (let i = 0; i < mediaLength; i++) {
     const item = props.item.Items[i];
-    console.log(item);
-
     const media = (
       <Grid item xs={12 / totalItems} key={`${item.Name}${i}`}>
         {/* <Link href={`/item/${item.Id}`} className="Link"> */}
@@ -94,11 +91,13 @@ class BannerSlide extends React.Component {
   componentDidMount() {
     const products = this.props.products;
     let categories = Object.keys(products);
-    for (let i = 0; i < 5; i++) {
-      const categoryChosen =
-        products[categories[(categories.length * Math.random()) << 0]];
+    for (let i = 0; i < 7; i++) {
+      const pos = (categories.length * Math.random()) << 0;
+      const categoryChosen = products[categories[pos]];
+      categories.splice(pos, 1);
       const productChosen =
         categoryChosen[(categoryChosen.length * Math.random()) << 0];
+      console.log(productChosen);
       const productFormat = {
         Name: productChosen.name,
         Caption: parseFloat(productChosen.price).toFixed(2),
