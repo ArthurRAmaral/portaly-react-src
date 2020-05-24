@@ -3,6 +3,8 @@ import Carousel from "react-material-ui-carousel";
 import autoBind from "auto-bind";
 import "./Slide.css";
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
+import InitPath from "../../services/InitPath";
 
 import {
   Card,
@@ -27,11 +29,13 @@ function Banner(props) {
       <CardContent className="Content">
         <Typography className="Title">{props.item.Name}</Typography>
 
-        <Typography className="Caption">{props.item.Caption}</Typography>
+        <Typography className="Caption">R${props.item.Caption}</Typography>
 
-        <Button variant="outlined" className="ViewButton">
-          Veja agora
-        </Button>
+        <NavLink to={`${InitPath}/produto/${props.item.slug}`}>
+          <Button variant="outlined" className="ViewButton">
+            Veja agora!
+          </Button>
+        </NavLink>
       </CardContent>
     </Grid>
   );
@@ -97,8 +101,9 @@ class BannerSlide extends React.Component {
         categoryChosen[(categoryChosen.length * Math.random()) << 0];
       const productFormat = {
         Name: productChosen.name,
-        Caption: productChosen.price,
+        Caption: parseFloat(productChosen.price).toFixed(2),
         contentPosition: "left",
+        slug: productChosen.slug,
         Items: [
           {
             Image: productChosen.images[0].src,
