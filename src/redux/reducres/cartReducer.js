@@ -33,8 +33,12 @@ export default function setCarrinho(
     case SALVA_KIT:
       return {
         ...state,
-        quantidadeTotal: state.quantidadeTotal + action.quantidadeKits,
-        valorTotal: state.valorTotal + action.valorTotalKits,
+        quantidadeTotal:
+          state.quantidadeTotal -
+          state.kits.quantidadeKits +
+          action.quantidadeKits,
+        valorTotal:
+          state.valorTotal - state.kits.valorTotalKits + action.valorTotalKits,
         kits: {
           ...state.kits,
           quantidadeKits: action.quantidadeKits,
