@@ -38,6 +38,7 @@ import ApiCupom from "../../../services/ApiCupom";
 const MostrarProdutos = (props) => {
   const classes = useStyles();
   const {
+    removeKitCart,
     carrinho,
     removeProductCart,
     handleClick,
@@ -46,8 +47,12 @@ const MostrarProdutos = (props) => {
     handleUpdateQuant,
   } = props;
 
-  const handleRemove = (event) => {
+  const handleRemoveProduct = (event) => {
     removeProductCart(event.currentTarget.id);
+  };
+
+  const handleRemoveKit = (kit) => {
+    removeKitCart(kit);
   };
 
   const handleQuantidade = (event) => {
@@ -143,7 +148,7 @@ const MostrarProdutos = (props) => {
                     <TableRow key={`row${produto.produto[0].id}`}>
                       <TableCell align="left">
                         <CloseIcon
-                          onClick={handleRemove}
+                          onClick={handleRemoveProduct}
                           id={produto.produto[0].id}
                           className={classes.icon}
                         />
@@ -205,8 +210,7 @@ const MostrarProdutos = (props) => {
                     <TableRow>
                       <TableCell align="left">
                         <CloseIcon
-                          // onClick={handleRemove}
-                          // id={produto.produto[0].id}
+                          onClick={() => handleRemoveKit(kit)}
                           className={classes.icon}
                         />
                         <img

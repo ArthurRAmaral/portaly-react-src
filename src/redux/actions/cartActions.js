@@ -3,6 +3,7 @@ import {
   REMOVE_CART,
   UPDATE_QUANTIDADE,
   SALVA_KIT,
+  REMOVE_KIT_CART,
 } from "./actionsTypes";
 
 /////////////
@@ -30,8 +31,8 @@ export function updateQuantidade(produtoId, flag) {
 }
 
 export function addKit(kit) {
-  const idKit = criaIdKit(kit.produtos);
   const kitTratado = trataKit(kit);
+  const idKit = criaIdKit(kitTratado.produtos);
   return function (dispatch, getState) {
     dispatch({
       type: SALVA_KIT,
@@ -42,9 +43,42 @@ export function addKit(kit) {
   };
 }
 
+export function removeKitCart(kit) {
+  return function (dispatch, getState) {
+    dispatch({
+      type: REMOVE_KIT_CART,
+      payload: removeKit(getState(), kit),
+      kitRemovido: kit,
+    });
+  };
+}
+
 ////////////////////////
 ///MONTE_SUA_PORTA//////
 ////////////////////////
+
+function removeKit(state, kit) {
+  const idKit = criaIdKit(kit.produtos);
+  const kits = state.carrinho.kits;
+  let upadateRemovedKits = {
+    quantidadeKits: kits.quantidadeKits - 1,
+    valorTotalKits: kits.valorTotalKits - kit.quantidade * kit.valorKit,
+  };
+
+  for (const kitId in kits) {
+    if (
+      idKit !== kitId &&
+      kitId !== "quantidadeKits" &&
+      kitId !== "valorTotalKits"
+    )
+      upadateRemovedKits = {
+        ...upadateRemovedKits,
+        [kitId]: kits[kitId],
+      };
+  }
+
+  return upadateRemovedKits;
+}
 
 function calculaValorTotalKits(state, kit) {
   return (
@@ -79,7 +113,7 @@ function trataKit(kit) {
 function criaIdKit(produtos) {
   let id = "";
   Object.values(produtos).map((produto) => {
-    id += produto.id;
+    id += produto[0].id;
   });
   return id;
 }
