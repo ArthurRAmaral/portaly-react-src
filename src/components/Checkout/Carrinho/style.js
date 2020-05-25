@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   textColor: {
     color: colors.orangeDark,
+    fontSize: "14px",
   },
   textTotal: {
     color: colors.orangeDark,

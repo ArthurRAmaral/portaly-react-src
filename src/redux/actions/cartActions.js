@@ -29,12 +29,25 @@ export function updateQuantidade(produtoId, flag) {
 export function addKit(kit) {
   const idKit = criaIdKit(kit.produtos);
   const kitTratado = trataKit(kit);
-  return function (dispatch) {
+  return function (dispatch, getState) {
     dispatch({
       type: SALVA_KIT,
       payload: { [idKit]: kitTratado },
+      quantidadeKits: calculaQuantidadeTotalKits(getState()),
+      valorTotalKits: calculaValorTotalKits(getState(), kit),
     });
   };
+}
+
+function calculaValorTotalKits(state, kit) {
+  return (
+    state.carrinho.kits.valorTotalKits +
+    kit.quantidade * parseFloat(kit.valorKit)
+  );
+}
+
+function calculaQuantidadeTotalKits(state) {
+  return state.carrinho.kits.quantidadeKits + 1;
 }
 
 function trataKit(kit) {
@@ -140,21 +153,29 @@ function remove(produtoId) {
 }
 
 function novoCarrinho(produtoId, state) {
-  let carrinho = {
-    quantidadeTotal: 0,
-    valorTotal: 0,
-  };
+  let carrinho = {};
+  let prodRemovido;
+
+  Object.values(state.carrinho).map((prod) => {
+    if (prod.produto && produtoId == prod.produto[0].id) prodRemovido = prod;
+  });
+
   Object.values(state.carrinho).map((prod) => {
     if (prod.produto && produtoId != prod.produto[0].id) {
       //NÃO MUDE PARA !==, pois quebra a função
       carrinho = {
         ...carrinho,
-        quantidadeTotal: diminuiQuantidade(state),
-        valorTotal: calculaValorTotal(prod.produto[0].price, prod.quantidade),
         [prod.produto[0].slug]: prod,
       };
     }
   });
+  carrinho = {
+    ...carrinho,
+    quantidadeTotal: diminuiQuantidade(state),
+    valorTotal: calculaValorTotalRemover(state, prodRemovido),
+    kits: { ...state.carrinho.kits },
+  };
+
   return carrinho;
 }
 
@@ -170,8 +191,15 @@ function produtoExiste(produto, state) {
   return true;
 }
 
-function calculaValorTotal(price, quantidade, valorTotal = 0) {
-  return valorTotal + parseFloat(price) * quantidade;
+function calculaValorTotalRemover(state, prodRemovido) {
+  return (
+    state.carrinho.valorTotal -
+    prodRemovido.quantidade * parseFloat(prodRemovido.produto[0].price)
+  );
+}
+
+function calculaValorTotal(price, quantidade, valorTotal, valorTotalKit = 0) {
+  return valorTotal + parseFloat(price) * quantidade + valorTotalKit;
 }
 
 function addQuantidadeComParametro(state, quantidade) {

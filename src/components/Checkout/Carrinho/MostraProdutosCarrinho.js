@@ -71,7 +71,20 @@ const MostrarProdutos = (props) => {
     return produtosCarrinho;
   };
 
+  const getkits = (carrinho) => {
+    if (!carrinho.kits) return 0;
+
+    let kits = [];
+    for (const kit in carrinho.kits) {
+      if (kit !== "quantidadeKits" && kit !== "valorTotalKits")
+        kits.push(carrinho.kits[kit]);
+    }
+
+    return kits;
+  };
+
   const produtosCarrinho = getProdutosCarrinho(carrinho);
+  const kits = getkits(carrinho);
 
   const [open, setOpen] = React.useState(false);
   const [msg, setMsg] = React.useState("");
@@ -191,11 +204,78 @@ const MostrarProdutos = (props) => {
                     </TableRow>
                   );
                 })}
+                {kits.map((kit) => {
+                  return (
+                    <TableRow>
+                      <TableCell align="left">
+                        <CloseIcon
+                          // onClick={handleRemove}
+                          // id={produto.produto[0].id}
+                          className={classes.icon}
+                        />
+                        <img
+                        // src={`${produto.produto[0].images[0].src}`}
+                        // alt=""
+                        // className={classes.img}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        {Object.values(kit.produtos).map((produto) => {
+                          return (
+                            <Fragment>
+                              <Typography
+                                key={produto[0].id}
+                                className={classes.textColor}
+                              >
+                                {produto[0].name}
+                              </Typography>
+                            </Fragment>
+                          );
+                        })}
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography className={classes.textColor}>
+                          {kit.valorKit * kit.quantidade}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Grid container alignItems="center" justify="center">
+                          <Box
+                            border={1}
+                            marginRight={2}
+                            padding={2}
+                            alignItems="center"
+                            justifyContent="center"
+                          >
+                            <Typography className={classes.textColor}>
+                              {kit.quantidade}
+                            </Typography>
+                          </Box>
+                          <Grid>
+                            <Grid container direction="column">
+                              <AddIcon
+                                className={classes.icon}
+                                // id={produto.produto[0].id}
+                                // slot="aumenta"
+                                // onClick={handleQuantidade}
+                              />
+                              <RemoveIcon
+                                className={classes.icon}
+                                // id={produto.produto[0].id}
+                                // slot="diminui"
+                                // onClick={handleQuantidade}
+                              />
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </Fragment>
               <TableRow>
                 <TableCell />
                 <TableCell align="right">
-                  {" "}
                   <TextField
                     id="coupon"
                     onChange={handleChange}

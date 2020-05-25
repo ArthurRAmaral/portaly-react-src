@@ -6,7 +6,11 @@ import {
 } from "../actions/actionsTypes";
 
 export default function setCarrinho(
-  state = { quantidadeTotal: 0, valorTotal: 0, kits: { quantidadeKits: 0 } },
+  state = {
+    quantidadeTotal: 0,
+    valorTotal: 0,
+    kits: { quantidadeKits: 0, valorTotalKits: 0 },
+  },
   action
 ) {
   switch (action.type) {
@@ -28,9 +32,12 @@ export default function setCarrinho(
     case SALVA_KIT:
       return {
         ...state,
+        quantidadeTotal: state.quantidadeTotal + action.quantidadeKits,
+        valorTotal: state.valorTotal + action.valorTotalKits,
         kits: {
           ...state.kits,
-          quantidadeKits: state.kits.quantidadeKits + 1,
+          quantidadeKits: action.quantidadeKits,
+          valorTotalKits: action.valorTotalKits,
           ...action.payload,
         },
       };
