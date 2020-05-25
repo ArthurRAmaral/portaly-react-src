@@ -5,6 +5,9 @@ import {
   SALVA_KIT,
 } from "./actionsTypes";
 
+/////////////
+///EXPORTS///
+/////////////
 export function addCart(produto, quantidade, variacao) {
   return function (dispatch, getState) {
     if (produtoExiste(produto, getState()))
@@ -12,9 +15,9 @@ export function addCart(produto, quantidade, variacao) {
   };
 }
 
-export function removeCart(produtoId) {
+export function removeProductCart(produtoId) {
   return function (dispatch, getState) {
-    if (quantidadeValida(getState())) dispatch(remove(produtoId));
+    if (quantidadeValida(getState())) dispatch(removeProduto(produtoId));
   };
 }
 export function updateQuantidade(produtoId, flag) {
@@ -38,6 +41,10 @@ export function addKit(kit) {
     });
   };
 }
+
+////////////////////////
+///MONTE_SUA_PORTA//////
+////////////////////////
 
 function calculaValorTotalKits(state, kit) {
   return (
@@ -77,11 +84,15 @@ function criaIdKit(produtos) {
   return id;
 }
 
+//////////////
+///PRODUTOS///
+//////////////
+
 function mudaquantidade(state, produtoId, flag) {
   let carrinho = state.carrinho;
   let novaQuantidade, newCart;
 
-  newCart = novoCarrinho(produtoId, state);
+  newCart = novoCarrinhoProduto(produtoId, state);
 
   newCart.quantidadeTotal =
     flag === "aumenta" ? addQuantidade(state) : diminuiQuantidade(state);
@@ -95,7 +106,7 @@ function mudaquantidade(state, produtoId, flag) {
 
       if (novaQuantidade < 1) return carrinho;
 
-      newCart.valorTotal = valorTotalUpadate(
+      newCart.valorTotal = valorTotalMudaQuantidade(
         carrinho.valorTotal,
         prod,
         novaQuantidade
@@ -113,12 +124,7 @@ function mudaquantidade(state, produtoId, flag) {
   return newCart;
 }
 
-function novaQuant(flag, produto) {
-  if (flag === "aumenta") return produto.quantidade + 1;
-  if (flag === "diminui") return produto.quantidade - 1;
-}
-
-function valorTotalUpadate(valorTotal, produto, novaQuantidade) {
+function valorTotalMudaQuantidade(valorTotal, produto, novaQuantidade) {
   return (valorTotal =
     valorTotal -
     produto.quantidade * produto.produto[0].price +
@@ -143,16 +149,16 @@ function add(produto, quantidade, variacao) {
   };
 }
 
-function remove(produtoId) {
+function removeProduto(produtoId) {
   return function (dispatch, getState) {
     dispatch({
       type: REMOVE_CART,
-      novoState: novoCarrinho(produtoId, getState()),
+      novoState: novoCarrinhoProduto(produtoId, getState()),
     });
   };
 }
 
-function novoCarrinho(produtoId, state) {
+function novoCarrinhoProduto(produtoId, state) {
   let carrinho = {};
   let prodRemovido;
 
@@ -179,6 +185,22 @@ function novoCarrinho(produtoId, state) {
   return carrinho;
 }
 
+/////////////
+///GERAIS////
+/////////////
+
+function novaQuant(flag, produto) {
+  if (flag === "aumenta") return produto.quantidade + 1;
+  if (flag === "diminui") return produto.quantidade - 1;
+}
+
+function calculaValorTotalRemover(state, prodRemovido) {
+  return (
+    state.carrinho.valorTotal -
+    prodRemovido.quantidade * parseFloat(prodRemovido.produto[0].price)
+  );
+}
+
 function quantidadeValida(state) {
   return !!state.carrinho.quantidadeTotal;
 }
@@ -189,13 +211,6 @@ function produtoExiste(produto, state) {
   }
 
   return true;
-}
-
-function calculaValorTotalRemover(state, prodRemovido) {
-  return (
-    state.carrinho.valorTotal -
-    prodRemovido.quantidade * parseFloat(prodRemovido.produto[0].price)
-  );
 }
 
 function calculaValorTotal(price, quantidade, valorTotal, valorTotalKit = 0) {

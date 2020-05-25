@@ -39,7 +39,7 @@ const MostrarProdutos = (props) => {
   const classes = useStyles();
   const {
     carrinho,
-    removeCart,
+    removeProductCart,
     handleClick,
     handleChange,
     coupon,
@@ -47,12 +47,8 @@ const MostrarProdutos = (props) => {
   } = props;
 
   const handleRemove = (event) => {
-    removeCart(event.currentTarget.id);
+    removeProductCart(event.currentTarget.id);
   };
-
-  // const handleClick = () => {
-  //   this.props.salvaCupom(this.state.coupon);
-  // };
 
   const handleQuantidade = (event) => {
     handleUpdateQuant(event.currentTarget.id, event.currentTarget.slot);
@@ -214,9 +210,9 @@ const MostrarProdutos = (props) => {
                           className={classes.icon}
                         />
                         <img
-                        // src={`${produto.produto[0].images[0].src}`}
-                        // alt=""
-                        // className={classes.img}
+                          src="https://portaly.demo.skeavee.com/wp-content/uploads/2020/04/073800be12.png"
+                          alt=""
+                          className={classes.img}
                         />
                       </TableCell>
                       <TableCell>
@@ -328,6 +324,16 @@ const MostrarProdutos = (props) => {
                       </Typography>
                     );
                   })}
+                  {kits.map((kit, index) => {
+                    return (
+                      <Typography
+                        className={classes.textColor}
+                        key={`name${kit.valorKit}`}
+                      >
+                        {`Porta Montada ${index + 1}`}
+                      </Typography>
+                    );
+                  })}
                   <Typography className={classes.textColor}>Total</Typography>
                 </TableCell>
                 <TableCell align="right">
@@ -335,7 +341,7 @@ const MostrarProdutos = (props) => {
                     return (
                       <Typography
                         className={classes.textColor}
-                        key={`sob-total${produto.produto[0].id}`}
+                        key={`sub-total${produto.produto[0].id}`}
                       >
                         {`${produto.quantidade}x ${(
                           produto.produto[0].price * produto.quantidade
@@ -343,7 +349,16 @@ const MostrarProdutos = (props) => {
                       </Typography>
                     );
                   })}
-
+                  {kits.map((kit) => {
+                    return (
+                      <Typography
+                        className={classes.textColor}
+                        key={`sub-total${kit.valorKit}`}
+                      >
+                        {`${kit.quantidade}x ${kit.valorKit * kit.quantidade}`}
+                      </Typography>
+                    );
+                  })}
                   <Typography className={classes.textColor}>
                     {carrinho.valorTotal.toFixed(2)}
                   </Typography>

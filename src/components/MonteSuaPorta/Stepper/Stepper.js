@@ -1,5 +1,6 @@
 //From depedencies
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 
 //From Material-ui
@@ -18,6 +19,9 @@ import Check from "@material-ui/icons/Check";
 //From util
 import Montador from "../../../util/MontadorPorta";
 import colors from "../../../util/Colors";
+
+//From services
+import InitPath from "../../../services/InitPath";
 
 //From here
 import useStyles, { useQontoStepIconStyles, QontoConnector } from "./style";
@@ -143,6 +147,7 @@ function HorizontalLinearStepper(props) {
   const handleSubmit = () => {
     const kit = Montador.getMontador();
     props.addKit(kit);
+    Montador.resetMontador();
   };
 
   const handleBack = () => {
@@ -226,6 +231,8 @@ function HorizontalLinearStepper(props) {
                   color="primary"
                   onClick={handleSubmit}
                   className={classes.button}
+                  component={NavLink}
+                  to={`${InitPath}/meuCarrinho`}
                 >
                   Adicionar ao Carrinho
                 </Button>

@@ -1,9 +1,9 @@
 //From depdencies
-import React, { Fragment } from "react";
+import React from "react";
 import { connect } from "react-redux";
 
 //From Material-ui
-import { ThemeProvider } from "@material-ui/core/styles";
+
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -32,7 +32,6 @@ import CircleLoading from "../../loading/CircleLoading";
 //From util
 import PagSeguro from "../../../util/PagSeguro";
 import btnPagSeguro from "../../../util/btnPagSeguro";
-import ApiPedidos from "../../../services/ApiPedidos";
 import ApiCupom from "../../../services/ApiCupom";
 
 //From redux
