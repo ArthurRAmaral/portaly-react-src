@@ -4,6 +4,7 @@ import {
   UPDATE_QUANTIDADE,
   SALVA_KIT,
   REMOVE_KIT_CART,
+  UPDATE_QUANT_kIT,
 } from "./actionsTypes";
 
 /////////////
@@ -53,9 +54,46 @@ export function removeKitCart(kit) {
   };
 }
 
+export function upadateQuantidadeKit(kit, flag) {
+  if (kit.quantidade - 1 == 0) return;
+  return function (dispatch, getState) {
+    dispatch({
+      type: UPDATE_QUANT_kIT,
+      payload: updateKit(getState(), kit, flag),
+    });
+  };
+}
+
 ////////////////////////
 ///MONTE_SUA_PORTA//////
 ////////////////////////
+
+function updateKit(state, kit, flag) {
+  const novaQuantidade = updateQuantidadeKit(kit, flag);
+  const antigaQuantidade = kit.quantidade;
+
+  let updateKits = state.carrinho.kits;
+  const idkit = criaIdKit(kit.produtos);
+  updateKits = {
+    ...updateKits,
+    quantidadeKits:
+      state.carrinho.kits.quantidadeKits - antigaQuantidade + novaQuantidade,
+    valorTotalKits:
+      state.carrinho.kits.valorTotalKits -
+      kit.valorKit * antigaQuantidade +
+      kit.valorKit * novaQuantidade,
+    [idkit]: {
+      ...kit,
+      quantidade: novaQuantidade,
+    },
+  };
+  return updateKits;
+}
+
+function updateQuantidadeKit(kit, flag) {
+  if (flag === "aumenta") return kit.quantidade + 1;
+  if (flag === "diminui") return kit.quantidade - 1;
+}
 
 function removeKit(state, kit) {
   const idKit = criaIdKit(kit.produtos);

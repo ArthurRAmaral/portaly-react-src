@@ -38,6 +38,7 @@ import ApiCupom from "../../../services/ApiCupom";
 const MostrarProdutos = (props) => {
   const classes = useStyles();
   const {
+    upadateQuantidadeKit,
     removeKitCart,
     carrinho,
     removeProductCart,
@@ -57,6 +58,10 @@ const MostrarProdutos = (props) => {
 
   const handleQuantidade = (event) => {
     handleUpdateQuant(event.currentTarget.id, event.currentTarget.slot);
+  };
+
+  const handleQuantidadeKit = (kit, flag) => {
+    upadateQuantidadeKit(kit, flag);
   };
 
   const getProdutosCarrinho = (carrinho) => {
@@ -255,15 +260,15 @@ const MostrarProdutos = (props) => {
                             <Grid container direction="column">
                               <AddIcon
                                 className={classes.icon}
-                                // id={produto.produto[0].id}
-                                // slot="aumenta"
-                                // onClick={handleQuantidade}
+                                onClick={() =>
+                                  handleQuantidadeKit(kit, "aumenta")
+                                }
                               />
                               <RemoveIcon
                                 className={classes.icon}
-                                // id={produto.produto[0].id}
-                                // slot="diminui"
-                                // onClick={handleQuantidade}
+                                onClick={() =>
+                                  handleQuantidadeKit(kit, "diminui")
+                                }
                               />
                             </Grid>
                           </Grid>

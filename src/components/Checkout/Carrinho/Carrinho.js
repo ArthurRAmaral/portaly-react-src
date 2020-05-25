@@ -16,6 +16,7 @@ import {
   removeProductCart,
   updateQuantidade,
   removeKitCart,
+  upadateQuantidadeKit,
 } from "../../../redux/actions/cartActions";
 import { salvaCupom } from "../../../redux/actions/cupomActions";
 
@@ -70,6 +71,7 @@ class PaginaCarrinho extends Component {
               carrinho={this.props.carrinho}
               removeProductCart={this.props.removeProductCart}
               removeKitCart={this.props.removeKitCart}
+              upadateQuantidadeKit={this.props.upadateQuantidadeKit}
               handleChange={this.handleChange}
               handleClick={this.handleClick}
               handleUpdateQuant={this.props.updateQuantidade}
@@ -94,6 +96,7 @@ const mapDispatchToProps = {
   salvaCupom,
   updateQuantidade,
   removeKitCart,
+  upadateQuantidadeKit,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaginaCarrinho);

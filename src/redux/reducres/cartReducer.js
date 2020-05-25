@@ -4,6 +4,7 @@ import {
   UPDATE_QUANTIDADE,
   SALVA_KIT,
   REMOVE_KIT_CART,
+  UPDATE_QUANT_kIT,
 } from "../actions/actionsTypes";
 
 export default function setCarrinho(
@@ -53,6 +54,19 @@ export default function setCarrinho(
         valorTotal:
           state.valorTotal -
           action.kitRemovido.quantidade * action.kitRemovido.valorKit,
+        kits: action.payload,
+      };
+    case UPDATE_QUANT_kIT:
+      return {
+        ...state,
+        quantidadeTotal:
+          state.quantidadeTotal -
+          state.kits.quantidadeKits +
+          action.payload.quantidadeKits,
+        valorTotal:
+          state.valorTotal -
+          state.kits.valorTotalKits +
+          action.payload.valorTotalKits,
         kits: action.payload,
       };
     default:
