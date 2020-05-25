@@ -2,6 +2,9 @@ import React from "react";
 import Carousel from "react-material-ui-carousel";
 import autoBind from "auto-bind";
 import "./Slide.css";
+import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
+import InitPath from "../../services/InitPath";
 
 import {
   Card,
@@ -13,7 +16,6 @@ import {
 } from "@material-ui/core";
 
 function Banner(props) {
-  if (props.newProp) console.log(props.newProp);
   const contentPosition = props.contentPosition
     ? props.contentPosition
     : "left";
@@ -26,18 +28,19 @@ function Banner(props) {
       <CardContent className="Content">
         <Typography className="Title">{props.item.Name}</Typography>
 
-        <Typography className="Caption">{props.item.Caption}</Typography>
+        <Typography className="Caption">R${props.item.Caption}</Typography>
 
-        <Button variant="outlined" className="ViewButton">
-          Veja agora
-        </Button>
+        <NavLink to={`${InitPath}/produto/${props.item.slug}`}>
+          <Button variant="outlined" className="ViewButton">
+            Veja agora!
+          </Button>
+        </NavLink>
       </CardContent>
     </Grid>
   );
 
   for (let i = 0; i < mediaLength; i++) {
     const item = props.item.Items[i];
-
     const media = (
       <Grid item xs={12 / totalItems} key={`${item.Name}${i}`}>
         {/* <Link href={`/item/${item.Id}`} className="Link"> */}
@@ -68,47 +71,7 @@ function Banner(props) {
   );
 }
 
-const items = [
-  {
-    Name: "Porta Diagonal",
-    Caption: "Se você procura amor e carinho, abrir a porta é o caminho",
-    contentPosition: "left",
-    Items: [
-      {
-        Image: "https://skeavee.com/imagens/portaly/portas/porta-diagonal.jpg",
-      },
-      {
-        Image: "https://skeavee.com/imagens/4.jpg",
-      },
-    ],
-  },
-  {
-    Name: "Alizar Tauari",
-    Caption: "R$ 39,90",
-    contentPosition: "left",
-    Items: [
-      {
-        Image: "https://skeavee.com/imagens/2.jpg",
-      },
-      {
-        Image: "https://skeavee.com/imagens/5.jpg",
-      },
-    ],
-  },
-  {
-    Name: "Fechadura Open Golf",
-    Caption: "R$ 39,00",
-    contentPosition: "left",
-    Items: [
-      {
-        Image: "https://skeavee.com/imagens/1.jpg",
-      },
-      {
-        Image: "https://skeavee.com/imagens/8.jpg",
-      },
-    ],
-  },
-];
+let items = [];
 
 class BannerSlide extends React.Component {
   constructor(props) {
@@ -119,16 +82,49 @@ class BannerSlide extends React.Component {
       timer: 1200,
       animation: "fade",
       indicators: true,
+      items: [],
     };
 
     autoBind(this);
+  }
+
+  componentDidMount() {
+    const products = this.props.products;
+    let categories = Object.keys(products);
+    for (let i = 0; i < 7; i++) {
+      const pos = (categories.length * Math.random()) << 0;
+      const categoryChosen = products[categories[pos]];
+      categories.splice(pos, 1);
+      const productChosen =
+        categoryChosen[(categoryChosen.length * Math.random()) << 0];
+      console.log(productChosen);
+      const productFormat = {
+        Name: productChosen.name,
+        Caption: parseFloat(productChosen.price).toFixed(2),
+        contentPosition: "left",
+        slug: productChosen.slug,
+        Items: [
+          {
+            Image: productChosen.images[0].src,
+          },
+          {
+            Image: !!productChosen.images[1]
+              ? productChosen.images[1].src
+              : productChosen.images[0].src,
+          },
+        ],
+      };
+      items = this.state.items;
+      items.push(productFormat);
+      this.setState({ items: items });
+    }
   }
 
   render() {
     return (
       <div style={{ color: "#494949" }}>
         <Carousel className="Example" indicators={false}>
-          {items.map((item, index) => (
+          {this.state.items.map((item, index) => (
             <Banner
               item={item}
               key={index}
@@ -141,4 +137,8 @@ class BannerSlide extends React.Component {
   }
 }
 
-export default BannerSlide;
+const mapStateToProps = (state) => ({
+  products: state.produtos,
+});
+
+export default connect(mapStateToProps, null)(BannerSlide);
