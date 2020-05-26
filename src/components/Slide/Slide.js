@@ -89,6 +89,14 @@ class BannerSlide extends React.Component {
   }
 
   componentDidMount() {
+    if (
+      !this.props.categorias ||
+      !this.props.produtos ||
+      Object.values(this.props.categorias).length !=
+        Object.values(this.props.produtos).length
+    )
+      return;
+
     const products = this.props.products;
     let categories = Object.keys(products);
     for (let i = 0; i < 7; i++) {
@@ -139,6 +147,7 @@ class BannerSlide extends React.Component {
 
 const mapStateToProps = (state) => ({
   products: state.produtos,
+  categorias: state.categorias,
 });
 
 export default connect(mapStateToProps, null)(BannerSlide);
