@@ -168,7 +168,7 @@ function HorizontalLinearStepper(props) {
   };
 
   return (
-    <Grid>
+    <Grid className={classes.grid}>
       <Grid container direction="row" alignItems="center" justify="center">
         <Box
           borderBottom={2}
@@ -181,7 +181,7 @@ function HorizontalLinearStepper(props) {
           </Typography>
         </Box>
       </Grid>
-      <Box border={1} borderColor={colors.orangeDark}>
+      <Box border={2} borderColor={colors.orangeDark}>
         <Stepper
           alternativeLabel
           activeStep={activeStep}
@@ -200,56 +200,59 @@ function HorizontalLinearStepper(props) {
           })}
         </Stepper>
       </Box>
-      <Box border={1} borderColor={colors.orangeDark}>
-        {activeStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions}>
-              Produtos adicionados ao carrinho!
-            </Typography>
-            <Button onClick={handleReset} className={classes.button}>
-              Montar outra
+      <Box border={2} borderColor={colors.orangeDark}>
+        <div>
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            justify="center"
+          >
+            {getStepContent(activeStep, btnHandler)}
+          </Grid>
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+            justify="space-between"
+          >
+            <Button
+              disabled={activeStep === 0}
+              variant="outlined"
+              onClick={handleBack}
+              className={classes.button}
+            >
+              Voltar
             </Button>
-          </div>
-        ) : (
-          <div>
-            <Card className={classes.instructions}>
-              {getStepContent(activeStep, btnHandler)}
-            </Card>
-            <div>
+            <Typography
+              className={classes.cont}
+            >{`${activeStep}/5 ${steps[activeStep]}`}</Typography>
+            {activeStep === steps.length - 1 ? (
               <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
+                focusVisibleClassName="btn"
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit}
                 className={classes.button}
+                component={NavLink}
+                to={`${InitPath}/meuCarrinho`}
               >
-                Voltar
+                Adicionar ao Carrinho
               </Button>
-              {activeStep === steps.length - 1 ? (
-                <Button
-                  focusVisibleClassName="btn"
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSubmit}
-                  className={classes.button}
-                  component={NavLink}
-                  to={`${InitPath}/meuCarrinho`}
-                >
-                  Adicionar ao Carrinho
-                </Button>
-              ) : (
-                <Button
-                  focusVisibleClassName="btn"
-                  variant="contained"
-                  color="primary"
-                  onClick={twoFunctionsHandler}
-                  className={classes.button}
-                  disabled={btnvalid}
-                >
-                  Próximo
-                </Button>
-              )}
-            </div>
-          </div>
-        )}
+            ) : (
+              <Button
+                focusVisibleClassName="btn"
+                variant="contained"
+                color="primary"
+                onClick={twoFunctionsHandler}
+                className={classes.button}
+                disabled={btnvalid}
+              >
+                Próximo
+              </Button>
+            )}
+          </Grid>
+        </div>
       </Box>
     </Grid>
   );

@@ -70,25 +70,32 @@ export default function ScrollableTabsButtonForce(props) {
   };
 
   return (
-    <div className={classes.root}>
-      {produtosAtuais.map((produto, index) => (
-        <TabPanel
-          key={`image${produto.id}`}
-          value={value}
-          index={index}
-          className={classes.tabPanel}
-        >
-          <img src={produto.images[0].src} alt="" />
-        </TabPanel>
-      ))}
-      <AppBar position="static" color="default">
+    <Grid
+      container
+      direction="row"
+      alignItems="center"
+      justify="center"
+      className={classes.root}
+    >
+      <Grid>
+        {produtosAtuais.map((produto, index) => (
+          <TabPanel
+            key={`image${produto.id}`}
+            value={value}
+            index={index}
+            className={classes.tabPanel}
+          >
+            <img src={produto.images[0].src} alt="" />
+          </TabPanel>
+        ))}
+      </Grid>
+      <AppBar position="static" className={classes.appBar}>
         <Tabs
           value={value}
           onChange={handleChange}
           variant="scrollable"
           scrollButtons="on"
-          indicatorColor="primary"
-          textColor="primary"
+          indicatorColor="secondary"
           aria-label="scrollable force tabs example"
         >
           {produtosAtuais.map((produto, index) => (
@@ -121,6 +128,6 @@ export default function ScrollableTabsButtonForce(props) {
           ))}
         </Tabs>
       </AppBar>
-    </div>
+    </Grid>
   );
 }
