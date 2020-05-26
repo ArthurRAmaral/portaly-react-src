@@ -41,8 +41,21 @@ const MostrarProdutos = (produtos) => {
                   />
                 </CardMedia>
                 <CardContent className="produto-dados">
-                  <Typography className="nome grey-text text-darken-4">{`${produto.name}`}</Typography>
-                  <Typography className="preco">{`R$: ${produto.price}`}</Typography>
+                  <Grid
+                    container
+                    direction="column"
+                    alignItems="center"
+                    justify="center"
+                  >
+                    <Typography
+                      className="nome"
+                      align="center"
+                    >{`${produto.name}`}</Typography>
+                    <Typography
+                      className="preco"
+                      align="center"
+                    >{`R$: ${produto.price}`}</Typography>
+                  </Grid>
                 </CardContent>
               </Link>
             </Card>

@@ -17,6 +17,7 @@
 .produto .preco {
   font-weight: 800;
   font-size: medium;
+  color: #ff9d4d;
 }
 
 .produto:hover {
@@ -26,6 +27,7 @@
 .produto .nome {
   font-weight: 400;
   font-size: large;
+  color: #8a572d;
 }
 
 .produto img {
