@@ -89,14 +89,7 @@ class BannerSlide extends React.Component {
   }
 
   componentDidMount() {
-    if (
-      !this.props.categorias ||
-      !this.props.produtos ||
-      Object.values(this.props.categorias).length !=
-        Object.values(this.props.produtos).length
-    )
-      return;
-
+    if (!!this.props.produtos) return;
     const products = this.props.products;
     let categories = Object.keys(products);
     for (let i = 0; i < 7; i++) {
