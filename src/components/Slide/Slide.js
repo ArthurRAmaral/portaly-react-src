@@ -83,12 +83,34 @@ class BannerSlide extends React.Component {
       animation: "fade",
       indicators: true,
       items: [],
+      flag: true,
     };
 
     autoBind(this);
   }
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.categorias.length ==
+      Object.values(nextProps.products).length
+      ? true
+      : false;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.state.flag) {
+      this.setState({ flag: false });
+      this.componentDidMount();
+    }
+  }
+
   componentDidMount() {
+    if (
+      !this.props.categorias ||
+      !this.props.products ||
+      this.props.categorias.length != Object.values(this.props.products).length
+    )
+      return;
+
     const products = this.props.products;
     let categories = Object.keys(products);
     for (let i = 0; i < 7; i++) {
@@ -139,6 +161,7 @@ class BannerSlide extends React.Component {
 
 const mapStateToProps = (state) => ({
   products: state.produtos,
+  categorias: state.categorias,
 });
 
 export default connect(mapStateToProps, null)(BannerSlide);
