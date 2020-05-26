@@ -3,8 +3,9 @@ import React, { Component } from "react";
 
 //Material-ui
 import Grid from "@material-ui/core/Grid";
-import SearchIcon from "@material-ui/icons/Search";
-import TextField from "@material-ui/core/TextField";
+
+//From here
+import Search from "./search";
 
 //From service
 import InitPath from "../../../services/InitPath";
@@ -40,33 +41,10 @@ class Busca extends Component {
     return (
       <Grid item>
         <Grid container direction="row" alignItems="center" justify="center">
-          <form
-            onSubmit={this.handleSubmit}
-            style={{
-              backgroundColor: colors.orangeLight,
-              borderRadius: 10,
-              height: 50,
-            }}
-          >
-            <SearchIcon
-              onClick={this.handleSubmit}
-              style={{
-                width: 50,
-                height: 50,
-                color: colors.orangeDark,
-                cursor: "pointer",
-              }}
-            />
-            <TextField
-              label="Buscar"
-              InputProps={{ disableUnderline: true }}
-              id="buscaInput"
-              type="text"
-              value={this.state.value}
-              onChange={this.handleChange}
-              style={{
-                minWidth: 400,
-              }}
+          <form onSubmit={this.handleSubmit}>
+            <Search
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
             />
           </form>
         </Grid>
