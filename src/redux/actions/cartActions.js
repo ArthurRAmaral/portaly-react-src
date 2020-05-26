@@ -33,9 +33,6 @@ export function updateQuantidade(produtoId, flag) {
   };
 }
 
-//////////////
-/////KITS/////
-//////////////
 export function addKit(kit) {
   return async function (dispatch, getState) {
     const kitTratado = await ApiProdutos.createKit(kit.produtos);
@@ -66,6 +63,10 @@ export function removeKit(id) {
       });
   };
 }
+
+//////////////
+/////KITS/////
+//////////////
 
 function valorTotalIds(idsArray, state) {
   const produtos = state.produtos;
