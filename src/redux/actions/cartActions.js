@@ -7,6 +7,8 @@ import {
   UPDATE_QUANT_kIT,
 } from "./actionsTypes";
 
+import ApiProdutos from "../../services/ApiProdutos";
+
 /////////////
 ///EXPORTS///
 /////////////
@@ -31,129 +33,53 @@ export function updateQuantidade(produtoId, flag) {
   };
 }
 
+//////////////
+/////KITS/////
+//////////////
 export function addKit(kit) {
-  const kitTratado = trataKit(kit);
-  const idKit = criaIdKit(kitTratado.produtos);
-  return function (dispatch, getState) {
+  return async function (dispatch, getState) {
+    const kitTratado = await ApiProdutos.createKit(kit.produtos);
+
+    kitTratado.kit = [kitTratado.kit];
+
     dispatch({
       type: SALVA_KIT,
-      payload: { [idKit]: kitTratado },
-      quantidadeKits: calculaQuantidadeTotalKits(getState()),
-      valorTotalKits: calculaValorTotalKits(getState(), kit),
+      id: kitTratado.kit[0].id,
+      kit: kitTratado,
+      quantidadeDoKit: kit.quantidade,
+      valorDoKit: valorTotalIds(kitTratado.kit[0].grouped_products, getState()),
     });
   };
 }
 
-export function removeKitCart(kit) {
-  return function (dispatch, getState) {
-    dispatch({
-      type: REMOVE_KIT_CART,
-      payload: removeKit(getState(), kit),
-      kitRemovido: kit,
+export function removeKit(id) {
+  return async function (dispatch, getState) {
+    let kits = getState().carrinho.kits;
+    const kit = kits[id];
+    delete kits[id];
+    console.log(kits);
+    if (quantidadeValida(getState()))
+      dispatch({
+        type: REMOVE_KIT_CART,
+        kit: kit,
+        kitsRemanescentes: kits,
+      });
+  };
+}
+
+function valorTotalIds(idsArray, state) {
+  const produtos = state.produtos;
+  let precoFinal = 0;
+
+  Object.values(produtos).forEach((prods) => {
+    prods.forEach((prod) => {
+      if (idsArray.includes(prod.id)) {
+        precoFinal += parseFloat(prod.price);
+      }
     });
-  };
-}
-
-export function upadateQuantidadeKit(kit, flag) {
-  if (kit.quantidade - 1 == 0) return;
-  return function (dispatch, getState) {
-    dispatch({
-      type: UPDATE_QUANT_kIT,
-      payload: updateKit(getState(), kit, flag),
-    });
-  };
-}
-
-////////////////////////
-///MONTE_SUA_PORTA//////
-////////////////////////
-
-function updateKit(state, kit, flag) {
-  const novaQuantidade = updateQuantidadeKit(kit, flag);
-  const antigaQuantidade = kit.quantidade;
-
-  let updateKits = state.carrinho.kits;
-  const idkit = criaIdKit(kit.produtos);
-  updateKits = {
-    ...updateKits,
-    quantidadeKits:
-      state.carrinho.kits.quantidadeKits - antigaQuantidade + novaQuantidade,
-    valorTotalKits:
-      state.carrinho.kits.valorTotalKits -
-      kit.valorKit * antigaQuantidade +
-      kit.valorKit * novaQuantidade,
-    [idkit]: {
-      ...kit,
-      quantidade: novaQuantidade,
-    },
-  };
-  return updateKits;
-}
-
-function updateQuantidadeKit(kit, flag) {
-  if (flag === "aumenta") return kit.quantidade + 1;
-  if (flag === "diminui") return kit.quantidade - 1;
-}
-
-function removeKit(state, kit) {
-  const idKit = criaIdKit(kit.produtos);
-  const kits = state.carrinho.kits;
-  let upadateRemovedKits = {
-    quantidadeKits: kits.quantidadeKits - 1,
-    valorTotalKits: kits.valorTotalKits - kit.quantidade * kit.valorKit,
-  };
-
-  for (const kitId in kits) {
-    if (
-      idKit !== kitId &&
-      kitId !== "quantidadeKits" &&
-      kitId !== "valorTotalKits"
-    )
-      upadateRemovedKits = {
-        ...upadateRemovedKits,
-        [kitId]: kits[kitId],
-      };
-  }
-
-  return upadateRemovedKits;
-}
-
-function calculaValorTotalKits(state, kit) {
-  return (
-    state.carrinho.kits.valorTotalKits +
-    kit.quantidade * parseFloat(kit.valorKit)
-  );
-}
-
-function calculaQuantidadeTotalKits(state) {
-  return state.carrinho.kits.quantidadeKits + 1;
-}
-
-function trataKit(kit) {
-  let kitTratado = {};
-  let produtos = {};
-  Object.values(kit.produtos).map((produto) => {
-    produtos = {
-      ...produtos,
-      [produto.slug]: [produto],
-    };
   });
 
-  kitTratado = {
-    produtos: produtos,
-    valorKit: kit.valorKit,
-    quantidade: kit.quantidade,
-  };
-
-  return kitTratado;
-}
-
-function criaIdKit(produtos) {
-  let id = "";
-  Object.values(produtos).map((produto) => {
-    id += produto[0].id;
-  });
-  return id;
+  return precoFinal;
 }
 
 //////////////

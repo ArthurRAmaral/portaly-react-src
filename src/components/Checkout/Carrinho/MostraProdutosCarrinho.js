@@ -38,30 +38,22 @@ import ApiCupom from "../../../services/ApiCupom";
 const MostrarProdutos = (props) => {
   const classes = useStyles();
   const {
-    upadateQuantidadeKit,
-    removeKitCart,
+    produtos,
     carrinho,
     removeProductCart,
     handleClick,
     handleChange,
     coupon,
     handleUpdateQuant,
+    removeKit,
   } = props;
 
   const handleRemoveProduct = (event) => {
     removeProductCart(event.currentTarget.id);
   };
 
-  const handleRemoveKit = (kit) => {
-    removeKitCart(kit);
-  };
-
   const handleQuantidade = (event) => {
     handleUpdateQuant(event.currentTarget.id, event.currentTarget.slot);
-  };
-
-  const handleQuantidadeKit = (kit, flag) => {
-    upadateQuantidadeKit(kit, flag);
   };
 
   const getProdutosCarrinho = (carrinho) => {
@@ -78,15 +70,7 @@ const MostrarProdutos = (props) => {
   };
 
   const getkits = (carrinho) => {
-    if (!carrinho.kits) return 0;
-
-    let kits = [];
-    for (const kit in carrinho.kits) {
-      if (kit !== "quantidadeKits" && kit !== "valorTotalKits")
-        kits.push(carrinho.kits[kit]);
-    }
-
-    return kits;
+    return carrinho.kits ? Object.values(carrinho.kits) : [];
   };
 
   const produtosCarrinho = getProdutosCarrinho(carrinho);
@@ -111,7 +95,6 @@ const MostrarProdutos = (props) => {
       setSeverity("warning");
       setMsg("Nenhum cupom informado");
     } else {
-      console.log(coupon);
       const response = await ApiCupom.getCoupon(props.coupon);
       if (response.data.length > 0) {
         setSeverity("success");
@@ -215,7 +198,7 @@ const MostrarProdutos = (props) => {
                     <TableRow>
                       <TableCell align="left">
                         <CloseIcon
-                          onClick={() => handleRemoveKit(kit)}
+                          onClick={() => removeKit(kit.kit[0].id)}
                           className={classes.icon}
                         />
                         <img
@@ -229,10 +212,10 @@ const MostrarProdutos = (props) => {
                           return (
                             <Fragment>
                               <Typography
-                                key={produto[0].id}
+                                key={produto.id}
                                 className={classes.textColor}
                               >
-                                {produto[0].name}
+                                {produto.name}
                               </Typography>
                             </Fragment>
                           );
@@ -240,7 +223,7 @@ const MostrarProdutos = (props) => {
                       </TableCell>
                       <TableCell align="right">
                         <Typography className={classes.textColor}>
-                          {kit.valorKit * kit.quantidade}
+                          {kit.valorDoKit}
                         </Typography>
                       </TableCell>
                       <TableCell align="right">
@@ -253,22 +236,22 @@ const MostrarProdutos = (props) => {
                             justifyContent="center"
                           >
                             <Typography className={classes.textColor}>
-                              {kit.quantidade}
+                              {kit.quantidadeDoKit}
                             </Typography>
                           </Box>
                           <Grid>
                             <Grid container direction="column">
                               <AddIcon
                                 className={classes.icon}
-                                onClick={() =>
-                                  handleQuantidadeKit(kit, "aumenta")
-                                }
+                                // onClick={() =>
+                                //   handleQuantidadeKit(kit, "aumenta")
+                                // }
                               />
                               <RemoveIcon
                                 className={classes.icon}
-                                onClick={() =>
-                                  handleQuantidadeKit(kit, "diminui")
-                                }
+                                // onClick={() =>
+                                //   handleQuantidadeKit(kit, "diminui")
+                                // }
                               />
                             </Grid>
                           </Grid>
@@ -337,7 +320,7 @@ const MostrarProdutos = (props) => {
                     return (
                       <Typography
                         className={classes.textColor}
-                        key={`name${kit.valorKit}`}
+                        key={`name${kit.valorDoKit}`}
                       >
                         {`Porta Montada ${index + 1}`}
                       </Typography>
@@ -352,9 +335,7 @@ const MostrarProdutos = (props) => {
                         className={classes.textColor}
                         key={`sub-total${produto.produto[0].id}`}
                       >
-                        {`${produto.quantidade}x ${(
-                          produto.produto[0].price * produto.quantidade
-                        ).toFixed(2)}`}
+                        {`${produto.quantidade}x ${produto.produto[0].price}`}
                       </Typography>
                     );
                   })}
@@ -362,9 +343,9 @@ const MostrarProdutos = (props) => {
                     return (
                       <Typography
                         className={classes.textColor}
-                        key={`sub-total${kit.valorKit}`}
+                        key={`sub-total${kit.valorDoKit}`}
                       >
-                        {`${kit.quantidade}x ${kit.valorKit * kit.quantidade}`}
+                        {`${kit.quantidadeDoKit}x ${kit.valorDoKit}`}
                       </Typography>
                     );
                   })}

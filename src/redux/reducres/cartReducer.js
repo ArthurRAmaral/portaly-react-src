@@ -4,14 +4,13 @@ import {
   UPDATE_QUANTIDADE,
   SALVA_KIT,
   REMOVE_KIT_CART,
-  UPDATE_QUANT_kIT,
 } from "../actions/actionsTypes";
 
 export default function setCarrinho(
   state = {
     quantidadeTotal: 0,
     valorTotal: 0,
-    kits: { quantidadeKits: 0, valorTotalKits: 0 },
+    kits: {},
   },
   action
 ) {
@@ -32,42 +31,30 @@ export default function setCarrinho(
     case UPDATE_QUANTIDADE:
       return action.novoCarrinho;
     case SALVA_KIT:
+      console.log(action);
       return {
         ...state,
-        quantidadeTotal:
-          state.quantidadeTotal -
-          state.kits.quantidadeKits +
-          action.quantidadeKits,
+        quantidadeTotal: state.quantidadeTotal + action.quantidadeDoKit,
         valorTotal:
-          state.valorTotal - state.kits.valorTotalKits + action.valorTotalKits,
+          state.valorTotal + action.valorDoKit * action.quantidadeDoKit,
         kits: {
           ...state.kits,
-          quantidadeKits: action.quantidadeKits,
-          valorTotalKits: action.valorTotalKits,
-          ...action.payload,
+          [action.id]: {
+            kit: action.kit.kit,
+            produtos: action.kit.produtos,
+            quantidadeDoKit: action.quantidadeDoKit,
+            valorDoKit: action.valorDoKit,
+          },
         },
       };
     case REMOVE_KIT_CART:
+      console.log("valornokit", action.kit.quantidadeDoKit);
       return {
         ...state,
-        quantidadeTotal: state.quantidadeTotal - action.kitRemovido.quantidade,
+        quantidadeTotal: state.quantidadeTotal - action.kit.quantidadeDoKit,
         valorTotal:
-          state.valorTotal -
-          action.kitRemovido.quantidade * action.kitRemovido.valorKit,
-        kits: action.payload,
-      };
-    case UPDATE_QUANT_kIT:
-      return {
-        ...state,
-        quantidadeTotal:
-          state.quantidadeTotal -
-          state.kits.quantidadeKits +
-          action.payload.quantidadeKits,
-        valorTotal:
-          state.valorTotal -
-          state.kits.valorTotalKits +
-          action.payload.valorTotalKits,
-        kits: action.payload,
+          state.valorTotal - action.kit.valorDoKit * action.kit.quantidadeDoKit,
+        kits: action.kitsRemanescentes,
       };
     default:
       return state;

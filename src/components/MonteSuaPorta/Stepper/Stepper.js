@@ -31,8 +31,6 @@ import FecharMontagem from "../FecharMontagem";
 //From redux
 import { addKit } from "../../../redux/actions/cartActions";
 
-//From redux
-
 function getSteps() {
   return [
     "Alizar",
@@ -126,6 +124,7 @@ QontoStepIcon.propTypes = {
 
 function HorizontalLinearStepper(props) {
   const classes = useStyles();
+  // const [activeStep, setActiveStep] = React.useState(5);
   const [activeStep, setActiveStep] = React.useState(0);
   const [btnvalid, setBtnValid] = React.useState(true);
   const [skipped, setSkipped] = React.useState(new Set());
@@ -144,9 +143,9 @@ function HorizontalLinearStepper(props) {
     setSkipped(newSkipped);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const kit = Montador.getMontador();
-    props.addKit(kit);
+    await props.addKit(kit);
     Montador.resetMontador();
   };
 

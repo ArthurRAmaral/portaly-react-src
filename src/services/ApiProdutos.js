@@ -55,14 +55,6 @@ const ApiWooCommerceProdutos = {
     return { data: prods };
   },
 
-  // getAllPublishPoductsByCategoriesSlug: async (slug) => {
-  //   console.log((await api.get("products/categories", { slug })).data);
-  //   return api.get("products", {
-  //     category: await (await api.get("products/categories", { slug })).data,
-  //     status: "publish",
-  //   });
-  // },
-
   getOnSale: () => api.get("products", { on_sale: true }),
 
   getProductBySlug: (slug) => api.get("products", { slug, status: "publish" }),
@@ -72,14 +64,17 @@ const ApiWooCommerceProdutos = {
   createKit: async (dados) => {
     let ids = [];
     let prices = [];
+    let produtos = [];
     let total = 0;
 
     for (const key in dados) {
       if (dados.hasOwnProperty(key)) {
-        ids.push(dados[key]);
-        prices.push(
-          (await ApiWooCommerceProdutos.getProductByid(dados[key])).data.price
-        );
+        const produtoAtual = (
+          await ApiWooCommerceProdutos.getProductByid(dados[key].id)
+        ).data;
+        produtos.push(produtoAtual);
+        ids.push(produtoAtual.id);
+        prices.push(produtoAtual.price);
       }
     }
 
@@ -99,11 +94,11 @@ const ApiWooCommerceProdutos = {
           id: 284,
         },
       ],
-      price: total,
+      price: total.toString(),
       grouped_products: ids,
     };
 
-    return await api.post("products", data);
+    return { kit: (await api.post("products", data)).data, produtos: produtos };
   },
 
   getAllOnSaleProducts: async () => {

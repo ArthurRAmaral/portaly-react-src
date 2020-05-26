@@ -24,7 +24,6 @@ import Cadastro from "../Cadastro";
 import Frete from "../Frete";
 import Pagamento from "../Pagamento";
 import useStyles from "./style";
-import funcoesCarrinho from "../../../util/Carrinho";
 
 //From components
 import CircleLoading from "../../loading/CircleLoading";
@@ -163,7 +162,6 @@ function getStepContent(props, step, validCode, setCode) {
           dadosComprador,
           dadosEntrega,
         };
-        console.log(dados);
         if (dadosProdutos.length > 0 && contador === 0) {
           contador++;
           PagSeguro.gerarPagamento(dados).then((codigo) => {
@@ -173,7 +171,6 @@ function getStepContent(props, step, validCode, setCode) {
             // if (dados.dadosProdutos.length > 0) controle = true;
             code = codigo;
             validCode(code);
-            funcoesCarrinho.reset();
           });
         }
       })();
@@ -323,8 +320,6 @@ const createPagseguroProducts = async (props) => {
     };
     arrayItens.push(frete);
   }
-  console.log("ArrayItens", arrayItens);
-
   return arrayItens;
 };
 
@@ -372,34 +367,6 @@ const pagamento = (props, dadosCadastro, dadosFrete) => {
       }
     }
   }
-  // if (contador === 1) {
-  //   ApiPedidos.createOrder({
-  //     payment_method: "PagSeguro",
-  //     payment_method_title: "delete",
-  //     set_paid: false,
-  //     billing: dadosCadastro,
-  //     shipping: dadosFrete,
-  //     shipping_lines: [
-  //       {
-  //         method_id: "Padrão",
-  //         method_title: "Padrão",
-  //         total: props.frete.join(""),
-  //       },
-  //     ],
-  //     coupon_lines: [
-  //       {
-  //         code: cupom,
-  //       },
-  //     ],
-  //     line_items: itensCarrinho,
-  //   })
-  //     .then((response) => {
-  //       //console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
   props.salvaCupom("");
 };
 

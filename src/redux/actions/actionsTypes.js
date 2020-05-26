@@ -8,4 +8,3 @@ export const SALVA_CUPOM = "SALVA_CUPOM";
 export const UPDATE_QUANTIDADE = "UPDATE_QUANTIDADE";
 export const SALVA_KIT = "SALVA_KIT";
 export const REMOVE_KIT_CART = "REMOVE_KIT_CART";
-export const UPDATE_QUANT_kIT = "UPDATE_QUANT_kIT";
