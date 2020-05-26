@@ -15,9 +15,6 @@ import Box from "@material-ui/core/Box";
 import MostrarProdutos from "../MostraProdutos/MostraProdutos";
 import Loading from "../loading/LineLoading";
 
-//From utils
-import ApiProdutos from "../../services/ApiProdutos";
-
 //From here
 import useStyles from "./style";
 
