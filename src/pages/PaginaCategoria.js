@@ -9,6 +9,10 @@ import Paginador from "../components/paginador/Paginador";
 
 //From Material-ui
 import { ThemeProvider } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
+import Divider from "@material-ui/core/Divider";
+import Grid from "@material-ui/core/Grid";
 
 //From here
 import theme from "./theme";
@@ -18,6 +22,9 @@ import { buscaProduto } from "../redux/actions/produtoActions";
 
 //From reutildux
 import { paginar } from "../util/prodsToPag";
+
+//From util
+import colors from "../util/Colors";
 
 const QUANTIDADE_POR_PAGINA = 5;
 
@@ -36,6 +43,7 @@ class PaginaCategorias extends Component {
 
   componentDidMount() {
     this.props.buscaProduto(this.state.paginaId);
+    console.log(this.props.produtos);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -57,6 +65,14 @@ class PaginaCategorias extends Component {
     this.setState({ page });
   }
 
+  getCategoria(value) {
+    for (const category of this.props.categorias) {
+      if (category.id == value) {
+        return category.name;
+      }
+    }
+  }
+
   render() {
     const { paginaId } = this.state;
     const prods = this.escolheProdutosCategorias();
@@ -66,14 +82,44 @@ class PaginaCategorias extends Component {
     return (
       <Fragment>
         <ThemeProvider theme={theme}>
-          {prods && paginaId === this.props.match.params.id ? (
-            <Fragment>
-              {MostraProdutos(paginas[this.state.page - 1])}
-              {Paginador(paginas.length, this.mudarPagina)}
-            </Fragment>
-          ) : (
-            <LineLoaging />
-          )}
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            justify="center"
+          >
+            <Box
+              borderBottom={1}
+              margin={5}
+              style={{
+                borderColor: colors.orangeDark,
+              }}
+            >
+              <Typography
+                variant="h3"
+                style={{
+                  color: colors.orangeDark,
+                  fontWeight: "bold",
+                }}
+              >
+                {this.getCategoria(this.props.match.params.id)}
+              </Typography>
+            </Box>
+            <Divider
+              className="line_title_section"
+              variant="middle"
+              orientation="horizontal"
+              flexItem
+            />
+            {prods && paginaId === this.props.match.params.id ? (
+              <Fragment>
+                {MostraProdutos(paginas[this.state.page - 1])}
+                {Paginador(paginas.length, this.mudarPagina)}
+              </Fragment>
+            ) : (
+              <LineLoaging />
+            )}
+          </Grid>
         </ThemeProvider>
       </Fragment>
     );
@@ -82,6 +128,7 @@ class PaginaCategorias extends Component {
 
 const mapStateToProps = (state) => ({
   produtos: state.produtos,
+  categorias: state.categorias,
 });
 
 const mapDispatchToProps = { buscaProduto };
