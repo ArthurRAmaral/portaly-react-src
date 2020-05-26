@@ -124,7 +124,7 @@ function FullWidthTabs(props) {
             index={0}
             dir={theme.direction}
           >
-            {MostrarProdutos(produtosAleatoriosHome(props))}
+            {MostrarProdutos(produtosAleatoriosHome(props).slice(0, 24))}
           </TabPanel>
           <TabPanel
             className="product_tab"
