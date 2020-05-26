@@ -7,7 +7,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import PaginaCategoria from "./pages/PaginaCategoria";
 import PaginaProduto from "./pages/PaginaProduto";
 import MonteSuaPorta from "./pages/MonteSuaPorta";
-import ProdutoBuscado from "./pages/ProdutoBuscado";
+import ProdutoBuscado from "./pages/ProdutoBuscado/ProdutoBuscado.js";
 import Carrinho from "./pages/PaginaCheckout";
 import DefaultPage from "./pages/DefaultPage";
 import TestPage from "./pages/TestPage";
