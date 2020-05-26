@@ -1,0 +1,22 @@
+.text {
+  color: #a9764e;
+  border-top: 1px solid #a9764e;
+  padding: 15px;
+  margin: 20px;
+}
+
+.text:hover {
+  background-color: #a9764e;
+  color: white;
+  border-top: 1px solid #a9764e;
+  font-weight: 900;
+}
+
+.pag {
+  font-weight: 900;
+}
+
+.grid {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

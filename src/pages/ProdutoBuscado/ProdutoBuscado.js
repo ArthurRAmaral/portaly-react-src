@@ -58,6 +58,9 @@ class ProdutosBuscado extends Component {
             direction="column"
             alignItems="center"
             justify="center"
+            style={{
+              marginBottom: 50,
+            }}
           >
             <Box
               borderBottom={1}
