@@ -41,7 +41,7 @@ const HomePage = () => {
             }}
           >
             <Typography className={classes.title} variant="h3">
-              Ultimos Produtos
+              Conheça Nossos Produtos
             </Typography>
           </Box>
           <Divider

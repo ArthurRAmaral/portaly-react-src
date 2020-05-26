@@ -44,6 +44,29 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
+function produtosRecentes(props) {
+  let produtos = [];
+  Object.values(props.produtos).map((produto) => {
+    produto.forEach((prod) => produtos.push(prod));
+  });
+  produtos = produtos.sort((product1, product2) => {
+    const date1 = new Date(product1.date_created);
+    const date2 = new Date(product2.date_created);
+    return date2 - date1;
+  });
+  return produtos;
+}
+
+function produtosOnSale(props) {
+  let produtos = [];
+  Object.values(props.produtos).map((produto) => {
+    produto.forEach((prod) => produtos.push(prod));
+  });
+  console.log(produtos);
+  produtos = produtos.filter((prod) => prod.on_sale);
+  return produtos;
+}
+
 function produtosAleatoriosHome(props) {
   let produtos = [];
   Object.values(props.produtos).map((produto) => {
@@ -82,8 +105,8 @@ function FullWidthTabs(props) {
           variant="fullWidth"
           centered
         >
-          <Tab label="Mais Vendidos" />
-          <Tab label="Destaques" />
+          <Tab label="Todos Produtos" />
+          <Tab label="Mais Recentes" />
           <Tab label="Ofertas" />
         </Tabs>
       </AppBar>
@@ -101,7 +124,7 @@ function FullWidthTabs(props) {
             index={0}
             dir={theme.direction}
           >
-            {MostrarProdutos(produtosAleatoriosHome(props).slice(0, 20))}
+            {MostrarProdutos(produtosAleatoriosHome(props))}
           </TabPanel>
           <TabPanel
             className="product_tab"
@@ -109,7 +132,7 @@ function FullWidthTabs(props) {
             index={1}
             dir={theme.direction}
           >
-            {MostrarProdutos(produtosAleatoriosHome(props).slice(37, 45))}
+            {MostrarProdutos(produtosRecentes(props).slice(0, 20))}
           </TabPanel>
           <TabPanel
             className="product_tab"
@@ -117,7 +140,7 @@ function FullWidthTabs(props) {
             index={2}
             dir={theme.direction}
           >
-            {MostrarProdutos(produtosAleatoriosHome(props).slice(29, 33))}
+            {MostrarProdutos(produtosOnSale(props))}
           </TabPanel>
         </SwipeableViews>
       )}
