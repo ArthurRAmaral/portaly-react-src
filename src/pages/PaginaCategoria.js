@@ -1,6 +1,7 @@
 //From depedencies
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 //From components
 import MostraProdutos from "../components/MostraProdutos/MostraProdutos";
@@ -26,6 +27,9 @@ import { paginar } from "../util/prodsToPag";
 
 //From util
 import colors from "../util/Colors";
+
+//From services
+import InitPath from "../services/InitPath";
 
 const QUANTIDADE_POR_PAGINA = 5;
 
@@ -89,7 +93,7 @@ class PaginaCategorias extends Component {
             alignItems="center"
             justify="center"
           >
-            <Box>
+            <Box component={NavLink} to={`${InitPath}/`}>
               <img
                 src="https://skeavee.com/imagens/portaly/assets/BACKGROUNDCATEGORIA.png"
                 alt=""
@@ -129,6 +133,7 @@ class PaginaCategorias extends Component {
                   style={{
                     color: colors.white,
                     fontWeight: "bold",
+                    marginBottom: 5,
                   }}
                 >
                   {this.getCategoria(this.props.match.params.id)}
