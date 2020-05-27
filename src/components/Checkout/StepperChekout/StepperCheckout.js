@@ -259,7 +259,6 @@ const calculaQuantidade = (carrinho, cupom) => {
       }
     }
   }
-  console.log(qnt);
   return qnt;
 };
 
@@ -271,7 +270,6 @@ const createPagseguroProducts = async (props) => {
   let cupomAmount = 0;
   cupom = await ApiCupom.getCoupon(cupom);
   if (cupom.data.length > 0) {
-    console.log(cupom);
     if (
       cupom.data[0].maximum_amount < 1 ||
       (cupom.data[0].minimum_amount <= props.carrinho.valorTotal &&
@@ -298,14 +296,6 @@ const createPagseguroProducts = async (props) => {
         const kit = kits[idDoKit].kit[0];
         const quantidade = kits[idDoKit].quantidadeDoKit;
         const valor = kits[idDoKit].valorDoKit;
-        console.log(
-          valor.toString(),
-          cupomAmount,
-          parseInt(quantidade),
-          product_ids,
-          discount_type,
-          idDoKit
-        );
         const itemToPush = {
           id: idDoKit,
           description: kit.description,
@@ -351,9 +341,13 @@ const createPagseguroProducts = async (props) => {
   let idFrete = 1;
   while (arrayIds.includes(idFrete)) idFrete++;
 
+  console.log("Frete = ", props.frete);
+
   const valorFrete = Object.values(props.frete).length
     ? props.frete.join("")
     : "0";
+
+  console.log("valorFrete = ", valorFrete);
 
   if (valorFrete !== "0") {
     const frete = {

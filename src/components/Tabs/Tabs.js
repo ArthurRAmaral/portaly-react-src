@@ -62,7 +62,6 @@ function produtosOnSale(props) {
   Object.values(props.produtos).map((produto) => {
     produto.forEach((prod) => produtos.push(prod));
   });
-  console.log(produtos);
   produtos = produtos.filter((prod) => prod.on_sale);
   return produtos;
 }
@@ -124,7 +123,7 @@ function FullWidthTabs(props) {
             index={0}
             dir={theme.direction}
           >
-            {MostrarProdutos(produtosAleatoriosHome(props).slice(0, 24))}
+            {MostrarProdutos(produtosAleatoriosHome(props))}
           </TabPanel>
           <TabPanel
             className="product_tab"
