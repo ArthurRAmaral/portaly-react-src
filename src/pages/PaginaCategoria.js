@@ -93,50 +93,39 @@ class PaginaCategorias extends Component {
             alignItems="center"
             justify="center"
           >
-            <Box width={1} component={NavLink} to={`${InitPath}/`}>
-              <div style={{
+            <Box
+              width={1}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              style={{
                 width: "100%",
                 height: "250px",
-                backgroundImage: "url('https://skeavee.com/imagens/portaly/assets/BACKGROUNDCATEGORIA.png')",
+                backgroundImage:
+                  "url('https://skeavee.com/imagens/portaly/assets/BACKGROUNDCATEGORIA.png')",
                 marginBottom: 40,
-              }}>
-              </div>
-              <ArrowBackIcon
+              }}
+            >
+              <NavLink to={`${InitPath}/`}>
+                <ArrowBackIcon
+                  style={{
+                    width: 80,
+                    height: 80,
+                    color: colors.white,
+                  }}
+                />
+              </NavLink>
+              <Typography
+                variant="h3"
+                align="center"
                 style={{
-                  width: 50,
-                  height: 50,
                   color: colors.white,
-                  marginRight: 50,
-                  position: "absolute",
-                  top: "40%",
-                  left: "30%",
-                  transform: "translate(-50%,-40%)",
-                }}
-              />
-              <Grid
-                container
-                direction="column"
-                alignItems="center"
-                justify="center"
-                style={{
-                  width: "100%",
-                  position: "absolute",
-                  top: "40%",
-                  left: "50%",
-                  transform: "translate(-50%,-50%)",
+                  fontWeight: "bold",
+                  marginBottom: 5,
+                  padding: 50,
                 }}
               >
-                <Typography
-                  variant="h3"
-                  align="center"
-                  style={{
-                    color: colors.white,
-                    fontWeight: "bold",
-                    marginBottom: 5,
-                  }}
-                >
-                  {this.getCategoria(this.props.match.params.id)}
-                </Typography>
+                {this.getCategoria(this.props.match.params.id)}
                 <Typography
                   align="center"
                   style={{
@@ -148,7 +137,7 @@ class PaginaCategorias extends Component {
                     this.props.match.params.id
                   )}`}
                 </Typography>
-              </Grid>
+              </Typography>
             </Box>
             <Divider
               className="line_title_section"
@@ -162,8 +151,8 @@ class PaginaCategorias extends Component {
                 {Paginador(paginas.length, this.mudarPagina)}
               </Fragment>
             ) : (
-                <LineLoaging />
-              )}
+              <LineLoaging />
+            )}
           </Grid>
         </ThemeProvider>
       </Fragment>
