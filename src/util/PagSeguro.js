@@ -8,7 +8,6 @@ export default {
     var pag = new PagSeguro({
       email: process.env.REACT_APP_PAGSEGURO_EMAIL,
       token: "25542ED49E184E6E8356853880717C63",
-
       mode: "sandbox",
       sandbox: true,
       sandbox_email: "c71116547086085144918@sandbox.pagseguro.com.br",
@@ -21,7 +20,6 @@ export default {
 
     pag.currency("BRL");
     const { dadosEntrega, dadosProdutos, dadosComprador } = dados;
-    console.log("DadosProdutos", dadosProdutos);
     for (const item of dadosProdutos) {
       pag.addItem({
         id: item.id,

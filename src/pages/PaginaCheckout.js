@@ -11,7 +11,7 @@ import theme from "./theme";
 function PaginaCarrinho() {
   return (
     <ThemeProvider theme={theme}>
-      <Stepper />;
+      <Stepper />
     </ThemeProvider>
   );
 }

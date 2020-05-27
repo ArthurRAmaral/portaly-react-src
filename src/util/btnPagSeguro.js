@@ -1,7 +1,7 @@
 import React from "react";
 
 export default (code) => {
-  console.log(code);
+  // console.log(code);
   return (
     <form
       action="https://sandbox.pagseguro.uol.com.br/checkout/v2/payment.html"

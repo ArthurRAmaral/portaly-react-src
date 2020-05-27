@@ -10,13 +10,6 @@ import MostraProdutosCarrinho from "./MostraProdutosCarrinhoResumido";
 import SemProduto from "../semProdutos";
 import ApiCupom from "../../services/ApiCupom";
 
-// import ApiProdutos from "../../util/ApiProdutos.js";
-
-// import Carrinho from "../../util/Carrinho.js";
-
-// const varCadastro = "dadosCadastro";
-// const varFrete = "dadosFrete";
-
 class Pagamento extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +47,6 @@ class Pagamento extends Component {
 
     const cupom = await ApiCupom.getCoupon(propCoupon);
     const couponExist = cupom.data.length === 1;
-    console.log(cupom.data.length);
 
     if (couponExist && cupom.data[0].free_shipping) {
       this.props.salvaFrete("0");

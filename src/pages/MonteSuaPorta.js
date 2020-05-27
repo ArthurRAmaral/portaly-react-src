@@ -1,5 +1,5 @@
 //From depedencies
-import React, { Component } from "react";
+import React from "react";
 
 //From componensts
 import Setepper from "../components/MonteSuaPorta/Stepper/Stepper.js";
@@ -13,25 +13,14 @@ import Montador from "../util/MontadorPorta";
 //From here
 import theme from "./theme";
 
-class MonteSuaPorta extends Component {
-  constructor(props) {
-    Montador.resetMontador();
+function MonteSuaPorta() {
+  Montador.resetMontador();
 
-    super(props);
-
-    this.state = {
-      porta: null,
-      itens: [],
-    };
-  }
-
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <Setepper />
-      </ThemeProvider>
-    );
-  }
+  return (
+    <ThemeProvider theme={theme}>
+      <Setepper />
+    </ThemeProvider>
+  );
 }
 
 export default MonteSuaPorta;

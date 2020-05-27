@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 //From components
 import CircleLoading from "../loading/CircleLoading";
 
-import imgDefault from "../../assets/imgDefault.png";
+import TabMostraProduto from "./TabMostraProdutoPM/TabMostraProdutoPM";
 
-import "../../css/components/MonteSuaPorta/MostrarProdutos.css";
+import imgDefault from "../../assets/imgDefault.png";
 
 class EscolherItems extends Component {
   constructor(props) {
@@ -18,7 +18,6 @@ class EscolherItems extends Component {
       produtos: this.props.produtos,
       disabledButton: this.props.disabled,
       produtosAtuais: null,
-      kit: [],
     };
   }
 
@@ -30,39 +29,17 @@ class EscolherItems extends Component {
       }
     });
   }
-
   render() {
-    const { produtosAtuais, disabledButton } = this.state;
+    const { produtosAtuais, disabledButton, categoriaSlug } = this.state;
 
     return (
       <Fragment>
         {produtosAtuais ? (
-          <section className="center-align produtos-list">
-            {produtosAtuais.map((produto) => {
-              return (
-                <div
-                  className="produto-montagem selecionado"
-                  onClick={() => disabledButton(false)}
-                  id={produto.id}
-                  key={`intem-${produto.id}`}
-                >
-                  <img
-                    key={produto.id}
-                    src={
-                      produto.images.length > 0
-                        ? produto.images[0].src
-                        : imgDefault
-                    }
-                    alt=""
-                  />
-                  <div className="produto-dados-montagem">
-                    <p className="nome">{produto.name}</p>
-                    <p className="preco">R$: {produto.price}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </section>
+          <TabMostraProduto
+            produtosAtuais={produtosAtuais}
+            disabledButton={disabledButton}
+            categoriaSlug={categoriaSlug}
+          />
         ) : (
           <CircleLoading />
         )}
@@ -72,7 +49,5 @@ class EscolherItems extends Component {
 }
 
 const mapStateToProps = (state) => ({ produtos: state.produtos });
-
-// const mapDispatchToProps = { salvaCategorias, buscaProduto };
 
 export default connect(mapStateToProps, null)(EscolherItems);

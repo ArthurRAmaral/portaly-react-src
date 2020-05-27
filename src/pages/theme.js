@@ -20,9 +20,9 @@ const theme = createMuiTheme({
       hover: colors.orange,
     },
   },
-  typography: {
-    fontFamily: '"Segoe UI", "Tahoma", "Geneva", "Verdana", "sans-serif"',
-  },
+  // typography: {
+  //   fontFamily: '"Segoe UI", "Tahoma", "Geneva", "Verdana", "sans-serif"',
+  // },
 });
 
 export default theme;
