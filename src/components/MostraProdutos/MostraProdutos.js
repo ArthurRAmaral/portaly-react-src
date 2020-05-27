@@ -17,7 +17,7 @@ import { Grid } from "@material-ui/core";
 
 import "./MostrarProdutos.css";
 
-const MostrarProdutos = (produtos) => {
+const MostrarProdutos = (produtos, showDefault = true) => {
   return (
     <Grid container direction="row" alignContent="center" justify="center">
       {produtos.length > 0 ? (
@@ -61,9 +61,9 @@ const MostrarProdutos = (produtos) => {
             </Card>
           );
         })
-      ) : (
+      ) : showDefault ? (
         <div>Nenhum produto encontrado</div>
-      )}
+      ) : null}
     </Grid>
   );
 };

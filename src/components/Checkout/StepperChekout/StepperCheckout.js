@@ -120,7 +120,7 @@ function getOptionalSteps() {
   return [];
 }
 
-function getStepContent(props, step, validCode, setCode) {
+function getStepContent(props, step, validCode, setCode, setValidInputs) {
   switch (step) {
     case 0:
       if (contador === 1) {
@@ -135,14 +135,14 @@ function getStepContent(props, step, validCode, setCode) {
         code = null;
         setCode(code);
       }
-      return <Cadastro />;
+      return <Cadastro setValidInputs={setValidInputs} />;
     case 2:
       if (contador === 1) {
         contador = 0;
         code = null;
         setCode(code);
       }
-      return <Frete />;
+      return <Frete setValidInputs={setValidInputs} />;
     case 3:
       (async () => {
         const varCadastro = "dadosCadastro";
@@ -259,7 +259,6 @@ const calculaQuantidade = (carrinho, cupom) => {
       }
     }
   }
-  console.log(qnt);
   return qnt;
 };
 
@@ -271,7 +270,6 @@ const createPagseguroProducts = async (props) => {
   let cupomAmount = 0;
   cupom = await ApiCupom.getCoupon(cupom);
   if (cupom.data.length > 0) {
-    console.log(cupom);
     if (
       cupom.data[0].maximum_amount < 1 ||
       (cupom.data[0].minimum_amount <= props.carrinho.valorTotal &&
@@ -298,14 +296,6 @@ const createPagseguroProducts = async (props) => {
         const kit = kits[idDoKit].kit[0];
         const quantidade = kits[idDoKit].quantidadeDoKit;
         const valor = kits[idDoKit].valorDoKit;
-        console.log(
-          valor.toString(),
-          cupomAmount,
-          parseInt(quantidade),
-          product_ids,
-          discount_type,
-          idDoKit
-        );
         const itemToPush = {
           id: idDoKit,
           description: kit.description,
@@ -351,9 +341,13 @@ const createPagseguroProducts = async (props) => {
   let idFrete = 1;
   while (arrayIds.includes(idFrete)) idFrete++;
 
+  console.log("Frete = ", props.frete);
+
   const valorFrete = Object.values(props.frete).length
     ? props.frete.join("")
     : "0";
+
+  console.log("valorFrete = ", valorFrete);
 
   if (valorFrete !== "0") {
     const frete = {
@@ -434,6 +428,11 @@ function HorizontalLinearStepper(props) {
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
 
+  ///////////////////////
+  ////VALIDATE_INPUTS////
+  ///////////////////////
+  const [validInputs, setValidInputs] = React.useState(true);
+
   function validCode(code) {
     if (!finalCode) {
       setCode(code);
@@ -511,7 +510,15 @@ function HorizontalLinearStepper(props) {
           </div>
         ) : (
           <Grid>
-            <Grid>{getStepContent(props, activeStep, validCode, setCode)}</Grid>
+            <Grid>
+              {getStepContent(
+                props,
+                activeStep,
+                validCode,
+                setCode,
+                setValidInputs
+              )}
+            </Grid>
             <Grid
               container
               direction="row"
@@ -550,7 +557,9 @@ function HorizontalLinearStepper(props) {
                     color="primary"
                     onClick={handleNext}
                     className={classes.button}
-                    disabled={btnHandler(props.carrinho.quantidadeTotal)}
+                    disabled={
+                      btnHandler(props.carrinho.quantidadeTotal) || !validInputs
+                    }
                   >
                     Próximo
                   </Button>

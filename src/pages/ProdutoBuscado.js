@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 //From components
 import LineLoading from "../components/loading/LineLoading";
 import MostrarProdutos from "../components/MostraProdutos/MostraProdutos";
-import SemProdutos from "../components/semProdutos";
 
 //From Material-ui
 import { ThemeProvider } from "@material-ui/core/styles";
@@ -32,6 +31,20 @@ class ProdutosBuscado extends Component {
     this.state = {
       produtos: null,
     };
+  }
+
+  getResults() {
+    const results = this.state.produtos ? this.state.produtos.length : 0;
+    return (
+      results +
+      " " +
+      (results === 1 ? "produto encontrado" : "produtos encontrados")
+    );
+  }
+
+  hasResults() {
+    const results = this.state.produtos ? this.state.produtos.length : 0;
+    return results > 0 ? 50 : 0;
   }
 
   componentDidMount() {
@@ -64,56 +77,53 @@ class ProdutosBuscado extends Component {
             alignItems="center"
             justify="center"
             style={{
-              marginBottom: 40,
+              marginBottom: this.hasResults(),
             }}
           >
-            <Box width={1} component={NavLink} to={`${InitPath}/`}>
-              <div
+            <Box
+              width={1}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              style={{
+                width: "100%",
+                height: "250px",
+                backgroundImage:
+                  "url('https://skeavee.com/imagens/portaly/assets/BACKGROUNDCATEGORIA.png')",
+                marginBottom: this.hasResults(),
+              }}
+            >
+              <NavLink to={`${InitPath}/`}>
+                <ArrowBackIcon
+                  style={{
+                    width: 80,
+                    height: 80,
+                    color: colors.white,
+                  }}
+                />
+              </NavLink>
+              <Typography
+                variant="h3"
+                align="center"
                 style={{
-                  width: "100%",
-                  height: "250px",
-                  backgroundImage:
-                    "url('https://skeavee.com/imagens/portaly/assets/BACKGROUNDCATEGORIA.png')",
-                  marginBottom: 40,
-                }}
-              ></div>
-              <ArrowBackIcon
-                style={{
-                  width: 50,
-                  height: 50,
                   color: colors.white,
-                  marginRight: 50,
-                  position: "absolute",
-                  top: "40%",
-                  left: "30%",
-                  transform: "translate(-50%,-40%)",
-                }}
-              />
-              <Grid
-                container
-                direction="column"
-                alignItems="center"
-                justify="center"
-                style={{
-                  width: "100%",
-                  position: "absolute",
-                  top: "40%",
-                  left: "50%",
-                  transform: "translate(-50%,-50%)",
+                  fontWeight: "bold",
+                  marginBottom: 5,
+                  padding: 50,
                 }}
               >
+                {this.props.match.params.value.charAt(0).toUpperCase() +
+                  this.props.match.params.value.slice(1)}
                 <Typography
-                  variant="h3"
                   align="center"
                   style={{
                     color: colors.white,
                     fontWeight: "bold",
-                    marginBottom: 5,
                   }}
                 >
-                  Buscado: {this.props.match.params.value}
+                  {this.getResults()}
                 </Typography>
-              </Grid>
+              </Typography>
             </Box>
             <Divider
               className="line_title_section"
@@ -122,11 +132,7 @@ class ProdutosBuscado extends Component {
               flexItem
             />
             {this.state.produtos !== null || undefined ? (
-              this.state.produtos.length > 0 ? (
-                MostrarProdutos(produtos)
-              ) : (
-                <SemProdutos />
-              )
+              MostrarProdutos(produtos, false)
             ) : (
               <LineLoading />
             )}
