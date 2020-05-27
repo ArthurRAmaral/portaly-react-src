@@ -13,6 +13,7 @@ import { Typography } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 //From here
 import theme from "./theme";
@@ -88,22 +89,62 @@ class PaginaCategorias extends Component {
             alignItems="center"
             justify="center"
           >
-            <Box
-              borderBottom={1}
-              margin={5}
-              style={{
-                borderColor: colors.orangeDark,
-              }}
-            >
-              <Typography
-                variant="h3"
+            <Box>
+              <img
+                src="https://skeavee.com/imagens/portaly/assets/BACKGROUNDCATEGORIA.png"
+                alt=""
                 style={{
-                  color: colors.orangeDark,
-                  fontWeight: "bold",
+                  width: "100%",
+                  marginBottom: 20,
+                }}
+              />
+              <ArrowBackIcon
+                style={{
+                  width: 50,
+                  height: 50,
+                  color: colors.white,
+                  marginRight: 50,
+                  position: "absolute",
+                  top: "40%",
+                  left: "30%",
+                  transform: "translate(-50%,-40%)",
+                }}
+              />
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                justify="center"
+                style={{
+                  width: "100%",
+                  position: "absolute",
+                  top: "40%",
+                  left: "50%",
+                  transform: "translate(-50%,-50%)",
                 }}
               >
-                {this.getCategoria(this.props.match.params.id)}
-              </Typography>
+                <Typography
+                  variant="h3"
+                  align="center"
+                  style={{
+                    color: colors.white,
+                    fontWeight: "bold",
+                  }}
+                >
+                  {this.getCategoria(this.props.match.params.id)}
+                </Typography>
+                <Typography
+                  align="center"
+                  style={{
+                    color: colors.white,
+                    fontWeight: "bold",
+                  }}
+                >
+                  {`Categorias/${this.getCategoria(
+                    this.props.match.params.id
+                  )}`}
+                </Typography>
+              </Grid>
             </Box>
             <Divider
               className="line_title_section"
