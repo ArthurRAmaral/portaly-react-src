@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 //From Material-ui
+
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -34,9 +35,6 @@ import ApiCupom from "../../../services/ApiCupom";
 
 //From redux
 import { salvaCupom } from "../../../redux/actions/cupomActions";
-
-//From services
-import ApiPedidos from "../../../services/ApiPedidos";
 
 ////////////
 // STEPPER//
@@ -353,7 +351,9 @@ const createPagseguroProducts = async (props) => {
   let idFrete = 1;
   while (arrayIds.includes(idFrete)) idFrete++;
 
-  const valorFrete = props.frete.join("");
+  const valorFrete = Object.values(props.frete).length
+    ? props.frete.join("")
+    : "0";
 
   if (valorFrete !== "0") {
     const frete = {
@@ -411,34 +411,6 @@ const pagamento = (props, dadosCadastro, dadosFrete) => {
         });
       }
     }
-  }
-  if (contador === 1) {
-    ApiPedidos.createOrder({
-      payment_method: "PagSeguro",
-      payment_method_title: "delete",
-      set_paid: false,
-      billing: dadosCadastro,
-      shipping: dadosFrete,
-      shipping_lines: [
-        {
-          method_id: "Padrão",
-          method_title: "Padrão",
-          total: props.frete.join(""),
-        },
-      ],
-      coupon_lines: [
-        {
-          code: cupom,
-        },
-      ],
-      line_items: itensCarrinho,
-    })
-      .then((response) => {
-        //console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }
   props.salvaCupom("");
 };
