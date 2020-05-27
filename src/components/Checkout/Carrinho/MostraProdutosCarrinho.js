@@ -46,6 +46,7 @@ const MostrarProdutos = (props) => {
     coupon,
     handleUpdateQuant,
     removeKit,
+    updateQuantidadeKit,
   } = props;
 
   const handleRemoveProduct = (event) => {
@@ -243,15 +244,15 @@ const MostrarProdutos = (props) => {
                             <Grid container direction="column">
                               <AddIcon
                                 className={classes.icon}
-                                // onClick={() =>
-                                //   handleQuantidadeKit(kit, "aumenta")
-                                // }
+                                onClick={() =>
+                                  updateQuantidadeKit(kit.kit[0].id, "aumenta")
+                                }
                               />
                               <RemoveIcon
                                 className={classes.icon}
-                                // onClick={() =>
-                                //   handleQuantidadeKit(kit, "diminui")
-                                // }
+                                onClick={() =>
+                                  updateQuantidadeKit(kit.kit[0].id, "diminui")
+                                }
                               />
                             </Grid>
                           </Grid>

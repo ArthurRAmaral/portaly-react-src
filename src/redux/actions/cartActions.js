@@ -4,7 +4,7 @@ import {
   UPDATE_QUANTIDADE,
   SALVA_KIT,
   REMOVE_KIT_CART,
-  UPDATE_QUANT_kIT,
+  UPDATE_QUANTIDADE_KIT,
 } from "./actionsTypes";
 
 import ApiProdutos from "../../services/ApiProdutos";
@@ -61,6 +61,34 @@ export function removeKit(id) {
         kit: kit,
         kitsRemanescentes: kits,
       });
+  };
+}
+
+export function updateQuantidadeKit(id, novaQuantidade) {
+  return async function (dispatch, getState) {
+    let kits = getState().carrinho.kits;
+    const kit = kits[id];
+    let diferencaDeQuantidade;
+    const quantidadeAntiga = kit.quantidadeDoKit;
+    if (novaQuantidade === "aumenta") {
+      diferencaDeQuantidade = 1;
+    } else if (novaQuantidade === "diminui") {
+      diferencaDeQuantidade = -1;
+    } else {
+      diferencaDeQuantidade = novaQuantidade - kit.quantidadeDoKit;
+    }
+    if (novaQuantidade === "diminui") {
+      if (quantidadeAntiga > 1) kit.quantidadeDoKit += diferencaDeQuantidade;
+      else diferencaDeQuantidade = 0;
+    } else kit.quantidadeDoKit += diferencaDeQuantidade;
+    console.log(kits);
+    dispatch({
+      type: UPDATE_QUANTIDADE_KIT,
+      kits: kits,
+      valorDoKit: kit.valorDoKit,
+      diferencaDeQuantidade: diferencaDeQuantidade,
+      id: id,
+    });
   };
 }
 

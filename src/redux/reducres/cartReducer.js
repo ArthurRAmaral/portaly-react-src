@@ -4,6 +4,7 @@ import {
   UPDATE_QUANTIDADE,
   SALVA_KIT,
   REMOVE_KIT_CART,
+  UPDATE_QUANTIDADE_KIT,
 } from "../actions/actionsTypes";
 
 export default function setCarrinho(
@@ -31,7 +32,6 @@ export default function setCarrinho(
     case UPDATE_QUANTIDADE:
       return action.novoCarrinho;
     case SALVA_KIT:
-      console.log(action);
       return {
         ...state,
         quantidadeTotal: state.quantidadeTotal + action.quantidadeDoKit,
@@ -48,13 +48,20 @@ export default function setCarrinho(
         },
       };
     case REMOVE_KIT_CART:
-      console.log("valornokit", action.kit.quantidadeDoKit);
       return {
         ...state,
         quantidadeTotal: state.quantidadeTotal - action.kit.quantidadeDoKit,
         valorTotal:
           state.valorTotal - action.kit.valorDoKit * action.kit.quantidadeDoKit,
         kits: action.kitsRemanescentes,
+      };
+    case UPDATE_QUANTIDADE_KIT:
+      return {
+        ...state,
+        quantidadeTotal: state.quantidadeTotal + action.diferencaDeQuantidade,
+        valorTotal:
+          state.valorTotal + action.diferencaDeQuantidade * action.valorDoKit,
+        kits: action.kits,
       };
     default:
       return state;
