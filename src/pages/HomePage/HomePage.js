@@ -2,7 +2,7 @@
 import React from "react";
 
 //From components
-import Slide from "../../components/Slide/Slide";
+import Slide from "../../components/Slide/NewSlide";
 import Tabs from "../../components/Tabs/Tabs";
 
 //From Material-ui
