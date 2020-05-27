@@ -120,7 +120,7 @@ function getOptionalSteps() {
   return [];
 }
 
-function getStepContent(props, step, validCode, setCode) {
+function getStepContent(props, step, validCode, setCode, setValidInputs) {
   switch (step) {
     case 0:
       if (contador === 1) {
@@ -135,14 +135,14 @@ function getStepContent(props, step, validCode, setCode) {
         code = null;
         setCode(code);
       }
-      return <Cadastro />;
+      return <Cadastro setValidInputs={setValidInputs} />;
     case 2:
       if (contador === 1) {
         contador = 0;
         code = null;
         setCode(code);
       }
-      return <Frete />;
+      return <Frete setValidInputs={setValidInputs} />;
     case 3:
       (async () => {
         const varCadastro = "dadosCadastro";
@@ -428,6 +428,11 @@ function HorizontalLinearStepper(props) {
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
 
+  ///////////////////////
+  ////VALIDATE_INPUTS////
+  ///////////////////////
+  const [validInputs, setValidInputs] = React.useState(true);
+
   function validCode(code) {
     if (!finalCode) {
       setCode(code);
@@ -505,7 +510,15 @@ function HorizontalLinearStepper(props) {
           </div>
         ) : (
           <Grid>
-            <Grid>{getStepContent(props, activeStep, validCode, setCode)}</Grid>
+            <Grid>
+              {getStepContent(
+                props,
+                activeStep,
+                validCode,
+                setCode,
+                setValidInputs
+              )}
+            </Grid>
             <Grid
               container
               direction="row"
@@ -544,7 +557,9 @@ function HorizontalLinearStepper(props) {
                     color="primary"
                     onClick={handleNext}
                     className={classes.button}
-                    disabled={btnHandler(props.carrinho.quantidadeTotal)}
+                    disabled={
+                      btnHandler(props.carrinho.quantidadeTotal) || !validInputs
+                    }
                   >
                     Próximo
                   </Button>

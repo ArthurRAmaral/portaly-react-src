@@ -24,6 +24,16 @@ class Cadastro extends Component {
       ? dadosFrete
         ? dadosFrete
         : {
+            errors: {
+              first_name: false,
+              last_name: false,
+              address_1: false,
+              address_2: false,
+              city: false,
+              state: false,
+              postcode: false,
+              country: false,
+            },
             first_name: dadosCadastro.first_name,
             last_name: dadosCadastro.last_name,
             address_1: dadosCadastro.address_1,
@@ -34,6 +44,16 @@ class Cadastro extends Component {
             country: dadosCadastro.country,
           }
       : {
+          errors: {
+            first_name: false,
+            last_name: false,
+            address_1: false,
+            address_2: false,
+            city: false,
+            state: false,
+            postcode: false,
+            country: false,
+          },
           first_name: "",
           last_name: "",
           address_1: "",
@@ -61,10 +81,79 @@ class Cadastro extends Component {
     toSave[id] = value;
     sessionStorage.setItem(varFrete, JSON.stringify(toSave));
     this.setState({ [id]: value });
+    this.validate();
+  }
+
+  validate() {
+    const inputsValues = this.state;
+
+    for (const key in inputsValues) {
+      const input = inputsValues[key];
+      if (
+        key === "first_name" ||
+        key === "last_name" ||
+        key === "address_1" ||
+        key === "address_2" ||
+        key === "city" ||
+        key === "state" ||
+        key === "email" ||
+        key === "country"
+      ) {
+        if (input.length <= 0) {
+          this.props.setValidInputs(false);
+          const state = this.state;
+          state.errors[key] = true;
+          this.setState(state);
+          return;
+        } else {
+          const state = this.state;
+          state.errors[key] = false;
+          this.setState(state);
+        }
+      } else if (key === "cpf") {
+        if (input.length < 14) {
+          this.props.setValidInputs(false);
+          const state = this.state;
+          state.errors[key] = true;
+          this.setState(state);
+          return;
+        } else {
+          const state = this.state;
+          state.errors[key] = false;
+          this.setState(state);
+        }
+      } else if (key === "postcode") {
+        if (input.length < 10) {
+          this.props.setValidInputs(false);
+          const state = this.state;
+          state.errors[key] = true;
+          this.setState(state);
+          return;
+        } else {
+          const state = this.state;
+          state.errors[key] = false;
+          this.setState(state);
+        }
+      } else if (key === "phone") {
+        if (input.length < 14) {
+          this.props.setValidInputs(false);
+          const state = this.state;
+          state.errors[key] = true;
+          this.setState(state);
+          return;
+        } else {
+          const state = this.state;
+          state.errors[key] = false;
+          this.setState(state);
+        }
+      }
+    }
+    this.props.setValidInputs(true);
   }
 
   componentDidMount() {
     sessionStorage.setItem(varFrete, JSON.stringify(this.state));
+    this.validate();
   }
 
   render() {
@@ -77,6 +166,7 @@ class Cadastro extends Component {
           label="Rua"
           value={this.state.address_1}
           variant="outlined"
+          error={this.state.errors.address_1}
         />
         <TextField
           id={inputsIds.address_2}
@@ -84,6 +174,7 @@ class Cadastro extends Component {
           label="Número"
           value={this.state.address_2}
           variant="outlined"
+          error={this.state.errors.address_2}
         />
         <TextField
           id={inputsIds.city}
@@ -91,6 +182,7 @@ class Cadastro extends Component {
           label="Cidade"
           value={this.state.city}
           variant="outlined"
+          error={this.state.errors.city}
         />
         <TextField
           id={inputsIds.state}
@@ -98,6 +190,7 @@ class Cadastro extends Component {
           label="Estado"
           value={this.state.state}
           variant="outlined"
+          error={this.state.errors.state}
         />
         <TextField
           id={inputsIds.postcode}
@@ -105,6 +198,7 @@ class Cadastro extends Component {
           label="CEP"
           value={this.state.postcode}
           variant="outlined"
+          error={this.state.errors.postcode}
         />
         <TextField
           id={inputsIds.country}
@@ -112,6 +206,7 @@ class Cadastro extends Component {
           label="País"
           value={this.state.country}
           variant="outlined"
+          error={this.state.errors.country}
         />
       </Fragment>
     );
