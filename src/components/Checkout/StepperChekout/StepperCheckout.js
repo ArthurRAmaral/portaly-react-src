@@ -35,6 +35,9 @@ import ApiCupom from "../../../services/ApiCupom";
 //From redux
 import { salvaCupom } from "../../../redux/actions/cupomActions";
 
+//From services
+import ApiPedidos from "../../../services/ApiPedidos";
+
 ////////////
 // STEPPER//
 ////////////
