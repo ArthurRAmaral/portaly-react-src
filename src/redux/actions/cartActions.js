@@ -69,7 +69,9 @@ export function updateQuantidadeKit(id, novaQuantidade) {
     let kits = getState().carrinho.kits;
     const kit = kits[id];
     let diferencaDeQuantidade;
+
     const quantidadeAntiga = kit.quantidadeDoKit;
+
     if (novaQuantidade === "aumenta") {
       diferencaDeQuantidade = 1;
     } else if (novaQuantidade === "diminui") {
@@ -77,6 +79,7 @@ export function updateQuantidadeKit(id, novaQuantidade) {
     } else {
       diferencaDeQuantidade = novaQuantidade - kit.quantidadeDoKit;
     }
+
     if (novaQuantidade === "diminui") {
       if (quantidadeAntiga > 1) kit.quantidadeDoKit += diferencaDeQuantidade;
       else diferencaDeQuantidade = 0;

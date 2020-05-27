@@ -239,7 +239,15 @@ const calculaCupomAmount = (cupom, qnt) => {
 const calculaQuantidade = (carrinho, cupom) => {
   let qnt = 0;
   for (const key in carrinho) {
-    if (carrinho[key].quantidade) {
+    if (key === "kits" && cupom.product_ids.length === 0) {
+      const kits = carrinho[key];
+      for (const idDoKit in kits) {
+        const quantidade = kits[idDoKit].quantidadeDoKit;
+        const valor = kits[idDoKit].valorDoKit;
+        totalVal += valor * quantidade;
+        qnt += quantidade;
+      }
+    } else if (carrinho[key].quantidade) {
       if (cupom.product_ids.length > 0) {
         if (cupom.product_ids.indexOf(carrinho[key].produto[0].id) > -1) {
           totalVal += parseFloat(carrinho[key].produto[0].price);
@@ -251,6 +259,7 @@ const calculaQuantidade = (carrinho, cupom) => {
       }
     }
   }
+  console.log(qnt);
   return qnt;
 };
 
@@ -262,6 +271,7 @@ const createPagseguroProducts = async (props) => {
   let cupomAmount = 0;
   cupom = await ApiCupom.getCoupon(cupom);
   if (cupom.data.length > 0) {
+    console.log(cupom);
     if (
       cupom.data[0].maximum_amount < 1 ||
       (cupom.data[0].minimum_amount <= props.carrinho.valorTotal &&
@@ -276,33 +286,66 @@ const createPagseguroProducts = async (props) => {
   const arrayItens = [];
   const arrayIds = [];
   for (const key in props.carrinho) {
-    let item = props.carrinho[key].produto;
-    const variacao = props.carrinho[key].variacao;
-    const quantidade = props.carrinho[key].quantidade;
     let product_ids = [],
       discount_type = "";
     if (cupom.data.length > 0) {
       product_ids = cupom.data[0].product_ids;
       discount_type = cupom.data[0].discount_type;
     }
-    if (item) {
-      item = item[0];
-      const itemToPush = {
-        id: item.id,
-        description: item.name + (variacao ? " (" + variacao + ")" : ""),
-        amount: await calculaValorItem(
-          item.price,
+    if (key === "kits") {
+      const kits = props.carrinho[key];
+      for (const idDoKit in kits) {
+        const kit = kits[idDoKit].kit[0];
+        const quantidade = kits[idDoKit].quantidadeDoKit;
+        const valor = kits[idDoKit].valorDoKit;
+        console.log(
+          valor.toString(),
           cupomAmount,
           parseInt(quantidade),
           product_ids,
           discount_type,
-          item.id
-        ),
-        quantity: parseInt(quantidade),
-        weight: parseFloat(item.weight) ? parseFloat(item.weight) : 1,
-      };
-      arrayIds.push(item.id);
-      arrayItens.push(itemToPush);
+          idDoKit
+        );
+        const itemToPush = {
+          id: idDoKit,
+          description: kit.description,
+          amount: await calculaValorItem(
+            valor.toString(),
+            cupomAmount,
+            parseInt(quantidade),
+            product_ids,
+            discount_type,
+            idDoKit
+          ),
+          quantity: parseInt(quantidade),
+          weight: parseFloat(kit.weight) ? parseFloat(kit.weight) : 1,
+        };
+        arrayIds.push(idDoKit);
+        arrayItens.push(itemToPush);
+      }
+    } else {
+      let item = props.carrinho[key].produto;
+      const variacao = props.carrinho[key].variacao;
+      const quantidade = props.carrinho[key].quantidade;
+      if (item) {
+        item = item[0];
+        const itemToPush = {
+          id: item.id,
+          description: item.name + (variacao ? " (" + variacao + ")" : ""),
+          amount: await calculaValorItem(
+            item.price,
+            cupomAmount,
+            parseInt(quantidade),
+            product_ids,
+            discount_type,
+            item.id
+          ),
+          quantity: parseInt(quantidade),
+          weight: parseFloat(item.weight) ? parseFloat(item.weight) : 1,
+        };
+        arrayIds.push(item.id);
+        arrayItens.push(itemToPush);
+      }
     }
   }
   let idFrete = 1;
