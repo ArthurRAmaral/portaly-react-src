@@ -31,7 +31,7 @@ import colors from "../util/Colors";
 //From services
 import InitPath from "../services/InitPath";
 
-const QUANTIDADE_POR_PAGINA = 5;
+const QUANTIDADE_POR_PAGINA = 10;
 
 class PaginaCategorias extends Component {
   constructor(props) {
