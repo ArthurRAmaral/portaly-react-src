@@ -60,7 +60,12 @@ class Cadastro extends Component {
 
     if (id === inputsIds.phone) {
       const unMasked = unMask(value);
-      value = mask(unMasked, ["(99) 9999-9999", "(99) 99999-9999"]);
+      value = mask(unMasked, [
+        "(99) 9999-9999",
+        "(99) 99999-9999",
+        "+9 (99) 99999-9999",
+        "+99 (99) 99999-9999",
+      ]);
     }
 
     toSave[id] = value;
