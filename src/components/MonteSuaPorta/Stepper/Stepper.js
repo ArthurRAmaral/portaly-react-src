@@ -1,5 +1,6 @@
 //From depedencies
 import React from "react";
+import { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -27,6 +28,7 @@ import InitPath from "../../../services/InitPath";
 import useStyles, { useQontoStepIconStyles, QontoConnector } from "./style";
 import EscolherItems from "../EscolherItem";
 import FecharMontagem from "../FecharMontagem";
+import CircleLoading from "../../loading/CircleLoading";
 
 //From redux
 import { addKit } from "../../../redux/actions/cartActions";
@@ -127,6 +129,7 @@ function HorizontalLinearStepper(props) {
   // const [activeStep, setActiveStep] = React.useState(5);
   const [activeStep, setActiveStep] = React.useState(0);
   const [btnvalid, setBtnValid] = React.useState(true);
+  const [carregando, setCarregando] = React.useState(false);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
 
@@ -144,9 +147,11 @@ function HorizontalLinearStepper(props) {
   };
 
   const handleSubmit = async () => {
+    setCarregando(true);
     const kit = Montador.getMontador();
     await props.addKit(kit);
     Montador.resetMontador();
+    window.location.pathname = `${InitPath}/meuCarrinho`;
   };
 
   const handleBack = () => {
@@ -208,7 +213,16 @@ function HorizontalLinearStepper(props) {
             alignItems="center"
             justify="center"
           >
-            {getStepContent(activeStep, btnHandler)}
+            {carregando ? (
+              <Fragment>
+                <CircleLoading />
+                <Typography>
+                  Adicionando ao carrinho. Aguarde um momento.
+                </Typography>
+              </Fragment>
+            ) : (
+              getStepContent(activeStep, btnHandler)
+            )}
           </Grid>
           <Grid
             container
@@ -234,8 +248,8 @@ function HorizontalLinearStepper(props) {
                 color="primary"
                 onClick={handleSubmit}
                 className={classes.button}
-                component={NavLink}
-                to={`${InitPath}/meuCarrinho`}
+                // component={NavLink}
+                // to={`${InitPath}/meuCarrinho`}
               >
                 Adicionar ao Carrinho
               </Button>
