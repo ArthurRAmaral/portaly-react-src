@@ -93,15 +93,14 @@ class PaginaCategorias extends Component {
             alignItems="center"
             justify="center"
           >
-            <Box component={NavLink} to={`${InitPath}/`}>
-              <img
-                src="https://skeavee.com/imagens/portaly/assets/BACKGROUNDCATEGORIA.png"
-                alt=""
-                style={{
-                  width: "100%",
-                  marginBottom: 20,
-                }}
-              />
+            <Box width={1} component={NavLink} to={`${InitPath}/`}>
+              <div style={{
+                width: "100%",
+                height: "250px",
+                backgroundImage: "url('https://skeavee.com/imagens/portaly/assets/BACKGROUNDCATEGORIA.png')",
+                marginBottom: 40,
+              }}>
+              </div>
               <ArrowBackIcon
                 style={{
                   width: 50,
@@ -163,8 +162,8 @@ class PaginaCategorias extends Component {
                 {Paginador(paginas.length, this.mudarPagina)}
               </Fragment>
             ) : (
-              <LineLoaging />
-            )}
+                <LineLoaging />
+              )}
           </Grid>
         </ThemeProvider>
       </Fragment>
