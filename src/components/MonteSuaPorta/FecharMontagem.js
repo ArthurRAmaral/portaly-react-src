@@ -35,39 +35,59 @@ class FecharMontagem extends Component {
     return (
       <Fragment>
         {produtosSelecionados ? (
-          <section className="center-align produtos-list">
-            {Object.values(produtosSelecionados).map((produto) => {
-              return (
-                <div
-                  className="produto-final"
-                  // onClick={() => this.handleSelect(produto.id)}
-                  key={`intem-${produto.id}`}
-                >
-                  <img
-                    key={produto.id}
-                    src={
-                      produto.images.length > 0
-                        ? produto.images[0].src
-                        : imgDefault
-                    }
-                    alt=""
-                  />
-                  <div className="produto-dados-montagem">
-                    <p className="nome">{produto.name}</p>
-                    <p className="preco">R$: {produto.price}</p>
+          <Fragment>
+            <section className="center-align produtos-list">
+              {Object.values(produtosSelecionados).map((produto) => {
+                return (
+                  <div
+                    className="produto-final"
+                    // onClick={() => this.handleSelect(produto.id)}
+                    key={`intem-${produto.id}`}
+                  >
+                    <img
+                      key={produto.id}
+                      src={
+                        produto.images.length > 0
+                          ? produto.images[0].src
+                          : imgDefault
+                      }
+                      alt=""
+                    />
+                    <div className="produto-dados-montagem">
+                      <p className="nome">{produto.name}</p>
+                      <p className="preco">R$: {produto.price}</p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-            <span>Quantidae de portas montadas: </span>
-            <input
-              type="number"
-              name="Quantidade"
-              id="quantidadedekits"
-              value={quantidade}
-              onChange={(event) => this.handleChangeQuantidade(event)}
-            />
-          </section>
+                );
+              })}
+            </section>
+            <div>
+              <span
+                style={{
+                  fontSize: "25px",
+                  color: "#8A572D",
+                }}
+              >
+                Quantidae de portas montadas:{" "}
+              </span>
+              <input
+                type="number"
+                name="Quantidade"
+                id="quantidadedekits"
+                value={quantidade}
+                onChange={(event) => this.handleChangeQuantidade(event)}
+                style={{
+                  width: "50px",
+                  height: "35px",
+                  borderColor: "#8A572D",
+                  color: "#8A572D",
+                  outline: "none",
+                  fontSize: "20px",
+                  textJustify: "center",
+                }}
+              />
+            </div>
+          </Fragment>
         ) : (
           <CircleLoading />
         )}

@@ -6,8 +6,9 @@ import { connect } from "react-redux";
 
 //From Material-ui
 import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
+import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import FacebookIcon from "@material-ui/icons/Facebook";
@@ -17,7 +18,6 @@ import Button from "@material-ui/core/Button";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import Box from "@material-ui/core/Box";
 
 // From util
 import InitPath from "../../services/InitPath";
