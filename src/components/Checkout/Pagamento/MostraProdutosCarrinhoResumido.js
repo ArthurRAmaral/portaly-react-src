@@ -34,6 +34,7 @@ import ApiCupom from "../../../services/ApiCupom";
 const MostrarProdutos = (props) => {
   const classes = useStyles();
   const {
+    freteGratis,
     fretePreco,
     freteLugar,
     buyer,
@@ -316,7 +317,11 @@ const MostrarProdutos = (props) => {
                     {carrinho.valorTotal.toFixed(2)}
                   </Typography>
                   <Typography className={classes.textColor}>
-                    {fretePreco ? fretePreco : "Calculando..."}
+                    {fretePreco
+                      ? fretePreco
+                      : freteGratis
+                      ? freteGratis
+                      : "Calculando..."}
                   </Typography>
                 </TableCell>
               </TableRow>
@@ -329,7 +334,11 @@ const MostrarProdutos = (props) => {
                 <TableCell />
                 <TableCell align="right">
                   <Typography className={classes.textTotal}>
-                    {(carrinho.valorTotal + parseFloat(fretePreco)).toFixed(2)}
+                    {freteGratis
+                      ? (carrinho.valorTotal + parseFloat(fretePreco)).toFixed(
+                          2
+                        )
+                      : "Calculando..."}
                   </Typography>
                 </TableCell>
               </TableRow>

@@ -21,8 +21,9 @@ class Pagamento extends Component {
     super(props);
 
     this.state = {
-      tax: null,
+      tax: 0,
       place: null,
+      gratis: false,
       buyer: null,
       coupon: this.props.cupom.length > 0 ? this.props.cupom.join("") : "",
       couponDesc: "",
@@ -58,6 +59,7 @@ class Pagamento extends Component {
       this.props.salvaFrete("0");
       value = " Grátis";
     } else {
+      this.setState({ gratis: true });
       await mapBox.getTax(shipTo).then((tax) => {
         value = tax;
         this.props.salvaFrete(value);
@@ -69,6 +71,10 @@ class Pagamento extends Component {
     });
 
     this.setState({ tax: value });
+    if (cupom.data[0].free_shipping) {
+      this.setState({ tax: 0 });
+    }
+    this.setState({ gratis: "Grátis" });
     this.setState({ place: place });
     this.setState({
       buyer: dadosCadastro.first_name + " " + dadosCadastro.last_name,
@@ -81,6 +87,8 @@ class Pagamento extends Component {
       type = cupom.data[0].discount_type;
       amount = cupom.data[0].amount;
     }
+
+    console.log("AQQQQQQQQQQQQ" + this.state.tax);
 
     if (type === "fixed_product" && amount > 0) {
       this.setState({
@@ -130,6 +138,7 @@ class Pagamento extends Component {
 
           {this.props.carrinho.quantidadeTotal ? (
             <MostraProdutosCarrinho
+              freteGratis={this.state.gratis}
               fretePreco={this.state.tax}
               freteLugar={this.state.place}
               couponDesc={this.state.couponDesc}
