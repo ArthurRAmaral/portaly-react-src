@@ -207,7 +207,7 @@ function novoCarrinhoProduto(produtoId, state) {
   });
   carrinho = {
     ...carrinho,
-    quantidadeTotal: diminuiQuantidade(state),
+    quantidadeTotal: diminuiQuantidade(state, prodRemovido.quantidade),
     valorTotal: calculaValorTotalRemover(state, prodRemovido),
     kits: { ...state.carrinho.kits },
   };
@@ -255,6 +255,6 @@ function addQuantidade(state) {
   return state.carrinho.quantidadeTotal + 1;
 }
 
-function diminuiQuantidade(state) {
-  return state.carrinho.quantidadeTotal - 1;
+function diminuiQuantidade(state, quantidade = 0) {
+  return state.carrinho.quantidadeTotal - (quantidade ? quantidade : 1);
 }
