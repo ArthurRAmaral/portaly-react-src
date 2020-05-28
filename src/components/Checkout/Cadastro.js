@@ -1,14 +1,9 @@
 import React, { Component, Fragment } from "react";
 import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
 import { mask, unMask } from "remask";
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
 
-//From util
-import colors from "../../util/Colors";
-import Divider from '@material-ui/core/Divider';
+import Grid from "@material-ui/core/Grid";
+import Container from "@material-ui/core/Container";
 
 const varName = "dadosCadastro";
 
@@ -16,14 +11,14 @@ const inputsIds = {
   first_name: "first_name",
   last_name: "last_name",
   cpf: "cpf",
-  email: "email",
-  phone: "phone",
-  country: "country",
-  state: "state",
-  city: "city",
-  postcode: "postcode",
   address_1: "address_1",
   address_2: "address_2",
+  city: "city",
+  state: "state",
+  postcode: "postcode",
+  country: "country",
+  email: "email",
+  phone: "phone",
 };
 
 class Cadastro extends Component {
@@ -34,31 +29,31 @@ class Cadastro extends Component {
     this.state = dados
       ? dados
       : {
-        errors: {
-          first_name: false,
-          last_name: false,
-          cpf: false,
-          email: false,
-          phone: false,
-          country: false,
-          state: false,
-          city: false,
-          postcode: false,
-          address_1: false,
-          address_2: false,
-        },
-        first_name: "",
-        last_name: "",
-        cpf: "",
-        email: "",
-        phone: "",
-        country: "",
-        state: "",
-        city: "",
-        postcode: "",
-        address_1: "",
-        address_2: "",
-      };
+          errors: {
+            first_name: false,
+            last_name: false,
+            cpf: false,
+            address_1: false,
+            address_2: false,
+            city: false,
+            state: false,
+            postcode: false,
+            country: false,
+            email: false,
+            phone: false,
+          },
+          first_name: "",
+          last_name: "",
+          cpf: "",
+          address_1: "",
+          address_2: "",
+          city: "",
+          state: "",
+          postcode: "",
+          country: "",
+          email: "",
+          phone: "",
+        };
 
     this.handleChange = this.handleChange.bind(this);
     this.validate = this.validate.bind(this);
@@ -172,27 +167,9 @@ class Cadastro extends Component {
   render() {
     return (
       <Fragment>
-        <Grid container direction="row" alignItems="center" justify="center">
-          <Box
-            borderBottom={1}
-            marginBottom={10}
-            style={{
-              borderColor: colors.orangeDark,
-            }}
-          >
-            <Typography
-              className=""
-              variant="h3"
-              style={{
-                color: colors.orangeDark,
-              }}
-            >
-              Cadastro
-            </Typography>
-          </Box>
-        </Grid>
         <Container maxWidth="md">
           <Grid container direction="row" alignItems="center" justify="center">
+            <TextField style={{ display: "none" }} />
             <TextField
               id={inputsIds.first_name}
               onChange={this.handleChange}
@@ -202,147 +179,130 @@ class Cadastro extends Component {
               name="isWord"
               error={this.state.errors.first_name}
               style={{
-                borderColor: colors.orangeDark,
+                paddingBottom: 30,
+                paddingRight: 15,
               }}
-            >
-              <div>
-                <TextField
-                  id={inputsIds.first_name}
-                  onChange={this.handleChange}
-                  label="Nome"
-                  value={this.state.first_name}
-                  variant="outlined"
-                  name="isWord"
-                  error={this.state.errors.first_name}
-                  style={{
-                    paddingBottom: 30,
-                    paddingRight: 15,
-                  }}
-                />
-                <TextField
-                  id={inputsIds.last_name}
-                  onChange={this.handleChange}
-                  label="Sobrenome"
-                  value={this.state.last_name}
-                  variant="outlined"
-                  error={this.state.errors.last_name}
-                  style={{
-                    paddingBottom: 30,
-                    paddingRight: 15,
-                  }}
-                />
-                <TextField
-                  id={inputsIds.cpf}
-                  onChange={this.handleChange}
-                  label="CPF"
-                  value={this.state.cpf}
-                  variant="outlined"
-                  error={this.state.errors.cpf}
-                  style={{
-                    paddingBottom: 30,
-                    paddingRight: 15,
-                  }}
-                />
-                <TextField
-                  id={inputsIds.email}
-                  onChange={this.handleChange}
-                  label="Email"
-                  value={this.state.email}
-                  variant="outlined"
-                  error={this.state.errors.email}
-                  style={{
-                    paddingBottom: 30,
-                    paddingRight: 15,
-                  }}
-                />
-                <TextField
-                  id={inputsIds.phone}
-                  onChange={this.handleChange}
-                  label="Telefone"
-                  value={this.state.phone}
-                  variant="outlined"
-                  error={this.state.errors.phone}
-                  style={{
-                    paddingBottom: 30,
-                    paddingRight: 15,
-                  }}
-                />
-              </div>
-            </Box>
-            <div>
-              <TextField
-                id={inputsIds.country}
-                onChange={this.handleChange}
-                label="País"
-                value={this.state.country}
-                variant="outlined"
-                error={this.state.errors.country}
-                style={{
-                  paddingBottom: 30,
-                  paddingRight: 15,
-                }}
-              />
-              <TextField
-                id={inputsIds.state}
-                onChange={this.handleChange}
-                label="Estado"
-                value={this.state.state}
-                variant="outlined"
-                error={this.state.errors.state}
-                style={{
-                  paddingBottom: 30,
-                  paddingRight: 15,
-                }}
-              />
-              <TextField
-                id={inputsIds.city}
-                onChange={this.handleChange}
-                label="Cidade"
-                value={this.state.city}
-                variant="outlined"
-                error={this.state.errors.city}
-                style={{
-                  paddingBottom: 30,
-                  paddingRight: 15,
-                }}
-              />
-              <TextField
-                id={inputsIds.postcode}
-                onChange={this.handleChange}
-                label="CEP"
-                value={this.state.postcode}
-                variant="outlined"
-                error={this.state.errors.postcode}
-                style={{
-                  paddingBottom: 30,
-                  paddingRight: 15,
-                }}
-              />
-              <TextField
-                id={inputsIds.address_1}
-                onChange={this.handleChange}
-                label="Rua"
-                value={this.state.address_1}
-                variant="outlined"
-                error={this.state.errors.address_1}
-                style={{
-                  paddingBottom: 30,
-                  paddingRight: 15,
-                }}
-              />
-              <TextField
-                id={inputsIds.address_2}
-                onChange={this.handleChange}
-                label="Número"
-                value={this.state.address_2}
-                variant="outlined"
-                error={this.state.errors.address_2}
-                style={{
-                  paddingBottom: 30,
-                  paddingRight: 15,
-                }}
-              />
-            </div>
+            />
+            <TextField
+              id={inputsIds.last_name}
+              onChange={this.handleChange}
+              label="Sobrenome"
+              value={this.state.last_name}
+              variant="outlined"
+              error={this.state.errors.last_name}
+              style={{
+                paddingBottom: 30,
+                paddingRight: 15,
+              }}
+            />
+            <TextField
+              id={inputsIds.cpf}
+              onChange={this.handleChange}
+              label="CPF"
+              value={this.state.cpf}
+              variant="outlined"
+              error={this.state.errors.cpf}
+              style={{
+                paddingBottom: 30,
+                paddingRight: 15,
+              }}
+            />
+            <TextField
+              id={inputsIds.address_1}
+              onChange={this.handleChange}
+              label="Rua"
+              value={this.state.address_1}
+              variant="outlined"
+              error={this.state.errors.address_1}
+              style={{
+                paddingBottom: 30,
+                paddingRight: 15,
+              }}
+            />
+            <TextField
+              id={inputsIds.address_2}
+              onChange={this.handleChange}
+              label="Número"
+              value={this.state.address_2}
+              variant="outlined"
+              error={this.state.errors.address_2}
+              style={{
+                paddingBottom: 30,
+                paddingRight: 15,
+              }}
+            />
+            <TextField
+              id={inputsIds.city}
+              onChange={this.handleChange}
+              label="Cidade"
+              value={this.state.city}
+              variant="outlined"
+              error={this.state.errors.city}
+              style={{
+                paddingBottom: 30,
+                paddingRight: 15,
+              }}
+            />
+            <TextField
+              id={inputsIds.state}
+              onChange={this.handleChange}
+              label="Estado"
+              value={this.state.state}
+              variant="outlined"
+              error={this.state.errors.state}
+              style={{
+                paddingBottom: 30,
+                paddingRight: 15,
+              }}
+            />
+            <TextField
+              id={inputsIds.postcode}
+              onChange={this.handleChange}
+              label="CEP"
+              value={this.state.postcode}
+              variant="outlined"
+              error={this.state.errors.postcode}
+              style={{
+                paddingBottom: 30,
+                paddingRight: 15,
+              }}
+            />
+            <TextField
+              id={inputsIds.country}
+              onChange={this.handleChange}
+              label="País"
+              value={this.state.country}
+              variant="outlined"
+              error={this.state.errors.country}
+              style={{
+                paddingBottom: 30,
+                paddingRight: 15,
+              }}
+            />
+            <TextField
+              id={inputsIds.email}
+              onChange={this.handleChange}
+              label="Email"
+              value={this.state.email}
+              variant="outlined"
+              error={this.state.errors.email}
+              style={{
+                paddingBottom: 30,
+                paddingRight: 15,
+              }}
+            />
+            <TextField
+              id={inputsIds.phone}
+              onChange={this.handleChange}
+              label="Telefone"
+              value={this.state.phone}
+              variant="outlined"
+              error={this.state.errors.phone}
+              style={{
+                paddingBottom: 30,
+                paddingRight: 15,
+              }}
+            />
           </Grid>
         </Container>
       </Fragment>
