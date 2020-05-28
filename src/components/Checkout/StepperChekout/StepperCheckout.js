@@ -22,7 +22,7 @@ import clsx from "clsx";
 import Carrinho from "../Carrinho/Carrinho";
 import Cadastro from "../Cadastro";
 import Frete from "../Frete";
-import Pagamento from "../Pagamento";
+import Pagamento from "../Pagamento/Pagamento";
 import useStyles from "./style";
 
 //From components
