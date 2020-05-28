@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+.slider {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.h1 {
+  font-family: Poppins;
+}
+
+.slider a.previousButton,
+.slider a.nextButton {
+  font-size: 14px;
+  line-height: 0;
+  /* display: none; */
+  z-index: 100;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  padding: 10px;
+  text-decoration: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  /* prevent jump effect when scaling */
+}
+
+.slider a.previousButton:not(.disabled):hover,
+.slider a.nextButton:not(.disabled):hover {
+  -webkit-transform: translateY(-50%) scale(1.25);
+  transform: translateY(-50%) scale(1.25);
+  cursor: pointer;
+}
+
+.slider a.previousButton {
+  left: 20px;
+}
+
+.slider a.nextButton {
+  right: 20px;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+}
+
+.slide.hidden {
+  visibility: hidden;
+}
+
+.slide.previous {
+  left: -100%;
+}
+
+.slide.current {
+  left: 0;
+}
+
+.slide.next {
+  left: 100%;
+}
+
+.slide.animateIn,
+.slide.animateOut {
+  -webkit-transition: all 2s ease;
+  transition: all 2s ease;
+}
+
+.slide.animateIn.previous,
+.slide.animateIn.next {
+  left: 0;
+  visibility: visible;
+}
+
+.slide.animateOut.previous {
+  left: 100%;
+}
+
+.slide.animateOut.next {
+  left: -100%;
+}

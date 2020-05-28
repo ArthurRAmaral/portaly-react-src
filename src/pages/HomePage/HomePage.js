@@ -27,8 +27,6 @@ const HomePage = () => {
       <div
         style={{
           width: "100%",
-          backgroundColor: "white",
-          display: "inline-table",
         }}
       >
         <Slide />

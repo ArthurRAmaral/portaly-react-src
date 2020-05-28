@@ -1,18 +1,18 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Slider from "react-animated-slider";
-import "../../css/components/slider.css";
-import useStyles from "./style";
 
 //Links e Itens
 import autoBind from "auto-bind";
 import { connect } from "react-redux";
 import InitPath from "../../services/InitPath";
 import { NavLink } from "react-router-dom";
+import useStyles from "./style";
+import "./slider.css";
 
 function Slide(props) {
   const classes = useStyles();
-  const items = [];
-  const content = (
+
+  return (
     <div className={classes.link}>
       <div className={classes.sliderContent}>
         <div className={classes.div}>
@@ -30,10 +30,6 @@ function Slide(props) {
       </div>
     </div>
   );
-
-  items.push(content);
-
-  return <Slider>{items}</Slider>;
 }
 
 let items = [];
@@ -97,15 +93,25 @@ class NewSlide extends React.Component {
     }
   }
 
+  add() {
+    const lastItem = this.state.items.length - 1 + 1;
+    this.setState({ lastItem, items: [...this.state.items, lastItem] });
+  }
+
+  pop(len) {
+    const lastItem = this.state.items.length - 1 - len;
+    this.setState({ lastItem, items: this.state.items.slice(0, -len) });
+  }
+
   render() {
     return (
-      <div>
-        <Slider autoplay={5000}>
-          {this.state.items.map((item, index) => (
+      <Slider autoplay={5000}>
+        {this.state.items.map((item, index) => (
+          <div key={index} style={{ "text-align": "center" }}>
             <Slide item={item} key={index} />
-          ))}
-        </Slider>
-      </div>
+          </div>
+        ))}
+      </Slider>
     );
   }
 }
