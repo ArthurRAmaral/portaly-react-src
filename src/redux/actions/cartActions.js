@@ -54,7 +54,6 @@ export function removeKit(id) {
     let kits = getState().carrinho.kits;
     const kit = kits[id];
     delete kits[id];
-    console.log(kits);
     if (quantidadeValida(getState()))
       dispatch({
         type: REMOVE_KIT_CART,
@@ -84,7 +83,6 @@ export function updateQuantidadeKit(id, novaQuantidade) {
       if (quantidadeAntiga > 1) kit.quantidadeDoKit += diferencaDeQuantidade;
       else diferencaDeQuantidade = 0;
     } else kit.quantidadeDoKit += diferencaDeQuantidade;
-    console.log(kits);
     dispatch({
       type: UPDATE_QUANTIDADE_KIT,
       kits: kits,

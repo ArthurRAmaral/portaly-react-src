@@ -48,7 +48,6 @@ class PaginaCategorias extends Component {
 
   componentDidMount() {
     this.props.buscaProduto(this.state.paginaId);
-    console.log(this.props.produtos);
   }
 
   componentWillReceiveProps(nextProps) {

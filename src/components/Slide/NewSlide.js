@@ -79,7 +79,6 @@ class NewSlide extends React.Component {
       categories.splice(pos, 1);
       const productChosen =
         categoryChosen[(categoryChosen.length * Math.random()) << 0];
-      console.log(productChosen);
       const productFormat = {
         Name: productChosen.name,
         Caption: parseFloat(productChosen.price).toFixed(2),

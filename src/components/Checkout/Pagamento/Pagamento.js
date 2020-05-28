@@ -83,12 +83,9 @@ class Pagamento extends Component {
     let type = "",
       amount = 0;
     if (couponExist) {
-      console.log("existe");
       type = cupom.data[0].discount_type;
       amount = cupom.data[0].amount;
     }
-
-    console.log("AQQQQQQQQQQQQ" + this.state.tax);
 
     if (type === "fixed_product" && amount > 0) {
       this.setState({
