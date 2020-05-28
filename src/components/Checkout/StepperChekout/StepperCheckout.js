@@ -556,9 +556,12 @@ function HorizontalLinearStepper(props) {
                     color="primary"
                     onClick={handleNext}
                     className={classes.button}
-                    disabled={
-                      btnHandler(props.carrinho.quantidadeTotal) || !validInputs
-                    }
+                    disabled={(() => {
+                      return (
+                        btnHandler(props.carrinho.quantidadeTotal) ||
+                        !validInputs
+                      );
+                    })()}
                   >
                     Próximo
                   </Button>

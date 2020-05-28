@@ -84,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
     height: "300px",
   },
   sliderContent: {
+    fontFamily: "Roboto, Arial",
     textAlign: "center",
     width: "100%",
     backgroundSize: "cover",
