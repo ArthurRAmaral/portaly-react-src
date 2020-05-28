@@ -71,10 +71,10 @@ class Pagamento extends Component {
     });
 
     this.setState({ tax: value });
-    if (cupom.data[0].free_shipping) {
+    if (couponExist && cupom.data[0].free_shipping) {
       this.setState({ tax: 0 });
+      this.setState({ gratis: "Grátis" });
     }
-    this.setState({ gratis: "Grátis" });
     this.setState({ place: place });
     this.setState({
       buyer: dadosCadastro.first_name + " " + dadosCadastro.last_name,

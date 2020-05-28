@@ -343,9 +343,8 @@ const createPagseguroProducts = async (props) => {
 
   console.log("Frete = ", props.frete);
 
-  const valorFrete = Object.values(props.frete).length
-    ? props.frete.join("")
-    : "0";
+  const valorFrete = props.frete.join(""); //Object.values(props.frete).length
+  //: "0";
 
   console.log("valorFrete = ", valorFrete);
 
