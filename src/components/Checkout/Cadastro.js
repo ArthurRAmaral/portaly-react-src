@@ -1,11 +1,15 @@
 import React, { Component, Fragment } from "react";
 import TextField from "@material-ui/core/TextField";
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import { mask, unMask } from "remask";
-
 import Grid from "@material-ui/core/Grid";
+import { mask, unMask } from "remask";
 import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+
+//From util
+import colors from "../../util/Colors";
+
+import useStyles from "./style";
 
 const varName = "dadosCadastro";
 
@@ -24,7 +28,6 @@ const inputsIds = {
 };
 
 class Cadastro extends Component {
-
   constructor(props) {
     super(props);
     let dados = JSON.parse(sessionStorage.getItem(varName));
@@ -32,32 +35,31 @@ class Cadastro extends Component {
     this.state = dados
       ? dados
       : {
-        errors: {
-          first_name: false,
-          last_name: false,
-          cpf: false,
-          email: false,
-          phone: false,
-          country: false,
-          state: false,
-          city: false,
-          postcode: false,
-          address_1: false,
-          address_2: false,
-
-        },
-        first_name: "",
-        last_name: "",
-        cpf: "",
-        email: "",
-        phone: "",
-        country: "",
-        state: "",
-        city: "",
-        postcode: "",
-        address_1: "",
-        address_2: "",
-      };
+          errors: {
+            first_name: false,
+            last_name: false,
+            cpf: false,
+            email: false,
+            phone: false,
+            country: false,
+            state: false,
+            city: false,
+            postcode: false,
+            address_1: false,
+            address_2: false,
+          },
+          first_name: "",
+          last_name: "",
+          cpf: "",
+          email: "",
+          phone: "",
+          country: "",
+          state: "",
+          city: "",
+          postcode: "",
+          address_1: "",
+          address_2: "",
+        };
 
     this.handleChange = this.handleChange.bind(this);
     this.validate = this.validate.bind(this);
@@ -171,6 +173,25 @@ class Cadastro extends Component {
   render() {
     return (
       <Fragment>
+        <Grid container direction="row" alignItems="center" justify="center">
+          <Box
+            borderBottom={2}
+            marginBottom={10}
+            style={{
+              borderColor: colors.orangeDark,
+            }}
+          >
+            <Typography
+              className=""
+              variant="h3"
+              style={{
+                color: colors.orangeDark,
+              }}
+            >
+              Cadastro
+            </Typography>
+          </Box>
+        </Grid>
         <Container maxWidth="md">
           <Grid container direction="row" alignItems="center" justify="center">
             <TextField style={{ display: "none" }} />

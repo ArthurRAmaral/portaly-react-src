@@ -4,6 +4,11 @@ import TextField from "@material-ui/core/TextField";
 
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+
+//From util
+import colors from "../../util/Colors";
 
 const varCadastro = "dadosCadastro";
 const varFrete = "dadosFrete";
@@ -162,6 +167,25 @@ class Cadastro extends Component {
   render() {
     return (
       <Fragment>
+        <Grid container direction="row" alignItems="center" justify="center">
+          <Box
+            borderBottom={2}
+            marginBottom={10}
+            style={{
+              borderColor: colors.orangeDark,
+            }}
+          >
+            <Typography
+              className=""
+              variant="h3"
+              style={{
+                color: colors.orangeDark,
+              }}
+            >
+              Frete
+            </Typography>
+          </Box>
+        </Grid>
         <Container maxWidth="md">
           <Grid container direction="row" alignItems="center" justify="center">
             <TextField
