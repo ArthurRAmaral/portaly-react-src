@@ -1,6 +1,10 @@
 import React, { Component, Fragment } from "react";
 import TextField from "@material-ui/core/TextField";
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import { mask, unMask } from "remask";
+
+import useStyles from "./style";
 
 const varName = "dadosCadastro";
 
@@ -8,17 +12,18 @@ const inputsIds = {
   first_name: "first_name",
   last_name: "last_name",
   cpf: "cpf",
-  address_1: "address_1",
-  address_2: "address_2",
-  city: "city",
-  state: "state",
-  postcode: "postcode",
-  country: "country",
   email: "email",
   phone: "phone",
+  country: "country",
+  state: "state",
+  city: "city",
+  postcode: "postcode",
+  address_1: "address_1",
+  address_2: "address_2",
 };
 
 class Cadastro extends Component {
+
   constructor(props) {
     super(props);
     let dados = JSON.parse(sessionStorage.getItem(varName));
@@ -26,31 +31,32 @@ class Cadastro extends Component {
     this.state = dados
       ? dados
       : {
-          errors: {
-            first_name: false,
-            last_name: false,
-            cpf: false,
-            address_1: false,
-            address_2: false,
-            city: false,
-            state: false,
-            postcode: false,
-            country: false,
-            email: false,
-            phone: false,
-          },
-          first_name: "",
-          last_name: "",
-          cpf: "",
-          address_1: "",
-          address_2: "",
-          city: "",
-          state: "",
-          postcode: "",
-          country: "",
-          email: "",
-          phone: "",
-        };
+        errors: {
+          first_name: false,
+          last_name: false,
+          cpf: false,
+          email: false,
+          phone: false,
+          country: false,
+          state: false,
+          city: false,
+          postcode: false,
+          address_1: false,
+          address_2: false,
+
+        },
+        first_name: "",
+        last_name: "",
+        cpf: "",
+        email: "",
+        phone: "",
+        country: "",
+        state: "",
+        city: "",
+        postcode: "",
+        address_1: "",
+        address_2: "",
+      };
 
     this.handleChange = this.handleChange.bind(this);
     this.validate = this.validate.bind(this);
@@ -163,98 +169,125 @@ class Cadastro extends Component {
 
   render() {
     return (
-      <Fragment>
-        <TextField style={{ display: "none" }} />
-        <TextField
-          id={inputsIds.first_name}
-          onChange={this.handleChange}
-          label="Nome"
-          value={this.state.first_name}
-          variant="outlined"
-          name="isWord"
-          error={this.state.errors.first_name}
-        />
-        <TextField
-          id={inputsIds.last_name}
-          onChange={this.handleChange}
-          label="Sobrenome"
-          value={this.state.last_name}
-          variant="outlined"
-          error={this.state.errors.last_name}
-        />
-        <TextField
-          id={inputsIds.cpf}
-          onChange={this.handleChange}
-          label="CPF"
-          value={this.state.cpf}
-          variant="outlined"
-          error={this.state.errors.cpf}
-        />
-        <TextField
-          id={inputsIds.address_1}
-          onChange={this.handleChange}
-          label="Rua"
-          value={this.state.address_1}
-          variant="outlined"
-          error={this.state.errors.address_1}
-        />
-        <TextField
-          id={inputsIds.address_2}
-          onChange={this.handleChange}
-          label="Número"
-          value={this.state.address_2}
-          variant="outlined"
-          error={this.state.errors.address_2}
-        />
-        <TextField
-          id={inputsIds.city}
-          onChange={this.handleChange}
-          label="Cidade"
-          value={this.state.city}
-          variant="outlined"
-          error={this.state.errors.city}
-        />
-        <TextField
-          id={inputsIds.state}
-          onChange={this.handleChange}
-          label="Estado"
-          value={this.state.state}
-          variant="outlined"
-          error={this.state.errors.state}
-        />
-        <TextField
-          id={inputsIds.postcode}
-          onChange={this.handleChange}
-          label="CEP"
-          value={this.state.postcode}
-          variant="outlined"
-          error={this.state.errors.postcode}
-        />
-        <TextField
-          id={inputsIds.country}
-          onChange={this.handleChange}
-          label="País"
-          value={this.state.country}
-          variant="outlined"
-          error={this.state.errors.country}
-        />
-        <TextField
-          id={inputsIds.email}
-          onChange={this.handleChange}
-          label="Email"
-          value={this.state.email}
-          variant="outlined"
-          error={this.state.errors.email}
-        />
-        <TextField
-          id={inputsIds.phone}
-          onChange={this.handleChange}
-          label="Telefone"
-          value={this.state.phone}
-          variant="outlined"
-          error={this.state.errors.phone}
-        />
-      </Fragment>
+      <div style={{ flexGrow: 1, height: "530px", }}>
+        <Grid container spacing={1}>
+          <Grid item xs={12} sm={6}>
+            <div>
+              <TextField
+                id={inputsIds.first_name}
+                onChange={this.handleChange}
+                label="Nome"
+                value={this.state.first_name}
+                variant="outlined"
+                name="isWord"
+                error={this.state.errors.first_name}
+              />
+              <TextField
+                id={inputsIds.last_name}
+                onChange={this.handleChange}
+                label="Sobrenome"
+                value={this.state.last_name}
+                variant="outlined"
+                error={this.state.errors.last_name}
+              />
+            </div>
+            <div>
+              <TextField
+                id={inputsIds.cpf}
+                onChange={this.handleChange}
+                label="CPF"
+                value={this.state.cpf}
+                variant="outlined"
+                error={this.state.errors.cpf}
+              />
+
+              <TextField
+                id={inputsIds.email}
+                onChange={this.handleChange}
+                label="Email"
+                value={this.state.email}
+                variant="outlined"
+                error={this.state.errors.email}
+              />
+            </div>
+            <div>
+
+              <TextField
+                id={inputsIds.phone}
+                onChange={this.handleChange}
+                label="Telefone"
+                value={this.state.phone}
+                variant="outlined"
+                error={this.state.errors.phone}
+              />
+              <TextField
+                id={inputsIds.postcode}
+                onChange={this.handleChange}
+                label="CEP"
+                value={this.state.postcode}
+                variant="outlined"
+                error={this.state.errors.postcode}
+              />
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <div>
+              <TextField
+                id={inputsIds.country}
+                onChange={this.handleChange}
+                label="País"
+                value={this.state.country}
+                variant="outlined"
+                error={this.state.errors.country}
+              />
+              <TextField
+                id={inputsIds.state}
+                onChange={this.handleChange}
+                label="Estado"
+                value={this.state.state}
+                variant="outlined"
+                error={this.state.errors.state}
+              />
+            </div>
+            <div>
+              <TextField
+                id={inputsIds.city}
+                onChange={this.handleChange}
+                label="Cidade"
+                value={this.state.city}
+                variant="outlined"
+                error={this.state.errors.city}
+              />
+              <TextField
+                id={inputsIds.postcode}
+                onChange={this.handleChange}
+                label="CEP"
+                value={this.state.postcode}
+                variant="outlined"
+                error={this.state.errors.postcode}
+              />
+            </div>
+            <div>
+              <TextField
+                id={inputsIds.address_1}
+                onChange={this.handleChange}
+                label="Rua"
+                value={this.state.address_1}
+                variant="outlined"
+                error={this.state.errors.address_1}
+              />
+              <TextField
+                id={inputsIds.address_2}
+                onChange={this.handleChange}
+                label="Número"
+                value={this.state.address_2}
+                variant="outlined"
+                error={this.state.errors.address_2}
+              />
+            </div>
+          </Grid>
+        </Grid>
+      </div >
     );
   }
 }
