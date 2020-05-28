@@ -134,6 +134,9 @@ const MostrarProdutos = (props) => {
                 <TableCell align="center" className={classes.textColor}>
                   Quantidade
                 </TableCell>
+                <TableCell align="right" className={classes.textColor}>
+                  Total
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -176,12 +179,28 @@ const MostrarProdutos = (props) => {
                           </Box>
                         </Grid>
                       </TableCell>
+                      <TableCell align="right">
+                        <Typography className={classes.textColor}>
+                          {(
+                            produto.produto[0].price * produto.quantidade
+                          ).toFixed(2)}
+                        </Typography>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
                 {kits.map((kit) => {
                   return (
                     <TableRow>
+                      <TableCell align="left">
+                        <Link to={`${InitPath}/monteSuaPorta}`}>
+                          <img
+                            src={`${kit.kit[0].images[0].src}`}
+                            alt=""
+                            className={classes.img}
+                          />
+                        </Link>
+                      </TableCell>
                       <TableCell>
                         {Object.values(kit.produtos).map((produto) => {
                           return (
@@ -216,6 +235,11 @@ const MostrarProdutos = (props) => {
                           </Box>
                           <Grid></Grid>
                         </Grid>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography className={classes.textColor}>
+                          {(kit.valorDoKit * kit.quantidadeDoKit).toFixed(2)}
+                        </Typography>
                       </TableCell>
                     </TableRow>
                   );

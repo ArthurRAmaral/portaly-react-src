@@ -125,6 +125,9 @@ const MostrarProdutos = (props) => {
                 <TableCell align="center" className={classes.textColor}>
                   Quantidade
                 </TableCell>
+                <TableCell align="right" className={classes.textColor}>
+                  Total
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -188,12 +191,19 @@ const MostrarProdutos = (props) => {
                           </Grid>
                         </Grid>
                       </TableCell>
+                      <TableCell align="right">
+                        <Typography className={classes.textColor}>
+                          {(
+                            produto.produto[0].price * produto.quantidade
+                          ).toFixed(2)}
+                        </Typography>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
                 {kits.map((kit) => {
                   return (
-                    <TableRow>
+                    <TableRow key={kit.kit[0].id}>
                       <TableCell align="left">
                         <CloseIcon
                           onClick={() => removeKit(kit.kit[0].id)}
@@ -254,6 +264,11 @@ const MostrarProdutos = (props) => {
                             </Grid>
                           </Grid>
                         </Grid>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography className={classes.textColor}>
+                          {(kit.valorDoKit * kit.quantidadeDoKit).toFixed(2)}
+                        </Typography>
                       </TableCell>
                     </TableRow>
                   );

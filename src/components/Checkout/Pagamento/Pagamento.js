@@ -131,8 +131,8 @@ class Pagamento extends Component {
                 color: colors.orangeDark,
               }}
             >
-              Revisão do Pedido{" "}
-              {this.state.buyer ? "de " + this.state.buyer : ""}
+              Revisão do Pedido
+              {this.state.buyer ? " de " + this.state.buyer : ""}
             </Typography>
           </Box>
 

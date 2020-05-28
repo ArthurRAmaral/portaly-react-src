@@ -194,7 +194,6 @@ class Cadastro extends Component {
         </Grid>
         <Container maxWidth="md">
           <Grid container direction="row" alignItems="center" justify="center">
-            <TextField style={{ display: "none" }} />
             <TextField
               id={inputsIds.first_name}
               onChange={this.handleChange}
