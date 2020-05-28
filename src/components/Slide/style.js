@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "400",
     width: "200px",
     fontSize: "13px",
-    cursor: "cursor",
+    cursor: "pointer",
     float: "left",
     "&:hover": {
       color: "#FFFFFF",
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   link: {
-    background: "linear-gradient(317deg, rgba(255,235,220,1) 0%, rgba(255,255,255,1) 100%)",
+    background: colors.white,
     display: "flex",
     height: "100%",
   },
