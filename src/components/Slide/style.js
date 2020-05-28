@@ -29,8 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   link: {
-    background:
-      "linear-gradient(317deg, rgba(255,235,220,1) 0%, rgba(255,255,255,1) 100%)",
+    background: colors.white,
     display: "flex",
     height: "100%",
   },
