@@ -193,82 +193,69 @@ class Cadastro extends Component {
         </Grid>
         <Container maxWidth="md">
           <Grid container direction="row" alignItems="center" justify="center">
-            <TextField
-              id={inputsIds.first_name}
-              onChange={this.handleChange}
-              label="Nome"
-              value={this.state.first_name}
-              variant="outlined"
-              name="isWord"
-              error={this.state.errors.first_name}
-              style={{
-                borderColor: colors.orangeDark,
-              }}
-            >
-              <div>
-                <TextField
-                  id={inputsIds.first_name}
-                  onChange={this.handleChange}
-                  label="Nome"
-                  value={this.state.first_name}
-                  variant="outlined"
-                  name="isWord"
-                  error={this.state.errors.first_name}
-                  style={{
-                    paddingBottom: 30,
-                    paddingRight: 15,
-                  }}
-                />
-                <TextField
-                  id={inputsIds.last_name}
-                  onChange={this.handleChange}
-                  label="Sobrenome"
-                  value={this.state.last_name}
-                  variant="outlined"
-                  error={this.state.errors.last_name}
-                  style={{
-                    paddingBottom: 30,
-                    paddingRight: 15,
-                  }}
-                />
-                <TextField
-                  id={inputsIds.cpf}
-                  onChange={this.handleChange}
-                  label="CPF"
-                  value={this.state.cpf}
-                  variant="outlined"
-                  error={this.state.errors.cpf}
-                  style={{
-                    paddingBottom: 30,
-                    paddingRight: 15,
-                  }}
-                />
-                <TextField
-                  id={inputsIds.email}
-                  onChange={this.handleChange}
-                  label="Email"
-                  value={this.state.email}
-                  variant="outlined"
-                  error={this.state.errors.email}
-                  style={{
-                    paddingBottom: 30,
-                    paddingRight: 15,
-                  }}
-                />
-                <TextField
-                  id={inputsIds.phone}
-                  onChange={this.handleChange}
-                  label="Telefone"
-                  value={this.state.phone}
-                  variant="outlined"
-                  error={this.state.errors.phone}
-                  style={{
-                    paddingBottom: 30,
-                    paddingRight: 15,
-                  }}
-                />
-              </div>
-            </Box>
+            <div>
+              <TextField
+                id={inputsIds.first_name}
+                onChange={this.handleChange}
+                label="Nome"
+                value={this.state.first_name}
+                variant="outlined"
+                name="isWord"
+                error={this.state.errors.first_name}
+                style={{
+                  paddingBottom: 30,
+                  paddingRight: 15,
+                }}
+              />
+              <TextField
+                id={inputsIds.last_name}
+                onChange={this.handleChange}
+                label="Sobrenome"
+                value={this.state.last_name}
+                variant="outlined"
+                error={this.state.errors.last_name}
+                style={{
+                  paddingBottom: 30,
+                  paddingRight: 15,
+                }}
+              />
+              <TextField
+                id={inputsIds.cpf}
+                onChange={this.handleChange}
+                label="CPF"
+                value={this.state.cpf}
+                variant="outlined"
+                error={this.state.errors.cpf}
+                style={{
+                  paddingBottom: 30,
+                  paddingRight: 15,
+                }}
+              />
+              <TextField
+                id={inputsIds.email}
+                onChange={this.handleChange}
+                label="Email"
+                value={this.state.email}
+                variant="outlined"
+                error={this.state.errors.email}
+                style={{
+                  paddingBottom: 30,
+                  paddingRight: 15,
+                }}
+              />
+              <TextField
+                id={inputsIds.phone}
+                onChange={this.handleChange}
+                label="Telefone"
+                value={this.state.phone}
+                variant="outlined"
+                error={this.state.errors.phone}
+                style={{
+                  paddingBottom: 30,
+                  paddingRight: 15,
+                }}
+              />
+            </div>
             <div>
               <TextField
                 id={inputsIds.country}
