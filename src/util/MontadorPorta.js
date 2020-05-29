@@ -1,54 +1,52 @@
 const montadorInit = {
-  dados: {},
+  produtos: {},
+  valorKit: 0,
   quantidade: 1,
 };
 
-const varName = "montadorportaids";
+const varName = "montadorDePortas";
 
 const funcoesStorageMontador = {
   resetMontador: () => {
     sessionStorage.setItem(varName, JSON.stringify(montadorInit));
   },
 
-  resetMontadorIfEmpty: () => {
-    if (!sessionStorage.getItem(varName))
-      sessionStorage.setItem(varName, JSON.stringify(montadorInit));
-  },
-
-  setMontador: (val) => {
-    sessionStorage.setItem(varName, JSON.stringify(val));
+  setMontador: (montador) => {
+    sessionStorage.setItem(varName, JSON.stringify(montador));
   },
 
   getMontador: () => {
     return JSON.parse(sessionStorage.getItem(varName));
   },
 
-  removeItem: (id) => {
+  setItem: (categoriaSlug, produto) => {
     let montador = funcoesStorageMontador.getMontador();
-    if (montador.ids.indexOf(id) >= 0) {
-      montador.ids.splice(montador.ids.indexOf(id), 1);
-    }
-    funcoesStorageMontador.setMontador(montador);
-  },
-
-  setItem: (id, categoriaSlug) => {
-    let montador = funcoesStorageMontador.getMontador();
-    montador.dados[categoriaSlug] =
-      montador.dados[categoriaSlug] === id ? 0 : id;
-    funcoesStorageMontador.setMontador(montador);
-  },
-
-  exists: () => JSON.parse(sessionStorage.getItem(varName)) !== undefined,
-
-  setQuantidade: (quantidade) => {
-    let montador = funcoesStorageMontador.getMontador();
-    montador.quantidade = quantidade;
+    montador.produtos[categoriaSlug] = produto;
     funcoesStorageMontador.setMontador(montador);
   },
 
   getQuantidade: () => funcoesStorageMontador.getMontador().quantidade,
 
-  getDados: () => funcoesStorageMontador.getMontador().dados,
+  setQuantidade: (novaQuantidade) => {
+    let montador = funcoesStorageMontador.getMontador();
+    montador.quantidade = novaQuantidade;
+    funcoesStorageMontador.setMontador(montador);
+  },
+
+  getProdutos: () => funcoesStorageMontador.getMontador().produtos,
+
+  setValorKit: () => {
+    let montador = funcoesStorageMontador.getMontador();
+    let valorTotal = 0;
+    Object.values(montador.produtos).map((produto) => {
+      valorTotal += parseFloat(produto.price);
+    });
+    valorTotal *= montador.quantidade;
+    montador.valorKit = valorTotal;
+    funcoesStorageMontador.setMontador(montador);
+  },
+
+  getValorKit: () => funcoesStorageMontador.getMontador().valorKit,
 };
 
 export default funcoesStorageMontador;

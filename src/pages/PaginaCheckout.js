@@ -1,18 +1,19 @@
-import React, { Component } from "react";
-import Stepper from "../components/Checkout/StepperCheckout";
+//From depedencies
+import React from "react";
+import Stepper from "../components/Checkout/StepperChekout/StepperCheckout";
 
-class PaginaCarrinho extends Component {
-  constructor(props) {
-    super(props);
+//From Material-ui
+import { ThemeProvider } from "@material-ui/core/styles";
 
-    this.state = {
-      produtos: [],
-    };
-  }
+//From here
+import theme from "./theme";
 
-  render() {
-    return <Stepper />;
-  }
+function PaginaCarrinho() {
+  return (
+    <ThemeProvider theme={theme}>
+      <Stepper />
+    </ThemeProvider>
+  );
 }
 
 export default PaginaCarrinho;

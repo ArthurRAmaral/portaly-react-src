@@ -28,16 +28,19 @@ function CarrinhoCompras(props) {
           width: "100%",
           height: "100%",
           borderRadius: 5,
+          padding: 5,
         }}
       >
         <ShoppingCartIcon size="large" />
         <TrendingFlatIcon />
-        <span id="value">R$: {props.valorTotal}</span>
+        <span id="value">R$: {props.valorTotal.toFixed(2)}</span>
       </Grid>
     </NavLink>
   );
 }
 
-const mapStateToProps = (state) => ({ valorTotal: state.carrinho.valorTotal });
+const mapStateToProps = (state) => ({
+  valorTotal: state.carrinho.valorTotal,
+});
 
 export default connect(mapStateToProps, null)(CarrinhoCompras);

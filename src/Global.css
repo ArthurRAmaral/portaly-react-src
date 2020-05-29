@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
   text-decoration: none;
   /* font-weight: 400; */
 }
@@ -10,6 +10,7 @@
   min-height: calc(100vh - (262px + 225.344px));
   display: flex;
   align-items: center;
+  overflow: hidden;
   justify-content: center;
 }
 

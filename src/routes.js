@@ -3,7 +3,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 // From componets
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/HomePage/HomePage";
 import PaginaCategoria from "./pages/PaginaCategoria";
 import PaginaProduto from "./pages/PaginaProduto";
 import MonteSuaPorta from "./pages/MonteSuaPorta";
@@ -11,12 +11,13 @@ import ProdutoBuscado from "./pages/ProdutoBuscado";
 import Carrinho from "./pages/PaginaCheckout";
 import DefaultPage from "./pages/DefaultPage";
 import TestPage from "./pages/TestPage";
+import SobreNos from "./pages/SobrePage/SobreNos";
 
 // From util
 import InitPath from "./services/InitPath";
 
 // From css
-import "./css/Global.css";
+import "./Global.css";
 
 const Routes = () => {
   return (
@@ -29,6 +30,7 @@ const Routes = () => {
         <Route path={`${InitPath}/busca/:value`} component={ProdutoBuscado} />
         <Route path={`${InitPath}/meuCarrinho`} component={Carrinho} />
         <Route path={`${InitPath}/teste`} component={TestPage} />
+        <Route path={`${InitPath}/sobre`} component={SobreNos} />
         <Route path={`${InitPath}/`} component={DefaultPage} />
       </Switch>
     </section>

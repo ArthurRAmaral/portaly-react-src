@@ -14,23 +14,34 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 20,
     marginLeft: 20,
   },
-  span: {
-    // marginBottom: 10,
-    marginRight: 20,
-  },
   svg: {
-    paddingTop: 10,
-    paddingLeft: 5,
-    paddingRight: 5,
+    marginBottom: -6,
+    paddingLeft: 4,
+    paddingRight: 4,
   },
-  // hover: {
-  //   display: 'flex',
-  //   alignItems: 'center',
-  //   height: '100%',
-  //   '&:hover': {
-  //     backgroundColor: colors.orangeDark
-  //   }
-  // }
+  link: {
+    marginBottom: -6,
+    marginRight: 20,
+    marginLeft: 20,
+    fontWeight: "bold",
+    height: "100%",
+    width: "100%"
+  },
+  text: {
+    color: colors.white,
+    textTransform: 'capitalize'
+  },
+  button: {
+    height: "100%",
+    width: "130px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    "&:hover": {
+      backgroundColor: colors.orangeDark
+    }
+  },
 }));
 
 export default useStyles;

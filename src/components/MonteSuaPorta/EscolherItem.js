@@ -1,13 +1,13 @@
 //From depedencies
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
 
 //From components
-import MostraProdutos from "./MostraProdutosMontagem";
 import CircleLoading from "../loading/CircleLoading";
 
-//From services
-import ApiCategorias from "../../services/ApiCategorias";
-import ApiProdutos from "../../services/ApiProdutos";
+import TabMostraProduto from "./TabMostraProdutoPM/TabMostraProdutoPM";
+
+import imgDefault from "../../assets/imgDefault.png";
 
 class EscolherItems extends Component {
   constructor(props) {
@@ -15,51 +15,30 @@ class EscolherItems extends Component {
 
     this.state = {
       categoriaSlug: this.props.categoriaSlug,
-      produtos: null,
+      produtos: this.props.produtos,
+      disabledButton: this.props.disabled,
+      produtosAtuais: null,
     };
   }
 
   componentDidMount() {
-    const categoriaSlug = this.props.categoriaSlug;
-    ApiCategorias.getAllCategorias().then((res) => {
-      res.data.forEach((cat) => {
-        if (cat.slug === categoriaSlug) {
-          this.chamaApiParaReceberProdutos(cat.id);
-          return;
-        }
-      });
+    const { produtos, categoriaSlug } = this.state;
+    Object.values(produtos).map((prods) => {
+      if (prods[0].categories[0].slug === categoriaSlug) {
+        this.setState({ produtosAtuais: prods });
+      }
     });
   }
-
-  componentWillReceiveProps(nextProps) {
-    const categoriaSlug = nextProps.categoriaSlug;
-    ApiCategorias.getAllCategorias().then((res) => {
-      res.data.forEach((cat) => {
-        if (cat.slug === categoriaSlug) {
-          this.chamaApiParaReceberProdutos(cat.id);
-          return;
-        }
-      });
-    });
-  }
-
-  chamaApiParaReceberProdutos(categoriaID) {
-    ApiProdutos.getAllPublishPoductsByCategoriesId(categoriaID).then((res) => {
-      this.setState({ produtos: res.data, categoriaID: categoriaID });
-      this.forceUpdate();
-    });
-  }
-
   render() {
+    const { produtosAtuais, disabledButton, categoriaSlug } = this.state;
+
     return (
       <Fragment>
-        {this.state.produtos &&
-        this.state.paginaId === this.props.categoriaID ? (
-          <MostraProdutos
-            categoriaSlug={this.state.categoriaSlug}
-            key={this.state.categoriaSlug}
-            produtos={this.state.produtos}
-            disabled={this.props.disabled}
+        {produtosAtuais ? (
+          <TabMostraProduto
+            produtosAtuais={produtosAtuais}
+            disabledButton={disabledButton}
+            categoriaSlug={categoriaSlug}
           />
         ) : (
           <CircleLoading />
@@ -69,4 +48,6 @@ class EscolherItems extends Component {
   }
 }
 
-export default EscolherItems;
+const mapStateToProps = (state) => ({ produtos: state.produtos });
+
+export default connect(mapStateToProps, null)(EscolherItems);

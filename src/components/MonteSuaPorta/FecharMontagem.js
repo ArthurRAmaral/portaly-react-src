@@ -1,54 +1,93 @@
 import React, { Component, Fragment } from "react";
-import ApiProdutos from "../../services/ApiProdutos";
-import MostraProdutosFinal from "./MostraProdutosMontagemFinal";
+
 import CircleLoading from "../loading/CircleLoading";
 
 import Montador from "../../util/MontadorPorta";
 
-class EscolherItems extends Component {
+import imgDefault from "../../assets/imgDefault.png";
+
+import "../../css/components/MonteSuaPorta/MostrarProdutosFinal.css";
+
+class FecharMontagem extends Component {
   constructor(props) {
     super(props);
 
+    Montador.setValorKit();
+
     this.state = {
-      produtosSelecionados: Montador.getMontador().dados,
-      produtos: null,
-      quantidade: 1,
+      produtosSelecionados: Montador.getProdutos(),
+      quantidade: Montador.getQuantidade(),
+      valorKit: Montador.getValorKit(),
     };
   }
 
-  componentDidMount() {
-    if (this.state.produtosSelecionados) {
-      let vet = [];
-      let qnt = 0;
-      const prods = this.state.produtosSelecionados;
-      let size = Object.values(prods).length;
-
-      for (const key in prods) {
-        ApiProdutos.getProductByid(prods[key]).then((res) => {
-          vet.push(res.data);
-          qnt++;
-          if (qnt === size) this.setState({ produtos: vet });
-        });
-      }
-    } else {
-      this.setState({ produtos: [] });
-    }
+  handleChangeQuantidade(event) {
+    Montador.setQuantidade(event.target.valueAsNumber);
+    Montador.setValorKit();
+    this.setState({
+      quantidade: event.target.valueAsNumber,
+      valorKit: Montador.getValorKit,
+    });
   }
 
   render() {
+    const { produtosSelecionados, quantidade, valorKit } = this.state;
     return (
       <Fragment>
-        {this.state.produtos ? (
-          this.state.produtos.length > 0 ? (
-            <Fragment>
-              <MostraProdutosFinal
-                key={this.state.categoriaID}
-                produtos={this.state.produtos}
+        {produtosSelecionados ? (
+          <Fragment>
+            <section className="center-align produtos-list">
+              {Object.values(produtosSelecionados).map((produto) => {
+                return (
+                  <div
+                    className="produto-final"
+                    // onClick={() => this.handleSelect(produto.id)}
+                    key={`intem-${produto.id}`}
+                  >
+                    <img
+                      key={produto.id}
+                      src={
+                        produto.images.length > 0
+                          ? produto.images[0].src
+                          : imgDefault
+                      }
+                      alt=""
+                    />
+                    <div className="produto-dados-montagem">
+                      <p className="nome">{produto.name}</p>
+                      <p className="preco">R$: {produto.price}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </section>
+            <div>
+              <span
+                style={{
+                  fontSize: "25px",
+                  color: "#8A572D",
+                }}
+              >
+                Quantidae de portas montadas:{" "}
+              </span>
+              <input
+                type="number"
+                name="Quantidade"
+                id="quantidadedekits"
+                value={quantidade}
+                onChange={(event) => this.handleChangeQuantidade(event)}
+                style={{
+                  width: "50px",
+                  height: "35px",
+                  borderColor: "#8A572D",
+                  color: "#8A572D",
+                  outline: "none",
+                  fontSize: "20px",
+                  textJustify: "center",
+                }}
               />
-            </Fragment>
-          ) : (
-            <div>{"Nenhum produto selecionado"}</div>
-          )
+            </div>
+          </Fragment>
         ) : (
           <CircleLoading />
         )}
@@ -57,4 +96,4 @@ class EscolherItems extends Component {
   }
 }
 
-export default EscolherItems;
+export default FecharMontagem;

@@ -9,6 +9,10 @@ import InformacoesProduto from "../components/informacoesProduto/informacoesProd
 
 //From Material-ui
 import Grid from "@material-ui/core/Grid";
+import { ThemeProvider } from "@material-ui/core/styles";
+
+//From here
+import theme from "./theme";
 
 class PaginaProduto extends Component {
   constructor(props) {
@@ -37,20 +41,22 @@ class PaginaProduto extends Component {
     const { produto } = this.state;
     return (
       <Fragment>
-        <Grid
-          container
-          direction="row"
-          alignItems="center"
-          justify="space-evenly"
-        >
-          <Grid>
-            <VerticalTab produto={produto} />
+        <ThemeProvider theme={theme}>
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+            justify="space-evenly"
+          >
+            <Grid>
+              <VerticalTab produto={produto} />
+            </Grid>
+            <Grid>
+              <InformacoesProduto produto={produto} />
+            </Grid>
           </Grid>
-          <Grid>
-            <InformacoesProduto produto={produto} />
-          </Grid>
-        </Grid>
-        <Grid container> </Grid>
+          <Grid container> </Grid>
+        </ThemeProvider>
       </Fragment>
     );
   };

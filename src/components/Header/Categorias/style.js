@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
+    color: colors.orangeDarkDark,
   },
   link: {
     fontFamily: "Poppins",
@@ -32,16 +33,16 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16,
     height: "100%",
     width: "100%",
-    color: colors.orangeDarkDark,
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
+    color: colors.orangeDarkDark,
   },
   Line: {
     height: "65%",
     alignSelf: "center",
     color: colors.orangeLight,
-    width: "1.5px",
+    width: "2px",
   },
   botao: {
     width: "16%",
@@ -49,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
+    color: colors.orangeDarkDark,
   },
   button_link: {
     height: "100%",
@@ -57,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
   },
   arrow: {
     marginLeft: "20px",
+  },
+  texto: {
+    color: colors.orangeDarkDark,
   },
 }));
 
