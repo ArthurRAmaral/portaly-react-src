@@ -7,8 +7,6 @@ import CircleLoading from "../loading/CircleLoading";
 
 import TabMostraProduto from "./TabMostraProdutoPM/TabMostraProdutoPM";
 
-import imgDefault from "../../assets/imgDefault.png";
-
 class EscolherItems extends Component {
   constructor(props) {
     super(props);

@@ -10,9 +10,6 @@ import Search from "./search";
 //From service
 import InitPath from "../../../services/InitPath";
 
-//From util
-import colors from "../../../util/Colors";
-
 class Busca extends Component {
   constructor(props) {
     super(props);

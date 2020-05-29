@@ -23,9 +23,7 @@
       "modules": true
     }
   },
-  "plugins": [
-    "prettier"
-  ],
+  "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error",
     "linebreak-style": 0,
@@ -34,8 +32,14 @@
     // ignore: optional array of props name to ignore during validation.
     // customValidators: optional array of validators used for propTypes validation.
     // skipUndeclared: optional boolean to only error on components that have a propTypes block declared.
-    "react/prop-types": [
-      0
+    "react/prop-types": [0],
+    "no-console": "off",
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "CallExpression[callee.object.name='console'][callee.property.name!=/^(log|warn|error|info|trace)$/]",
+        "message": "Unexpected property on console object was called"
+      }
     ]
   }
 }

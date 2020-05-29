@@ -8,7 +8,6 @@ import Box from "@material-ui/core/Box";
 
 //From util
 import colors from "../../util/Colors";
-import Divider from '@material-ui/core/Divider';
 
 const varName = "dadosCadastro";
 
@@ -34,31 +33,31 @@ class Cadastro extends Component {
     this.state = dados
       ? dados
       : {
-        errors: {
-          first_name: false,
-          last_name: false,
-          cpf: false,
-          email: false,
-          phone: false,
-          country: false,
-          state: false,
-          city: false,
-          postcode: false,
-          address_1: false,
-          address_2: false,
-        },
-        first_name: "",
-        last_name: "",
-        cpf: "",
-        email: "",
-        phone: "",
-        country: "",
-        state: "",
-        city: "",
-        postcode: "",
-        address_1: "",
-        address_2: "",
-      };
+          errors: {
+            first_name: false,
+            last_name: false,
+            cpf: false,
+            email: false,
+            phone: false,
+            country: false,
+            state: false,
+            city: false,
+            postcode: false,
+            address_1: false,
+            address_2: false,
+          },
+          first_name: "",
+          last_name: "",
+          cpf: "",
+          email: "",
+          phone: "",
+          country: "",
+          state: "",
+          city: "",
+          postcode: "",
+          address_1: "",
+          address_2: "",
+        };
 
     this.handleChange = this.handleChange.bind(this);
     this.validate = this.validate.bind(this);

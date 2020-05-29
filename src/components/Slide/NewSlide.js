@@ -106,7 +106,7 @@ class NewSlide extends React.Component {
     return (
       <Slider autoplay={5000}>
         {this.state.items.map((item, index) => (
-          <div key={index} style={{ "text-align": "center" }}>
+          <div key={index} style={{ textAlign: "center" }}>
             <Slide item={item} key={index} />
           </div>
         ))}
