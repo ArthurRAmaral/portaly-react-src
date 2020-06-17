@@ -32,6 +32,7 @@ import CircleLoading from "../../loading/CircleLoading";
 import PagSeguro from "../../../util/PagSeguro";
 import btnPagSeguro from "../../../util/btnPagSeguro";
 import ApiCupom from "../../../services/ApiCupom";
+import ApiPedidos from "../../../services/ApiPedidos";
 
 //From redux
 import { salvaCupom } from "../../../redux/actions/cupomActions";
@@ -405,7 +406,35 @@ const pagamento = (props, dadosCadastro, dadosFrete) => {
       }
     }
   }
-  props.salvaCupom("");
+  if (contador == 1) {
+    ApiPedidos.createOrder({
+      payment_method: "PagSeguro",
+      payment_method_title: "PagSeguro",
+      set_paid: false,
+      billing: dadosCadastro,
+      shipping: dadosFrete,
+      shipping_lines: [
+        {
+          method_id: "Padrão",
+          method_title: "Padrão",
+          total: props.frete.join(""),
+        },
+      ],
+      coupon_lines: [
+        {
+          code: cupom === "" ? "sem cupom" : cupom,
+        },
+      ],
+      line_items: itensCarrinho,
+    })
+      .then((response) => {
+        console.log("Response = ", response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    props.salvaCupom("");
+  }
 };
 
 ////////////
